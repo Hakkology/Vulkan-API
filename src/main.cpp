@@ -13,6 +13,7 @@
 int main (){
     glfwInit();
 
+    // Setup details about window
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
 }
