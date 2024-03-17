@@ -1,3 +1,7 @@
+This repository is merely archived for future work regarding Vulkan API.
+The project consists of GLFW and GLM along with Vulkan itself.
+It is planned to convert this into a Vulkan 3D renderer with some functionality.
+
 To do list:
 
 - Initiate Vulkan and setup GPU for usage.
