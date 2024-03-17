@@ -17,10 +17,22 @@ int main (){
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
 
-    // extension properties, not stored atm.
+    // Query extension count
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
+    // Get extension properties
+    VkExtensionProperties* extensions = new VkExtensionProperties[extensionCount];
+    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions);
+
+    // Print extension names
+    for (uint32_t i = 0; i < extensionCount; ++i) {
+        std::cout << "Extension " << i << ": " << extensions[i].extensionName << std::endl;
+    }
+
+    delete[] extensions;
+
+    // glm vector and matrix tests.
     glm::mat4 testMatrix(1.0f);
     glm::vec4 testVector(1.0f);
 
@@ -35,6 +47,7 @@ int main (){
         glfwPollEvents();
     }
 
+    // to close and terminate glfw.
     glfwDestroyWindow(window);
 
     glfwTerminate();
