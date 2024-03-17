@@ -7,8 +7,7 @@ sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list http://packages.l
 sudo apt update
 sudo apt install vulkan-sdk
 
-For GLFW and GLM (OpenGLMath):
-
+For GLFW (Graphics Launcher Framework) and GLM (OpenGLMathLib):
 sudo apt install libglfw3 libglfw3-dev libglm-dev
 
 
