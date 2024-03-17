@@ -210,15 +210,6 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-MyVulkanProject_BINARY_DIR:STATIC=/home/hakan/Desktop/Projects/C++/Vulkan/build
-
-//Value Computed by CMake
-MyVulkanProject_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-MyVulkanProject_SOURCE_DIR:STATIC=/home/hakan/Desktop/Projects/C++/Vulkan
-
-//Value Computed by CMake
 Vulkan-Renderer_BINARY_DIR:STATIC=/home/hakan/Desktop/Projects/C++/Vulkan/build
 
 //Value Computed by CMake
@@ -241,9 +232,6 @@ Vulkan_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libvulkan.so
 
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/glfw3
-
-//The directory containing a CMake configuration file for glm.
-glm_DIR:PATH=/usr/lib/cmake/glm
 
 
 ########################
@@ -403,6 +391,4 @@ Vulkan_GLSLC_EXECUTABLE-ADVANCED:INTERNAL=1
 Vulkan_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Vulkan_LIBRARY
 Vulkan_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: glm_DIR
-glm_DIR-ADVANCED:INTERNAL=1
 
