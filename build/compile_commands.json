@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
-  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/main.cpp",
-  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/main.cpp"
-}
-]

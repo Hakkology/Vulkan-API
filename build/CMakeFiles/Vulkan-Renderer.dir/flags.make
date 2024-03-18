@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm
+CXX_INCLUDES = -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm
 
 CXX_FLAGS = -std=gnu++17
 

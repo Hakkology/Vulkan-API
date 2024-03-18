@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o.d"
   "Vulkan-Renderer"
   "Vulkan-Renderer.pdb"
 )

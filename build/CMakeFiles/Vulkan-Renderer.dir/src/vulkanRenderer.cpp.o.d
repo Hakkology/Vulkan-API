@@ -1,7 +1,8 @@
-CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
- /home/hakan/Desktop/Projects/C++/Vulkan/src/main.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/11/stdexcept \
- /usr/include/c++/11/exception \
+CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp \
+ /usr/include/stdc-predef.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanRenderer.h \
+ /usr/include/c++/11/stdexcept /usr/include/c++/11/exception \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -136,7 +137,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc /usr/include/c++/11/iostream \
+ /usr/include/c++/11/bits/vector.tcc /usr/include/string.h \
+ /usr/include/strings.h /usr/include/c++/11/iostream \
  /usr/include/c++/11/ostream /usr/include/c++/11/ios \
  /usr/include/c++/11/bits/ios_base.h \
  /usr/include/c++/11/bits/locale_classes.h \
@@ -153,9 +155,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanRenderer.h \
- /usr/include/string.h /usr/include/strings.h /usr/include/GLFW/glfw3.h \
+ /usr/include/c++/11/bits/istream.tcc /usr/include/GLFW/glfw3.h \
  /usr/include/vulkan/vulkan.h /usr/include/vulkan/vk_platform.h \
  /usr/include/vulkan/vulkan_core.h \
  /usr/include/vk_video/vulkan_video_codec_h264std.h \
@@ -169,5 +169,4 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/vk_video/vulkan_video_codec_h265std_decode.h \
  /usr/include/GL/gl.h /usr/include/GL/glext.h \
  /usr/include/KHR/khrplatform.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/utilities.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/window.h
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/utilities.h
