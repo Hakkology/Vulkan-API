@@ -8,7 +8,8 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
-#include "utilities.h"
+#include "deviceManager.h"
+#include "queueManager.h"
 
 class VulkanRenderer {
 public:
@@ -20,26 +21,12 @@ public:
 private:
     GLFWwindow* window;
     VkInstance instance;
+    DeviceManager deviceManager;
+    QueueManager queueManager;
 
-    struct{
-        VkPhysicalDevice physicalDevice;
-        VkDevice logicalDevice;
-    } mainDevice;
-    
-    VkQueue graphicsQueue;
-
-    // create functions
+    // Create functions
     void createInstance();
-    void createLogicalDevice();
 
-    // get functions
-    void getPhysicalDevice();
-
-    // support functions
-    // --Checker functions
+    // Support functions
     bool checkInstanceExtensionSupport(std::vector<const char*>* checkExtensions);
-    bool checkDeviceSuitable(VkPhysicalDevice device);
-
-    // --Getter functions
-    QueueFamilyIndices getQueueFamilies (VkPhysicalDevice device);
 };

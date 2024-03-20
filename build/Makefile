@@ -129,6 +129,30 @@ Vulkan-Renderer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/build
 .PHONY : Vulkan-Renderer/fast
 
+src/deviceManager.o: src/deviceManager.cpp.o
+.PHONY : src/deviceManager.o
+
+# target to build an object file
+src/deviceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o
+.PHONY : src/deviceManager.cpp.o
+
+src/deviceManager.i: src/deviceManager.cpp.i
+.PHONY : src/deviceManager.i
+
+# target to preprocess a source file
+src/deviceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.i
+.PHONY : src/deviceManager.cpp.i
+
+src/deviceManager.s: src/deviceManager.cpp.s
+.PHONY : src/deviceManager.s
+
+# target to generate assembly for a file
+src/deviceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.s
+.PHONY : src/deviceManager.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -153,6 +177,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/queueManager.o: src/queueManager.cpp.o
+.PHONY : src/queueManager.o
+
+# target to build an object file
+src/queueManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o
+.PHONY : src/queueManager.cpp.o
+
+src/queueManager.i: src/queueManager.cpp.i
+.PHONY : src/queueManager.i
+
+# target to preprocess a source file
+src/queueManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.i
+.PHONY : src/queueManager.cpp.i
+
+src/queueManager.s: src/queueManager.cpp.s
+.PHONY : src/queueManager.s
+
+# target to generate assembly for a file
+src/queueManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.s
+.PHONY : src/queueManager.cpp.s
+
 src/vulkanRenderer.o: src/vulkanRenderer.cpp.o
 .PHONY : src/vulkanRenderer.o
 
@@ -176,6 +224,30 @@ src/vulkanRenderer.s: src/vulkanRenderer.cpp.s
 src/vulkanRenderer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.s
 .PHONY : src/vulkanRenderer.cpp.s
+
+src/vulkanUtils.o: src/vulkanUtils.cpp.o
+.PHONY : src/vulkanUtils.o
+
+# target to build an object file
+src/vulkanUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o
+.PHONY : src/vulkanUtils.cpp.o
+
+src/vulkanUtils.i: src/vulkanUtils.cpp.i
+.PHONY : src/vulkanUtils.i
+
+# target to preprocess a source file
+src/vulkanUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.i
+.PHONY : src/vulkanUtils.cpp.i
+
+src/vulkanUtils.s: src/vulkanUtils.cpp.s
+.PHONY : src/vulkanUtils.s
+
+# target to generate assembly for a file
+src/vulkanUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.s
+.PHONY : src/vulkanUtils.cpp.s
 
 src/window.o: src/window.cpp.o
 .PHONY : src/window.o
@@ -210,12 +282,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Vulkan-Renderer"
+	@echo "... src/deviceManager.o"
+	@echo "... src/deviceManager.i"
+	@echo "... src/deviceManager.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/queueManager.o"
+	@echo "... src/queueManager.i"
+	@echo "... src/queueManager.s"
 	@echo "... src/vulkanRenderer.o"
 	@echo "... src/vulkanRenderer.i"
 	@echo "... src/vulkanRenderer.s"
+	@echo "... src/vulkanUtils.o"
+	@echo "... src/vulkanUtils.i"
+	@echo "... src/vulkanUtils.s"
 	@echo "... src/window.o"
 	@echo "... src/window.i"
 	@echo "... src/window.s"

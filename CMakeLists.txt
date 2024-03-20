@@ -14,6 +14,9 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 # Add the executable that will be built from the source files.
 add_executable(Vulkan-Renderer
     src/main.cpp 
+    src/vulkanUtils.cpp
+    src/deviceManager.cpp
+    src/queueManager.cpp
     src/vulkanRenderer.cpp 
     src/window.cpp
 )

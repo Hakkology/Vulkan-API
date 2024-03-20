@@ -1,7 +1,8 @@
-CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: \
- /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp \
+CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o: \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/deviceManager.cpp \
  /usr/include/stdc-predef.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanRenderer.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/deviceManager.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
  /usr/include/c++/11/stdexcept /usr/include/c++/11/exception \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -169,6 +170,4 @@ CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: \
  /usr/include/vk_video/vulkan_video_codec_h265std_decode.h \
  /usr/include/GL/gl.h /usr/include/GL/glext.h \
  /usr/include/KHR/khrplatform.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/deviceManager.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h

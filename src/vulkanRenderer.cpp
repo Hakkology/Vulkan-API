@@ -6,21 +6,18 @@ VulkanRenderer::VulkanRenderer() {
 }
 
 int VulkanRenderer::init(GLFWwindow* newWindow) {
-
     window = newWindow;
 
-    try
-    {
+    try {
         createInstance();
-        getPhysicalDevice();
-        createLogicalDevice();
-    }
-    catch(const std::runtime_error &e)
-    {
+        deviceManager.pickPhysicalDevice(instance);
+        deviceManager.createLogicalDevice(); 
+        queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
+    } catch(const std::runtime_error &e) {
         printf("ERROR: %s\n", e.what());
         return EXIT_FAILURE;
     }
-    
+
     return 0;
 }
 
@@ -29,8 +26,12 @@ VulkanRenderer::~VulkanRenderer() {
 }
 
 void VulkanRenderer::terminate(){
-    vkDestroyDevice(mainDevice.logicalDevice, nullptr);
-    vkDestroyInstance(instance, nullptr);
+    if (deviceManager.getLogicalDevice() != VK_NULL_HANDLE) {
+        vkDestroyDevice(deviceManager.getLogicalDevice(), nullptr);
+    }
+    if (instance != VK_NULL_HANDLE) {
+        vkDestroyInstance(instance, nullptr);
+    }
 }
 
 void VulkanRenderer::createInstance(){
@@ -85,72 +86,6 @@ void VulkanRenderer::createInstance(){
     }
 }
 
-void VulkanRenderer::createLogicalDevice(){
-
-    // Get the queue family indices for the chosen pyhsical device.
-    QueueFamilyIndices indices = getQueueFamilies(mainDevice.physicalDevice);
-
-    // Queue the logical device needs to create and info to do so (only 1 for now, will add more later.)
-    VkDeviceQueueCreateInfo queueCreateInfo = {};
-    queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-    queueCreateInfo.queueFamilyIndex = indices.graphicsFamily;          //index of the family to create a queue from
-    queueCreateInfo.queueCount =1;                                      //number of queueus to create
-    float priority = 1.0f;
-    queueCreateInfo.pQueuePriorities = &priority;                       //vulkan needs to know how to handle multiple queues, so decide on priority, 1 highest, 0 lowest.
-
-    // information to create logical device (sometimes called device)
-    VkDeviceCreateInfo deviceCreateInfo = {};
-    deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    deviceCreateInfo.queueCreateInfoCount = 1;                          //number of queue createinfos
-    deviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;              //list of queue create infos so device can create required  queues.
-    deviceCreateInfo.queueCreateInfoCount = 0;                          //number of enabled logical device extensions.
-    deviceCreateInfo.ppEnabledExtensionNames = nullptr;                 //list of enabled logical device extensions.
-    deviceCreateInfo.enabledLayerCount = 0;
-
-    // physical device features the logical device will be using.
-    VkPhysicalDeviceFeatures deviceFeatures ={};
-    deviceCreateInfo.pEnabledFeatures= &deviceFeatures;                 //physical device features logical device will use.
-
-    // create a logical devices for the given physical device.
-    VkResult result = vkCreateDevice(mainDevice.physicalDevice, &deviceCreateInfo, nullptr, &mainDevice.logicalDevice);
-    if (result != VK_SUCCESS)
-    {
-        throw std::runtime_error("Failed to initialize logical device.");
-    }
-    
-    // queues are created at the same time as the device.
-    // so we need to handlet he queues.
-    // from given logical device, of given queue family, of given queue index, 0 since onlyo one queue, place references in given queue.
-    vkGetDeviceQueue(mainDevice.logicalDevice, indices.graphicsFamily, 0, &graphicsQueue);
-}
-
-void VulkanRenderer::getPhysicalDevice(){
-
-    // Enumerate physical devices the vkinstance can access
-    uint32_t deviceCount = 0;
-    vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
-
-    // If no devices available, then none support Vulkan!
-    if (deviceCount == 0)
-    {
-        throw std::runtime_error("Can't find GPU's that support Vulkan Instance!");
-    }
-
-    // Get list of physical devices
-    std::vector <VkPhysicalDevice> deviceList(deviceCount);
-    vkEnumeratePhysicalDevices(instance, &deviceCount, deviceList.data());
-
-    for (const auto &device : deviceList)
-    {
-        if (checkDeviceSuitable(device))
-        {
-            mainDevice.physicalDevice = device;
-            break;
-        }
-           
-    }
-    
-}
 
 bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *checkExtensions)
 {
@@ -185,55 +120,6 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
     
 }
 
-bool VulkanRenderer::checkDeviceSuitable(VkPhysicalDevice device)
-{
-    /*
-    
-        // Information about device itself (ID, name, type, vendor, etc)
-        VkPhysicalDeviceProperties deviceProperties;
-        vkGetPhysicalDeviceProperties(device, &deviceProperties);
 
-        // Information about what the device can do (geo shader, tess shader, wide lines etc)
-        VkPhysicalDeviceFeatures deviceFeatures;
-        vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
-    */
 
-    QueueFamilyIndices indices = getQueueFamilies(device);
-
-    return indices.isValid();
-}
-
-QueueFamilyIndices VulkanRenderer::getQueueFamilies(VkPhysicalDevice device)
-{
-    QueueFamilyIndices indices;
-
-    // Get all queue family property info for the given device
-    uint32_t queueFamilyCount = 0;
-    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
-
-    std::vector<VkQueueFamilyProperties> queueFamilyList(queueFamilyCount);
-    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilyList.data());
-
-    // Go through each queue family and check if it has at least 1 of the required types of queue.
-    int i = 0;
-    for (const auto &queueFamily : queueFamilyList)
-    {
-        // first check if queue family has at least 1 queue in that family, could have no queues.
-        // queue can be multilpe types defined through bitfield. need to bitwise and with vk_queue_*_bit to check if it has required bits.
-        if (queueFamily.queueCount >0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-        {
-            indices.graphicsFamily = i;         // if queue family is valid, then get index.
-        }
-        
-        // check if queue family indices are in a valid state, stop searching if so.
-        if (indices.isValid())
-        {
-            break;
-        }
-        
-        i++;
-    }
-    
-    return indices;
-}
