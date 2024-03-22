@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
+  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/main.cpp",
+  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/main.cpp"
+},
+{
+  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
+  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanUtils.cpp",
+  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanUtils.cpp"
+},
+{
+  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
+  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/deviceManager.cpp",
+  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/deviceManager.cpp"
+},
+{
+  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
+  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/queueManager.cpp",
+  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/queueManager.cpp"
+},
+{
+  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
+  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp",
+  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp"
+},
+{
+  "directory": "/home/hakan/Desktop/Projects/C++/Vulkan/build",
+  "command": "/usr/bin/clang++ -I/home/hakan/Desktop/Projects/C++/Vulkan/include -I/home/hakan/Desktop/Projects/C++/Vulkan/lib/glm -g -std=gnu++17 -o CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/window.cpp",
+  "file": "/home/hakan/Desktop/Projects/C++/Vulkan/src/window.cpp"
+}
+]

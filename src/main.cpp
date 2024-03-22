@@ -10,10 +10,18 @@
 GLFWwindow* window;
 VulkanRenderer vulkanRenderer;
 
-int main (){
+int main (int argc, char** argv){
 
     // Create window
     Window window ("Vulkan Renderer, 800, 600");
+
+    // Parse command-line arguments
+    for (int i = 1; i < argc; ++i) {
+        if (std::string(argv[i]) == "--enable-validation-layers") {
+            vulkanRenderer.setValidationEnabled();
+        }
+    }
+
     // Create Vulkan Renderer instance
     if (vulkanRenderer.init(window.glfwWindow) == EXIT_FAILURE)
     {

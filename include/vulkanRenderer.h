@@ -10,19 +10,28 @@
 
 #include "deviceManager.h"
 #include "queueManager.h"
+#include "vulkanValidation.h"
 
 class VulkanRenderer {
 public:
     VulkanRenderer();
+
     int init(GLFWwindow* newWindow);
+
     ~VulkanRenderer();
+
     void terminate();
+
+    // Validation functions
+    void setValidationEnabled();
 
 private:
     GLFWwindow* window;
     VkInstance instance;
+
     DeviceManager deviceManager;
     QueueManager queueManager;
+    VulkanValidation validation;
 
     // Create functions
     void createInstance();

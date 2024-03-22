@@ -1,12 +1,16 @@
 #include "vulkanRenderer.h"  
 
 
-VulkanRenderer::VulkanRenderer() {
+VulkanRenderer::VulkanRenderer() : {
     // Constructor implementation (if needed)
 }
 
 int VulkanRenderer::init(GLFWwindow* newWindow) {
     window = newWindow;
+
+    if (validation.getValidationLayerState()) {
+        validation.setupDebugMessenger(instance);
+    }
 
     try {
         createInstance();
@@ -32,10 +36,14 @@ void VulkanRenderer::terminate(){
     if (instance != VK_NULL_HANDLE) {
         vkDestroyInstance(instance, nullptr);
     }
+    if (validation.getValidationLayerState()) {
+        validation.cleanup(instance);
+    }
 }
 
 void VulkanRenderer::createInstance(){
     
+    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
     // Information about the application itself
     // Most data here does not affect the probram and is for developer convenience.
     VkApplicationInfo appInfo = {};
@@ -50,6 +58,11 @@ void VulkanRenderer::createInstance(){
     VkInstanceCreateInfo createInfo = {};                       // We dont necessarily know what type of info is created. This enum is basically what its type is.
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;  // createInfo.pNext is for additional structs and information parameters, stype is structure type.
     createInfo.pApplicationInfo = &appInfo;
+
+    if (validation.getValidationLayerState()) {
+        validation.populateDebugMessengerCreateInfo(debugCreateInfo);
+        createInfo.pNext = &debugCreateInfo;  // Link debugCreateInfo to createInfo
+    }
 
     // Create a list to hold instance extensions
     std::vector<const char*> instanceExtensions = std::vector<const char*>();
@@ -120,6 +133,6 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
     
 }
 
-
-
-
+void VulkanRenderer::setValidationEnabled(){
+    validation.setValidationLayerState();
+}
