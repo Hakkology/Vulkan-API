@@ -16,7 +16,8 @@ public:
 private:
     VkPhysicalDevice physicalDevice;
     VkDevice logicalDevice;
-    bool checkDeviceSuitable(VkPhysicalDevice device, const QueueFamilyIndices &indices);
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface);
+    bool checkDeviceSuitable(VkPhysicalDevice device);
+    bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+    // QueueFamilyIndices findQueueFamiliesForDevice(VkPhysicalDevice device);
+    // QueueFamilyIndices findQueueFamiliesForSurface(VkPhysicalDevice device, VkSurfaceKHR surface);
 };

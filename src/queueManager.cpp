@@ -7,7 +7,7 @@ QueueManager::QueueManager() : graphicsQueue(VK_NULL_HANDLE) {
 void QueueManager::init(VkDevice logicalDevice, VkPhysicalDevice physicalDevice) {
     // Initialize queues
     // This should be called after creating the logical device
-    QueueFamilyIndices indices = VulkanUtils::findQueueFamilies(physicalDevice);
+    QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForDevice(physicalDevice);
     createQueues(logicalDevice, indices);
 }
 

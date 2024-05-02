@@ -1,8 +1,13 @@
 // VulkanUtils.h
 #pragma once
 
+#include <iostream>
 #include <vector>
 #include <vulkan/vulkan.h>
+
+const std::vector<const char*> deviceExtensions = {
+    VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
 
 struct QueueFamilyIndices {
     int graphicsFamily = -1;
@@ -14,6 +19,9 @@ struct QueueFamilyIndices {
 };
 
 namespace VulkanUtils {
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface);
+    // Finds queue families without considering presentation support
+    QueueFamilyIndices findQueueFamiliesForDevice(VkPhysicalDevice device);
+
+    // Finds queue families with presentation support considered
+    QueueFamilyIndices findQueueFamiliesForSurface(VkPhysicalDevice device, VkSurfaceKHR surface);
 }

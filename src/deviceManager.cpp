@@ -13,10 +13,19 @@ void DeviceManager::pickPhysicalDevice(VkInstance instance) {
     }
 
     std::vector<VkPhysicalDevice> devices(deviceCount);
-    vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+    // Populate the devices vector
+    VkResult result = vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+    if (result != VK_SUCCESS) {
+        throw std::runtime_error("Failed to enumerate physical devices properly.");
+    }
 
-    // Just pick the first device for now
-    physicalDevice = devices[0];
+    // Iterate over all devices to find the first suitable one
+    for (const auto& device : devices) {
+        if (checkDeviceSuitable(device)) {
+            physicalDevice = device;
+            break;
+        }
+    }
 
     if (physicalDevice == VK_NULL_HANDLE) {
         throw std::runtime_error("Failed to find a suitable GPU!");
@@ -24,7 +33,7 @@ void DeviceManager::pickPhysicalDevice(VkInstance instance) {
 }
 
 void DeviceManager::createLogicalDevice() {
-    auto indices = VulkanUtils::findQueueFamilies(physicalDevice);
+    auto indices = VulkanUtils::findQueueFamiliesForDevice(physicalDevice);
 
     // Vector for queue creation information, set for family indices.
     // Since graphics and presentation queue are basically the same, we cannot have both of them available at the same time.
@@ -51,9 +60,9 @@ void DeviceManager::createLogicalDevice() {
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
     createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());               // Number of queue create infos.
     createInfo.pQueueCreateInfos = queueCreateInfos.data();                                         // List of queue create infos
-    createInfo.pEnabledFeatures = &deviceFeatures;                                                  // may be deleted.
-    createInfo.enabledExtensionCount = 0;                                                           // Number of enabled logical device extensions.
-    createInfo.ppEnabledExtensionNames = nullptr;                                                   // List of enabled logical device extensions.
+    //createInfo.pEnabledFeatures = &deviceFeatures;                                                  // may be deleted.
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());                                                           // Number of enabled logical device extensions.
+    createInfo.ppEnabledExtensionNames = deviceExtensions.data();                                                   // List of enabled logical device extensions.
 
     
 
@@ -70,8 +79,53 @@ VkDevice DeviceManager::getLogicalDevice() const {
     return logicalDevice;
 }
 
-bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device, const QueueFamilyIndices &indices) {
-    // No need to findQueueFamilies here as indices are passed in
-    return indices.isValid();
+bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device) {
+
+    QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForDevice(device);
+    bool extensionsSupported = checkDeviceExtensionSupport(device);
+
+    std::cout << "Checking device suitability: " << std::endl;
+    std::cout << "Queue Families - Graphics: " << indices.graphicsFamily << ", Presentation: " << indices.presentationFamily << std::endl;
+    std::cout << "Extensions Supported: " << extensionsSupported << std::endl;
+
+    return indices.isValid() && extensionsSupported;
+}
+
+bool DeviceManager::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+
+    // Get Device extension count.
+    uint32_t extensionCount = 0;
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+    // no extension, return.
+    if (extensionCount == 0)
+    {
+        return false;
+    }
+    
+    // Populate list of extensions.
+    std::vector<VkExtensionProperties> extensions(extensionCount);
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, extensions.data());
+
+    for(const auto &deviceExtension : deviceExtensions)
+    {
+        bool hasExtension = false;
+        for(const auto &extension : extensions)
+        {
+            if (strcmp(deviceExtension, extension.extensionName) == 0)
+            {
+                hasExtension = true;
+                break;
+            }
+            
+        }
+
+        if (!hasExtension)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 

@@ -1,6 +1,6 @@
 #include "vulkanUtils.h"
 
-QueueFamilyIndices VulkanUtils::findQueueFamilies(VkPhysicalDevice device) {
+QueueFamilyIndices VulkanUtils::findQueueFamiliesForDevice(VkPhysicalDevice device) {
     QueueFamilyIndices indices;
 
     // Get all queue family property info for the given device
@@ -26,7 +26,7 @@ QueueFamilyIndices VulkanUtils::findQueueFamilies(VkPhysicalDevice device) {
     return indices;
 }
 
-QueueFamilyIndices VulkanUtils::findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) {
+QueueFamilyIndices VulkanUtils::findQueueFamiliesForSurface(VkPhysicalDevice device, VkSurfaceKHR surface) {
     QueueFamilyIndices indices;
 
     // Get all queue family property info for the given device
@@ -43,11 +43,12 @@ QueueFamilyIndices VulkanUtils::findQueueFamilies(VkPhysicalDevice device, VkSur
         }
 
         // Check if queue family supports presentation.
-        VkBool32 presentationSupport = false;
-        vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentationSupport);
-        
+        VkBool32 presentSupport = false;
+        vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
+        std::cout << "Queue Family " << i << ": Present Support = " << presentSupport << std::endl;
+
         // Check if queue is presentation type (can be both graphics and presentation)
-        if (queueFamily.queueCount >0 && presentationSupport)
+        if (queueFamily.queueCount >0 && presentSupport)
         {
             indices.presentationFamily = i;
         }
