@@ -1,7 +1,7 @@
 #include "vulkanRenderer.h"  
 
 
-VulkanRenderer::VulkanRenderer() : {
+VulkanRenderer::VulkanRenderer() {
     // Constructor implementation (if needed)
 }
 
@@ -14,6 +14,9 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
 
     try {
         createInstance();
+        if (validation.getValidationLayerState()) {
+            validation.setupDebugMessenger(instance);
+        }
         deviceManager.pickPhysicalDevice(instance);
         deviceManager.createLogicalDevice(); 
         queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
@@ -41,63 +44,51 @@ void VulkanRenderer::terminate(){
     }
 }
 
-void VulkanRenderer::createInstance(){
-    
-    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
-    // Information about the application itself
-    // Most data here does not affect the probram and is for developer convenience.
+void VulkanRenderer::createInstance() {
     VkApplicationInfo appInfo = {};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    appInfo.pApplicationName = "Vulkan Renderer";               // Custom name of the application.
-    appInfo.applicationVersion = VK_MAKE_VERSION (1, 0, 0);     // CUstom version of the application.
-    appInfo.pEngineName = "Koprulu";                            // Custom engine name
-    appInfo.engineVersion = VK_MAKE_VERSION (1,0,0);            // Custom engine version
-    appInfo.apiVersion = VK_API_VERSION_1_3;                    // the Vulkan Version
+    appInfo.pApplicationName = "Vulkan Renderer";
+    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.pEngineName = "Koprulu";
+    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.apiVersion = VK_API_VERSION_1_3;
 
-                                                                // Creation Info for a VkInstance (Vulkan Instance)
-    VkInstanceCreateInfo createInfo = {};                       // We dont necessarily know what type of info is created. This enum is basically what its type is.
-    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;  // createInfo.pNext is for additional structs and information parameters, stype is structure type.
+    VkInstanceCreateInfo createInfo = {};
+    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
+    // Validation layers
+    std::vector<const char*> validationLayers = {"VK_LAYER_KHRONOS_validation"};
     if (validation.getValidationLayerState()) {
+        createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+        createInfo.ppEnabledLayerNames = validationLayers.data();
+
+        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
         validation.populateDebugMessengerCreateInfo(debugCreateInfo);
-        createInfo.pNext = &debugCreateInfo;  // Link debugCreateInfo to createInfo
+        createInfo.pNext = &debugCreateInfo;  // Chain debug messenger create info
+    } else {
+        createInfo.enabledLayerCount = 0;
+        createInfo.ppEnabledLayerNames = nullptr;
     }
 
-    // Create a list to hold instance extensions
-    std::vector<const char*> instanceExtensions = std::vector<const char*>();
-
-    uint32_t glfwExtensionCount = 0;                            // glfw may require multiple extensions.
-    const char** glfwExtensions;                                // Extensions passed as array of cstrings, so need pointer (the array) to pointer.
-    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount); // get glfw extensions
-    
-    // add glfw extensions to list of extensions
-    for (size_t i = 0; i < glfwExtensionCount; i++)
-    {
-        instanceExtensions.push_back(glfwExtensions[i]);
-    }
-
-    // check instance extensions supported...
-    if (!checkInstanceExtensionSupport(&instanceExtensions))
-    {
-        throw std::runtime_error ("vkInstance does not support requires extensions!");
-    }
-    
-
-    createInfo.enabledExtensionCount = static_cast<uint32_t> (instanceExtensions.size());
+    // Extensions required by GLFW and potentially by the validation layers
+    uint32_t glfwExtensionCount = 0;
+    const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+    std::vector<const char*> instanceExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
     createInfo.ppEnabledExtensionNames = instanceExtensions.data();
 
-    // TODO: Set up validation layers that instance will use.
-    createInfo.enabledLayerCount = 0;
-    //createInfo.ppEnabledExtensionNames = nullptr;
+    // Check instance extensions support
+    if (!checkInstanceExtensionSupport(&instanceExtensions)) {
+        throw std::runtime_error("Vulkan Instance does not support required extensions!");
+    }
 
-    // Create Instance
-    VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
-    if (result != VK_SUCCESS) {
-        std::string errorMsg = "Failed to create a Vulkan Instance. Error code: " + std::to_string(result);
-        throw std::runtime_error(errorMsg);
+    // Create the Vulkan instance
+    if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
+        throw std::runtime_error("Failed to create Vulkan instance!");
     }
 }
+
 
 
 bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *checkExtensions)
@@ -134,5 +125,5 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
 }
 
 void VulkanRenderer::setValidationEnabled(){
-    validation.setValidationLayerState();
+    validation.setValidationLayerState(true);
 }

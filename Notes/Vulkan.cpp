@@ -29,6 +29,12 @@ VK_EXT_surface_maintenance1: This extension provides maintenance functionality f
 VK_KHR_portability_enumeration: This extension provides a mechanism for querying whether an object created by one Vulkan implementation can be used with another implementation.
 VK_LUNARG_direct_driver_loading: This extension provides direct driver loading support.
 
+Swapchain modes:
+VK_PRESENT_MODE_IMMEDIATE_KHR => Surface image will be replaced immediately after the next image.
+VK_PRESENT_MODE_MAILBOX_KHR => Images ready to present are added to a queue of size 1 as tripple buffer.
+VK_PRESENT_MODE_FIFO_KHR => Images are added to a queue of certain size. First in first out principle.
+VK_PRESENT_MODE_FIFO_RELAXEd_KHR => As soon as queue is empty, it will start acting like immediate mode. 
+
 -------------------------
 
     Vulkan Instance - Vulkan context
@@ -93,6 +99,25 @@ VK_LUNARG_direct_driver_loading: This extension provides direct driver loading s
     VK_LAYER_LUNARG - validates swapchain func. Layers are similar to extensions but not in core Vulkan code. Must be acquired from third parties. LunarG has some validation layers.
     Reporting validation error should also require another extension. 
     Validation layers are now inserted into logical devices.
+
+    DoubleBuffer -------------
+    Swapchain: Complex Object that handles the retrieval and updating of images being displayed, or yet to be displayed.
+    Surface: An interface between the window and the image on the swapchain between GLFW and Vulkan defined image on Swapchain.
+    glfwCreateWindowSurface
+    Presentation queue will help us swap our rendered image to the surface.
+    Swapchain is a group of images prepared for display.
+
+    - Surface Capabilities - image size.
+    - Surface Format - image format.
+    - Presentation Mode - The order and timing of images.
+        - 4 presentation modes, 2 of them obsolete due to tearing.
+        - At any one time, there will be one image drawn to the screen.
+
+    ImageView shall act as an interface to draw the image.
+
+
+
+    
 
     
 

@@ -125,10 +125,24 @@ CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hakan/Desktop/Projects/C++/Vulkan/src/queueManager.cpp -o CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.s
 
+CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
+CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o: ../src/vulkanValidation.cpp
+CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanValidation.cpp
+
+CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanValidation.cpp > CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.i
+
+CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanValidation.cpp -o CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.s
+
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: ../src/vulkanRenderer.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.s: cmake_force
 CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/window.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.i: cmake_force
@@ -159,6 +173,7 @@ Vulkan__Renderer_OBJECTS = \
 "CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o" \
+"CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o"
 
@@ -169,13 +184,14 @@ Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o
+Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/build.make
 Vulkan-Renderer: /usr/lib/x86_64-linux-gnu/libvulkan.so
 Vulkan-Renderer: /usr/lib/x86_64-linux-gnu/libglfw.so.3.3
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Vulkan-Renderer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Vulkan-Renderer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Vulkan-Renderer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

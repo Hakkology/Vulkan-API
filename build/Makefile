@@ -249,6 +249,30 @@ src/vulkanUtils.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.s
 .PHONY : src/vulkanUtils.cpp.s
 
+src/vulkanValidation.o: src/vulkanValidation.cpp.o
+.PHONY : src/vulkanValidation.o
+
+# target to build an object file
+src/vulkanValidation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o
+.PHONY : src/vulkanValidation.cpp.o
+
+src/vulkanValidation.i: src/vulkanValidation.cpp.i
+.PHONY : src/vulkanValidation.i
+
+# target to preprocess a source file
+src/vulkanValidation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.i
+.PHONY : src/vulkanValidation.cpp.i
+
+src/vulkanValidation.s: src/vulkanValidation.cpp.s
+.PHONY : src/vulkanValidation.s
+
+# target to generate assembly for a file
+src/vulkanValidation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.s
+.PHONY : src/vulkanValidation.cpp.s
+
 src/window.o: src/window.cpp.o
 .PHONY : src/window.o
 
@@ -297,6 +321,9 @@ help:
 	@echo "... src/vulkanUtils.o"
 	@echo "... src/vulkanUtils.i"
 	@echo "... src/vulkanUtils.s"
+	@echo "... src/vulkanValidation.o"
+	@echo "... src/vulkanValidation.i"
+	@echo "... src/vulkanValidation.s"
 	@echo "... src/window.o"
 	@echo "... src/window.i"
 	@echo "... src/window.s"

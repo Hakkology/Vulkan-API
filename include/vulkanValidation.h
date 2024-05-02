@@ -14,7 +14,7 @@ public:
     void cleanup(VkInstance instance);
 
     bool getValidationLayerState();
-    void setValidationLayerState();
+    void setValidationLayerState(bool state);
 
 private:
     bool enableValidationLayers = false;

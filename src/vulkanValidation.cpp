@@ -43,8 +43,8 @@ bool VulkanValidation::getValidationLayerState(){
     return enableValidationLayers;
 }
 
-void VulkanValidation::setValidationLayerState(){
-    enableValidationLayers = true;
+void VulkanValidation::setValidationLayerState(bool state) {
+    enableValidationLayers = state;
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL VulkanValidation::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {

@@ -168,6 +168,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o: \
  /usr/include/vk_video/vulkan_video_codec_h265std.h \
  /usr/include/vk_video/vulkan_video_codec_h264std_decode.h \
  /usr/include/vk_video/vulkan_video_codec_h265std_decode.h \
- /usr/include/GL/gl.h /usr/include/GL/glext.h \
- /usr/include/KHR/khrplatform.h \
+ /usr/include/vk_video/vulkan_video_codec_av1std.h \
+ /usr/include/vk_video/vulkan_video_codec_av1std_decode.h \
+ /usr/include/vk_video/vulkan_video_codec_av1std.h /usr/include/GL/gl.h \
+ /usr/include/GL/glext.h /usr/include/KHR/khrplatform.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h

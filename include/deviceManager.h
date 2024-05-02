@@ -1,4 +1,6 @@
 // DeviceManager.h
+#pragma once
+
 #include "queueManager.h"
 #include "vulkanUtils.h"
 
