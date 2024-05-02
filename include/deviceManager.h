@@ -1,6 +1,7 @@
 // DeviceManager.h
 #pragma once
 
+#include <set>
 #include "queueManager.h"
 #include "vulkanUtils.h"
 
@@ -17,4 +18,5 @@ private:
     VkDevice logicalDevice;
     bool checkDeviceSuitable(VkPhysicalDevice device, const QueueFamilyIndices &indices);
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface);
 };

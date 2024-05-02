@@ -18,6 +18,7 @@ VkQueue QueueManager::getGraphicsQueue() const {
 void QueueManager::createQueues(VkDevice logicalDevice, QueueFamilyIndices indices) {
     // Assuming there's only one graphics queue to be initialized
     vkGetDeviceQueue(logicalDevice, indices.graphicsFamily, 0, &graphicsQueue);
+    vkGetDeviceQueue(logicalDevice, indices.presentationFamily, 0, &presentationQueue);
 }
 
 

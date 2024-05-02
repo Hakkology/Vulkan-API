@@ -19,6 +19,9 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         }
         deviceManager.pickPhysicalDevice(instance);
         deviceManager.createLogicalDevice(); 
+        
+        surfaceManager = new SurfaceManager(instance, window);
+
         queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
     } catch(const std::runtime_error &e) {
         printf("ERROR: %s\n", e.what());
@@ -36,11 +39,18 @@ void VulkanRenderer::terminate(){
     if (deviceManager.getLogicalDevice() != VK_NULL_HANDLE) {
         vkDestroyDevice(deviceManager.getLogicalDevice(), nullptr);
     }
+
     if (instance != VK_NULL_HANDLE) {
         vkDestroyInstance(instance, nullptr);
     }
+
     if (validation.getValidationLayerState()) {
         validation.cleanup(instance);
+    }
+
+    if (surfaceManager) {
+        delete surfaceManager;
+        surfaceManager = nullptr;
     }
 }
 
@@ -100,6 +110,11 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
     // Createa a list of VkExtesionProperties using count
     std::vector<VkExtensionProperties> extensions(extensionCount);
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
+
+    std::cout << "Supported Extensions (" << extensionCount << "):" << std::endl;
+    for (const auto& extension : extensions) {
+        std::cout << "\t" << extension.extensionName << std::endl;
+    }
 
     // Check if given extensions are in list of available extensions
     for (const auto &checkExtension: *checkExtensions)

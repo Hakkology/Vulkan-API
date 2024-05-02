@@ -17,9 +17,11 @@ public:
     void init(VkDevice logicalDevice, VkPhysicalDevice physicalDevice);
     VkQueue getGraphicsQueue() const;
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device) const;
+    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) const;
 
 private:
     VkQueue graphicsQueue;
+    VkQueue presentationQueue;
     void createQueues(VkDevice logicalDevice, QueueFamilyIndices indices);
 
 };

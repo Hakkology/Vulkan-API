@@ -26,20 +26,36 @@ void DeviceManager::pickPhysicalDevice(VkInstance instance) {
 void DeviceManager::createLogicalDevice() {
     auto indices = VulkanUtils::findQueueFamilies(physicalDevice);
 
-    float queuePriority = 1.0f;
-    VkDeviceQueueCreateInfo queueCreateInfo{};
-    queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-    queueCreateInfo.queueFamilyIndex = indices.graphicsFamily;
-    queueCreateInfo.queueCount = 1;
-    queueCreateInfo.pQueuePriorities = &queuePriority;
+    // Vector for queue creation information, set for family indices.
+    // Since graphics and presentation queue are basically the same, we cannot have both of them available at the same time.
+    // We will choose presentation if available, otherwise graphics queue will do.
+    // Set makes sure that only one item is available here.
+    std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+    std::set<int> queueFamilyIndices = {indices.graphicsFamily, indices.presentationFamily};
 
+    for (int queueFamilyIndex :  queueFamilyIndices)
+    {
+        float queuePriority = 1.0f;
+        VkDeviceQueueCreateInfo queueCreateInfo{};
+        queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+        queueCreateInfo.queueFamilyIndex = queueFamilyIndex;                                        // Index of the family to create a queue from.
+        queueCreateInfo.queueCount = 1;                                                             // Number of queues to create.
+        queueCreateInfo.pQueuePriorities = &queuePriority;       
+        
+        queueCreateInfos.push_back(queueCreateInfo);                                                // Vulkan wants to know how to handle multiple queues.
+    }
+    
     VkPhysicalDeviceFeatures deviceFeatures{};
     
     VkDeviceCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    createInfo.pQueueCreateInfos = &queueCreateInfo;
-    createInfo.queueCreateInfoCount = 1;
-    createInfo.pEnabledFeatures = &deviceFeatures;
+    createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());               // Number of queue create infos.
+    createInfo.pQueueCreateInfos = queueCreateInfos.data();                                         // List of queue create infos
+    createInfo.pEnabledFeatures = &deviceFeatures;                                                  // may be deleted.
+    createInfo.enabledExtensionCount = 0;                                                           // Number of enabled logical device extensions.
+    createInfo.ppEnabledExtensionNames = nullptr;                                                   // List of enabled logical device extensions.
+
+    
 
     if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &logicalDevice) != VK_SUCCESS) {
         throw std::runtime_error("Failed to create logical device!");

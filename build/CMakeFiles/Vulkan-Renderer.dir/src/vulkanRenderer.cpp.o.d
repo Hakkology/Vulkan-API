@@ -174,4 +174,5 @@ CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/deviceManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/surfaceManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanValidation.h

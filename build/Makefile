@@ -201,6 +201,30 @@ src/queueManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.s
 .PHONY : src/queueManager.cpp.s
 
+src/surfaceManager.o: src/surfaceManager.cpp.o
+.PHONY : src/surfaceManager.o
+
+# target to build an object file
+src/surfaceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.o
+.PHONY : src/surfaceManager.cpp.o
+
+src/surfaceManager.i: src/surfaceManager.cpp.i
+.PHONY : src/surfaceManager.i
+
+# target to preprocess a source file
+src/surfaceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.i
+.PHONY : src/surfaceManager.cpp.i
+
+src/surfaceManager.s: src/surfaceManager.cpp.s
+.PHONY : src/surfaceManager.s
+
+# target to generate assembly for a file
+src/surfaceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.s
+.PHONY : src/surfaceManager.cpp.s
+
 src/vulkanRenderer.o: src/vulkanRenderer.cpp.o
 .PHONY : src/vulkanRenderer.o
 
@@ -315,6 +339,9 @@ help:
 	@echo "... src/queueManager.o"
 	@echo "... src/queueManager.i"
 	@echo "... src/queueManager.s"
+	@echo "... src/surfaceManager.o"
+	@echo "... src/surfaceManager.i"
+	@echo "... src/surfaceManager.s"
 	@echo "... src/vulkanRenderer.o"
 	@echo "... src/vulkanRenderer.i"
 	@echo "... src/vulkanRenderer.s"

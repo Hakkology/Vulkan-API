@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o"

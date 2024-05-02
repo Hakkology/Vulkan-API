@@ -4,13 +4,16 @@
 
 #include <stdexcept>
 #include <vector>
+#include <set>
 #include <string.h>
 #include <iostream>
 #include <GLFW/glfw3.h>
 
 #include "deviceManager.h"
 #include "queueManager.h"
+#include "surfaceManager.h"
 #include "vulkanValidation.h"
+
 
 class VulkanRenderer {
 public:
@@ -31,6 +34,7 @@ private:
 
     DeviceManager deviceManager;
     QueueManager queueManager;
+    SurfaceManager* surfaceManager;
     VulkanValidation validation;
 
     // Create functions
