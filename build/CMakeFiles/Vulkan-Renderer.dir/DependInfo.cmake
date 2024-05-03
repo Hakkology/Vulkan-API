@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hakan/Desktop/Projects/C++/Vulkan/src/main.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o.d"
   "/home/hakan/Desktop/Projects/C++/Vulkan/src/queueManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o.d"
   "/home/hakan/Desktop/Projects/C++/Vulkan/src/surfaceManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.o.d"
+  "/home/hakan/Desktop/Projects/C++/Vulkan/src/swapChainManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.o.d"
   "/home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o.d"
   "/home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanUtils.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o.d"
   "/home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanValidation.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o.d"

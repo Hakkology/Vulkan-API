@@ -8,13 +8,19 @@
 
 class SwapChainManager {
 public:
-    SwapChainManager(VkDevice device, VkSurfaceKHR surface);
+    SwapChainManager(VkPhysicalDevice device, VkSurfaceKHR surface)
+    : m_device(device), m_surface(surface) {};
     ~SwapChainManager();
 
     SwapChainDetails getSwapChainDetails(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
-    void createSwapChain(VkDevice device, VkSurfaceKHR surface, const SwapChainDetails& details);
-    void cleanupSwapChain(VkDevice device);  // Assuming you need to clean up resources later
+
+    // will implement later:
+    // void createSwapChain(VkDevice device, VkSurfaceKHR surface, const SwapChainDetails& details);
+    // void cleanupSwapChain(VkDevice device);  // Assuming you need to clean up resources later
 
 private:
-    void querySwapChainDetails();
+    VkPhysicalDevice m_device;
+    VkSurfaceKHR m_surface;
+    // will implement later:
+    //void querySwapChainDetails();
 };

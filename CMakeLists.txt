@@ -17,6 +17,7 @@ add_executable(Vulkan-Renderer
     src/vulkanUtils.cpp
     src/vulkanValidation.cpp
     src/surfaceManager.cpp
+    src/swapChainManager.cpp
     src/deviceManager.cpp
     src/queueManager.cpp
     src/vulkanRenderer.cpp 

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <set>
+#include "swapChainManager.h"
 #include "queueManager.h"
 #include "vulkanUtils.h"
 

@@ -45,22 +45,42 @@ CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o: \
  /usr/include/c++/11/bits/stl_multiset.h \
  /usr/include/c++/11/bits/range_access.h \
  /usr/include/c++/11/bits/erase_if.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
- /usr/include/c++/11/stdexcept /usr/include/c++/11/exception \
- /usr/include/c++/11/bits/exception_ptr.h \
- /usr/include/c++/11/bits/cxxabi_init_exception.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/swapChainManager.h \
+ /usr/include/vulkan/vulkan.h /usr/include/vulkan/vk_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+ /usr/include/x86_64-linux-gnu/bits/types.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+ /usr/include/x86_64-linux-gnu/bits/time64.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+ /usr/include/vulkan/vulkan_core.h \
+ /usr/include/vk_video/vulkan_video_codec_h264std.h \
+ /usr/include/vk_video/vulkan_video_codecs_common.h \
+ /usr/include/vk_video/vulkan_video_codec_h264std_encode.h \
+ /usr/include/vk_video/vulkan_video_codec_h264std.h \
+ /usr/include/vk_video/vulkan_video_codec_h265std.h \
+ /usr/include/vk_video/vulkan_video_codec_h265std_encode.h \
+ /usr/include/vk_video/vulkan_video_codec_h265std.h \
+ /usr/include/vk_video/vulkan_video_codec_h264std_decode.h \
+ /usr/include/vk_video/vulkan_video_codec_h265std_decode.h \
+ /usr/include/vk_video/vulkan_video_codec_av1std.h \
+ /usr/include/vk_video/vulkan_video_codec_av1std_decode.h \
+ /usr/include/vk_video/vulkan_video_codec_av1std.h \
+ /usr/include/GLFW/glfw3.h /usr/include/GL/gl.h /usr/include/GL/glext.h \
+ /usr/include/KHR/khrplatform.h /usr/include/c++/11/stdexcept \
+ /usr/include/c++/11/exception /usr/include/c++/11/bits/exception_ptr.h \
+ /usr/include/c++/11/bits/cxxabi_init_exception.h \
  /usr/include/c++/11/typeinfo /usr/include/c++/11/bits/hash_bytes.h \
  /usr/include/c++/11/bits/nested_exception.h /usr/include/c++/11/string \
  /usr/include/c++/11/bits/stringfwd.h \
  /usr/include/c++/11/bits/char_traits.h \
  /usr/include/c++/11/bits/postypes.h /usr/include/c++/11/cwchar \
- /usr/include/wchar.h \
- /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
- /usr/include/x86_64-linux-gnu/bits/floatn.h \
+ /usr/include/wchar.h /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
@@ -68,14 +88,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/c++/11/cstdint \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/types.h \
- /usr/include/x86_64-linux-gnu/bits/typesizes.h \
- /usr/include/x86_64-linux-gnu/bits/time64.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/c++/11/bits/localefwd.h \
+ /usr/include/c++/11/cstdint /usr/include/c++/11/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h \
  /usr/include/c++/11/clocale /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/11/iosfwd \
@@ -139,14 +152,10 @@ CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o: \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/11/bits/charconv.h \
- /usr/include/c++/11/bits/basic_string.tcc /usr/include/c++/11/vector \
- /usr/include/c++/11/bits/stl_uninitialized.h \
- /usr/include/c++/11/bits/stl_vector.h \
- /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc /usr/include/string.h \
- /usr/include/strings.h /usr/include/c++/11/iostream \
- /usr/include/c++/11/ostream /usr/include/c++/11/ios \
- /usr/include/c++/11/bits/ios_base.h \
+ /usr/include/c++/11/bits/basic_string.tcc \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h \
+ /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
+ /usr/include/c++/11/ios /usr/include/c++/11/bits/ios_base.h \
  /usr/include/c++/11/bits/locale_classes.h \
  /usr/include/c++/11/bits/locale_classes.tcc \
  /usr/include/c++/11/system_error \
@@ -161,20 +170,10 @@ CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o: \
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc /usr/include/GLFW/glfw3.h \
- /usr/include/vulkan/vulkan.h /usr/include/vulkan/vk_platform.h \
- /usr/include/vulkan/vulkan_core.h \
- /usr/include/vk_video/vulkan_video_codec_h264std.h \
- /usr/include/vk_video/vulkan_video_codecs_common.h \
- /usr/include/vk_video/vulkan_video_codec_h264std_encode.h \
- /usr/include/vk_video/vulkan_video_codec_h264std.h \
- /usr/include/vk_video/vulkan_video_codec_h265std.h \
- /usr/include/vk_video/vulkan_video_codec_h265std_encode.h \
- /usr/include/vk_video/vulkan_video_codec_h265std.h \
- /usr/include/vk_video/vulkan_video_codec_h264std_decode.h \
- /usr/include/vk_video/vulkan_video_codec_h265std_decode.h \
- /usr/include/vk_video/vulkan_video_codec_av1std.h \
- /usr/include/vk_video/vulkan_video_codec_av1std_decode.h \
- /usr/include/vk_video/vulkan_video_codec_av1std.h /usr/include/GL/gl.h \
- /usr/include/GL/glext.h /usr/include/KHR/khrplatform.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h
+ /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/vector \
+ /usr/include/c++/11/bits/stl_uninitialized.h \
+ /usr/include/c++/11/bits/stl_vector.h \
+ /usr/include/c++/11/bits/stl_bvector.h \
+ /usr/include/c++/11/bits/vector.tcc \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
+ /usr/include/string.h /usr/include/strings.h

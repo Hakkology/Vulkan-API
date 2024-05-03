@@ -195,8 +195,9 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/vk_video/vulkan_video_codec_av1std.h /usr/include/GL/gl.h \
  /usr/include/GL/glext.h /usr/include/KHR/khrplatform.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/deviceManager.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/swapChainManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/surfaceManager.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanValidation.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/include/window.h

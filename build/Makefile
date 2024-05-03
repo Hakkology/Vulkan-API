@@ -225,6 +225,30 @@ src/surfaceManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.s
 .PHONY : src/surfaceManager.cpp.s
 
+src/swapChainManager.o: src/swapChainManager.cpp.o
+.PHONY : src/swapChainManager.o
+
+# target to build an object file
+src/swapChainManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.o
+.PHONY : src/swapChainManager.cpp.o
+
+src/swapChainManager.i: src/swapChainManager.cpp.i
+.PHONY : src/swapChainManager.i
+
+# target to preprocess a source file
+src/swapChainManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.i
+.PHONY : src/swapChainManager.cpp.i
+
+src/swapChainManager.s: src/swapChainManager.cpp.s
+.PHONY : src/swapChainManager.s
+
+# target to generate assembly for a file
+src/swapChainManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.s
+.PHONY : src/swapChainManager.cpp.s
+
 src/vulkanRenderer.o: src/vulkanRenderer.cpp.o
 .PHONY : src/vulkanRenderer.o
 
@@ -342,6 +366,9 @@ help:
 	@echo "... src/surfaceManager.o"
 	@echo "... src/surfaceManager.i"
 	@echo "... src/surfaceManager.s"
+	@echo "... src/swapChainManager.o"
+	@echo "... src/swapChainManager.i"
+	@echo "... src/swapChainManager.s"
 	@echo "... src/vulkanRenderer.o"
 	@echo "... src/vulkanRenderer.i"
 	@echo "... src/vulkanRenderer.s"

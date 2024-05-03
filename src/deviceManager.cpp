@@ -85,23 +85,27 @@ VkDevice DeviceManager::getLogicalDevice() const {
 }
 
 bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
-
-    // Get all indices.
+    // Retrieve queue family indices that are necessary for device suitability
     QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForSurface(device, surface);
 
-    // Check if extensions are supported.
+    // Check for the support of necessary device extensions
     bool extensionsSupported = checkDeviceExtensionSupport(device);
+
+    // Create an instance of SwapChainManager and retrieve swap chain details
+    SwapChainManager swapChainManager(device, surface);
+    SwapChainDetails swapChainDetails = swapChainManager.getSwapChainDetails(device, surface);
+
+    // Check swap chain adequacy
+    bool swapChainAdequate = !swapChainDetails.formats.empty() && !swapChainDetails.presentationModes.empty();
 
     std::cout << "Checking device suitability: " << std::endl;
     std::cout << "Queue Families - Graphics: " << indices.graphicsFamily;
     std::cout << ", Presentation: " << indices.presentationFamily << std::endl;
     std::cout << "Extensions Supported: " << (extensionsSupported ? "Yes" : "No") << std::endl;
+    std::cout << "Swap Chain Adequate: " << (swapChainAdequate ? "Yes" : "No") << std::endl;
 
-    // Check if swapchain is correct.
-    bool swapChainValid = false;
-    //SwapChainDetails SwapChainDetails = SwapChainManager::getSwapChainDetails(physicalDevice, surface,)
-
-    return indices.isValid() && extensionsSupported;
+    // Determine if the device is suitable
+    return indices.isValid() && extensionsSupported && swapChainAdequate;
 }
 
 bool DeviceManager::checkDeviceExtensionSupport(VkPhysicalDevice device) {
