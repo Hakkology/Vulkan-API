@@ -15,10 +15,10 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 add_executable(Vulkan-Renderer
     src/main.cpp 
     src/vulkanUtils.cpp
+    src/vulkanValidation.cpp
+    src/surfaceManager.cpp
     src/deviceManager.cpp
     src/queueManager.cpp
-    src/surfaceManager.cpp
-    src/vulkanValidation.cpp
     src/vulkanRenderer.cpp 
     src/window.cpp
 )

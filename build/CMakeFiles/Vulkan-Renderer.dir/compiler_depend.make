@@ -413,6 +413,29 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: ../src/main.cpp \
   /usr/include/c++/11/bits/erase_if.h \
   /usr/include/string.h \
   /usr/include/strings.h \
+  /usr/include/c++/11/memory \
+  /usr/include/c++/11/bits/stl_tempbuf.h \
+  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/11/bits/align.h \
+  /usr/include/c++/11/bit \
+  /usr/include/c++/11/bits/uses_allocator.h \
+  /usr/include/c++/11/bits/unique_ptr.h \
+  /usr/include/c++/11/utility \
+  /usr/include/c++/11/bits/stl_relops.h \
+  /usr/include/c++/11/tuple \
+  /usr/include/c++/11/array \
+  /usr/include/c++/11/bits/invoke.h \
+  /usr/include/c++/11/bits/shared_ptr.h \
+  /usr/include/c++/11/bits/shared_ptr_base.h \
+  /usr/include/c++/11/bits/allocated_ptr.h \
+  /usr/include/c++/11/bits/refwrap.h \
+  /usr/include/c++/11/ext/concurrence.h \
+  /usr/include/c++/11/bits/shared_ptr_atomic.h \
+  /usr/include/c++/11/bits/atomic_base.h \
+  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/11/backward/auto_ptr.h \
+  /usr/include/c++/11/pstl/glue_memory_defs.h \
+  /usr/include/c++/11/pstl/execution_defs.h \
   /usr/include/GLFW/glfw3.h \
   /usr/include/vulkan/vulkan.h \
   /usr/include/vulkan/vk_platform.h \
@@ -1021,6 +1044,29 @@ CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: ../src/vulkanRenderer.c
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/bits/istream.tcc \
+  /usr/include/c++/11/memory \
+  /usr/include/c++/11/bits/stl_tempbuf.h \
+  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/11/bits/align.h \
+  /usr/include/c++/11/bit \
+  /usr/include/c++/11/bits/uses_allocator.h \
+  /usr/include/c++/11/bits/unique_ptr.h \
+  /usr/include/c++/11/utility \
+  /usr/include/c++/11/bits/stl_relops.h \
+  /usr/include/c++/11/tuple \
+  /usr/include/c++/11/array \
+  /usr/include/c++/11/bits/invoke.h \
+  /usr/include/c++/11/bits/shared_ptr.h \
+  /usr/include/c++/11/bits/shared_ptr_base.h \
+  /usr/include/c++/11/bits/allocated_ptr.h \
+  /usr/include/c++/11/bits/refwrap.h \
+  /usr/include/c++/11/ext/concurrence.h \
+  /usr/include/c++/11/bits/shared_ptr_atomic.h \
+  /usr/include/c++/11/bits/atomic_base.h \
+  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/11/backward/auto_ptr.h \
+  /usr/include/c++/11/pstl/glue_memory_defs.h \
+  /usr/include/c++/11/pstl/execution_defs.h \
   /usr/include/GLFW/glfw3.h \
   /usr/include/vulkan/vulkan.h \
   /usr/include/vulkan/vk_platform.h \
@@ -1611,7 +1657,21 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 ../src/surfaceManager.cpp:
 
+/usr/include/c++/11/bits/shared_ptr_atomic.h:
+
+/usr/include/c++/11/bits/refwrap.h:
+
 ../include/vulkanValidation.h:
+
+/usr/include/c++/11/array:
+
+/usr/include/c++/11/bits/stl_relops.h:
+
+/usr/include/c++/11/bits/uses_allocator.h:
+
+/usr/include/c++/11/bits/stl_raw_storage_iter.h:
+
+/usr/include/c++/11/memory:
 
 ../include/vulkanRenderer.h:
 
@@ -1645,6 +1705,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/c++/11/bits/basic_ios.h:
 
+/usr/include/c++/11/bits/atomic_lockfree_defines.h:
+
 /usr/include/c++/11/bits/streambuf.tcc:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
@@ -1652,6 +1714,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 /usr/include/c++/11/bits/locale_classes.tcc:
 
 /usr/include/c++/11/bits/locale_classes.h:
+
+/usr/include/c++/11/bits/unique_ptr.h:
 
 /usr/include/c++/11/ostream:
 
@@ -1667,7 +1731,11 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/c++/11/bits/stl_vector.h:
 
+/usr/include/c++/11/backward/auto_ptr.h:
+
 /usr/include/c++/11/bits/stl_uninitialized.h:
+
+/usr/include/c++/11/bits/align.h:
 
 /usr/include/c++/11/vector:
 
@@ -1687,6 +1755,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
 
+/usr/include/c++/11/utility:
+
 /usr/include/errno.h:
 
 ../src/vulkanUtils.cpp:
@@ -1704,6 +1774,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+
+/usr/include/c++/11/bits/shared_ptr.h:
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
@@ -1839,13 +1911,19 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/c++/11/debug/assertions.h:
 
+/usr/include/c++/11/pstl/execution_defs.h:
+
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/c++/11/bits/stl_construct.h:
 
 /usr/include/features.h:
 
+/usr/include/c++/11/bits/atomic_base.h:
+
 /usr/include/c++/11/ext/numeric_traits.h:
+
+/usr/include/c++/11/bit:
 
 /usr/include/c++/11/cstdlib:
 
@@ -1885,11 +1963,15 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
+/usr/include/c++/11/tuple:
+
 /usr/include/c++/11/bits/stl_tree.h:
 
 /usr/include/c++/11/type_traits:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
+
+/usr/include/c++/11/pstl/glue_memory_defs.h:
 
 /usr/include/c++/11/ext/type_traits.h:
 
@@ -1917,6 +1999,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/c++/11/bits/postypes.h:
 
+/usr/include/c++/11/bits/invoke.h:
+
 /usr/include/x86_64-linux-gnu/bits/timex.h:
 
 /usr/include/c++/11/bits/cxxabi_init_exception.h:
@@ -1934,6 +2018,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/include/c++/11/bits/stl_tempbuf.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
@@ -2013,6 +2099,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/c++/11/bits/cxxabi_forced.h:
 
+/usr/include/c++/11/ext/concurrence.h:
+
 /usr/include/x86_64-linux-gnu/c++/11/bits/gthr-default.h:
 
 /usr/include/c++/11/bits/cpp_type_traits.h:
@@ -2037,11 +2125,15 @@ CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o: ../src/window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
+/usr/include/c++/11/bits/allocated_ptr.h:
+
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/c++/11/ext/new_allocator.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/c++/11/bits/shared_ptr_base.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 

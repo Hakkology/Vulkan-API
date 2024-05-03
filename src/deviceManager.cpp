@@ -4,7 +4,7 @@ DeviceManager::DeviceManager() : physicalDevice(VK_NULL_HANDLE), logicalDevice(V
     // Constructor implementation
 }
 
-void DeviceManager::pickPhysicalDevice(VkInstance instance) {
+void DeviceManager::pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface) {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
 
@@ -21,7 +21,7 @@ void DeviceManager::pickPhysicalDevice(VkInstance instance) {
 
     // Iterate over all devices to find the first suitable one
     for (const auto& device : devices) {
-        if (checkDeviceSuitable(device)) {
+        if (checkDeviceSuitable(device, surface)) {
             physicalDevice = device;
             break;
         }
@@ -32,42 +32,47 @@ void DeviceManager::pickPhysicalDevice(VkInstance instance) {
     }
 }
 
-void DeviceManager::createLogicalDevice() {
-    auto indices = VulkanUtils::findQueueFamiliesForDevice(physicalDevice);
+void DeviceManager::createLogicalDevice(VkSurfaceKHR surface) {
+    QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForSurface(physicalDevice, surface);
 
-    // Vector for queue creation information, set for family indices.
-    // Since graphics and presentation queue are basically the same, we cannot have both of them available at the same time.
-    // We will choose presentation if available, otherwise graphics queue will do.
-    // Set makes sure that only one item is available here.
+    std::cout << "Using Graphics Family Index: " << indices.graphicsFamily << std::endl;
+    std::cout << "Using Presentation Family Index: " << indices.presentationFamily << std::endl;
+
+    // Collect unique queue family indices that are valid
+    std::set<int> uniqueQueueFamilies;
+    if (indices.graphicsFamily != -1) {
+        uniqueQueueFamilies.insert(indices.graphicsFamily);
+    }
+    if (indices.presentationFamily != -1) {
+        uniqueQueueFamilies.insert(indices.presentationFamily);
+    }
+
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-    std::set<int> queueFamilyIndices = {indices.graphicsFamily, indices.presentationFamily};
-
-    for (int queueFamilyIndex :  queueFamilyIndices)
-    {
-        float queuePriority = 1.0f;
+    float queuePriority = 1.0f;
+    for (int queueFamily : uniqueQueueFamilies) {
         VkDeviceQueueCreateInfo queueCreateInfo{};
         queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        queueCreateInfo.queueFamilyIndex = queueFamilyIndex;                                        // Index of the family to create a queue from.
-        queueCreateInfo.queueCount = 1;                                                             // Number of queues to create.
-        queueCreateInfo.pQueuePriorities = &queuePriority;       
-        
-        queueCreateInfos.push_back(queueCreateInfo);                                                // Vulkan wants to know how to handle multiple queues.
+        queueCreateInfo.queueFamilyIndex = queueFamily;                                         // Index of the family to create a queue from.
+        queueCreateInfo.queueCount = 1;                                                         // Number of queues to create
+        queueCreateInfo.pQueuePriorities = &queuePriority;                                      
+        queueCreateInfos.push_back(queueCreateInfo);                                            // Vulkan needs to know how to handle multiple queues.
+
+        std::cout << "Queue Create Info added for family index: " << queueFamily << std::endl;
     }
-    
+
     VkPhysicalDeviceFeatures deviceFeatures{};
-    
+
     VkDeviceCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());               // Number of queue create infos.
-    createInfo.pQueueCreateInfos = queueCreateInfos.data();                                         // List of queue create infos
-    //createInfo.pEnabledFeatures = &deviceFeatures;                                                  // may be deleted.
-    createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());                                                           // Number of enabled logical device extensions.
-    createInfo.ppEnabledExtensionNames = deviceExtensions.data();                                                   // List of enabled logical device extensions.
-
-    
+    createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());           // Number of queue create infos.
+    createInfo.pQueueCreateInfos = queueCreateInfos.data();                                     // List of queue create infos.
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());          // Number of enabled logical devices.
+    createInfo.ppEnabledExtensionNames = deviceExtensions.data();                               // List of enabled logical device extensions.
 
     if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &logicalDevice) != VK_SUCCESS) {
         throw std::runtime_error("Failed to create logical device!");
+    } else {
+        std::cout << "Logical device created successfully." << std::endl;
     }
 }
 
@@ -79,14 +84,22 @@ VkDevice DeviceManager::getLogicalDevice() const {
     return logicalDevice;
 }
 
-bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device) {
+bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
 
-    QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForDevice(device);
+    // Get all indices.
+    QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForSurface(device, surface);
+
+    // Check if extensions are supported.
     bool extensionsSupported = checkDeviceExtensionSupport(device);
 
     std::cout << "Checking device suitability: " << std::endl;
-    std::cout << "Queue Families - Graphics: " << indices.graphicsFamily << ", Presentation: " << indices.presentationFamily << std::endl;
-    std::cout << "Extensions Supported: " << extensionsSupported << std::endl;
+    std::cout << "Queue Families - Graphics: " << indices.graphicsFamily;
+    std::cout << ", Presentation: " << indices.presentationFamily << std::endl;
+    std::cout << "Extensions Supported: " << (extensionsSupported ? "Yes" : "No") << std::endl;
+
+    // Check if swapchain is correct.
+    bool swapChainValid = false;
+    //SwapChainDetails SwapChainDetails = SwapChainManager::getSwapChainDetails(physicalDevice, surface,)
 
     return indices.isValid() && extensionsSupported;
 }
@@ -98,11 +111,8 @@ bool DeviceManager::checkDeviceExtensionSupport(VkPhysicalDevice device) {
     vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
     // no extension, return.
-    if (extensionCount == 0)
-    {
-        return false;
-    }
-    
+    if (extensionCount == 0) return false;
+
     // Populate list of extensions.
     std::vector<VkExtensionProperties> extensions(extensionCount);
     vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, extensions.data());

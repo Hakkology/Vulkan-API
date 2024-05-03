@@ -10,12 +10,18 @@ const std::vector<const char*> deviceExtensions = {
 };
 
 struct QueueFamilyIndices {
-    int graphicsFamily = -1;
-    int presentationFamily = -1;
+    int graphicsFamily = -1;                            // Graphics Queue Family location.
+    int presentationFamily = -1;                        // Presentation Queue Family location.
 
     bool isValid() const {
         return graphicsFamily >= 0 && presentationFamily >=0;
     }
+};
+
+struct SwapChainDetails{
+    VkSurfaceCapabilitiesKHR surfaceCapabilities;       // Surface Properties e.g. image size/extent.
+    std::vector<VkSurfaceFormatKHR> formats;            // Surface Image format e.g. RGBA and size of each colour.
+    std::vector<VkPresentModeKHR> presentationModes;    // How images should be presented to screen.
 };
 
 namespace VulkanUtils {

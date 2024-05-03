@@ -148,13 +148,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/deviceManager.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/queueManager.cpp",
+			"path" : "src/vulkanValidation.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -166,7 +160,13 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/vulkanValidation.cpp",
+			"path" : "src/deviceManager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/queueManager.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

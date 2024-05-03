@@ -7,29 +7,48 @@ VulkanRenderer::VulkanRenderer() {
 
 int VulkanRenderer::init(GLFWwindow* newWindow) {
     window = newWindow;
+    std::cout << "Starting initialization..." << std::endl;
 
+    // Initialize validation layer and debug messenger first if needed
     if (validation.getValidationLayerState()) {
+        std::cout << "Setting up debug messenger..." << std::endl;
         validation.setupDebugMessenger(instance);
     }
 
     try {
+        // Step 1: Create Vulkan instance
+        std::cout << "Creating Vulkan instance..." << std::endl;
         createInstance();
         if (validation.getValidationLayerState()) {
+            std::cout << "Setting up debug messenger post-instance creation..." << std::endl;
             validation.setupDebugMessenger(instance);
         }
-        deviceManager.pickPhysicalDevice(instance);
-        deviceManager.createLogicalDevice(); 
-        
-        surfaceManager = new SurfaceManager(instance, window);
 
+        // Step 2: Create surface
+        std::cout << "Creating surface..." << std::endl;
+        surfaceManager = std::make_unique<SurfaceManager>(instance, window);
+
+        // Step 3: Pick physical device
+        std::cout << "Picking physical device..." << std::endl;
+        deviceManager.pickPhysicalDevice(instance, surfaceManager->getSurface());
+
+        // Step 4: Create logical device
+        std::cout << "Creating logical device..." << std::endl;
+        deviceManager.createLogicalDevice(surfaceManager->getSurface()); 
+
+        // Step 5: Initialize queue manager
+        std::cout << "Initializing queue manager..." << std::endl;
         queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
+
     } catch(const std::runtime_error &e) {
-        printf("ERROR: %s\n", e.what());
+        std::cerr << "ERROR during initialization: " << e.what() << std::endl;
         return EXIT_FAILURE;
     }
 
+    std::cout << "Initialization successful" << std::endl;
     return 0;
 }
+
 
 VulkanRenderer::~VulkanRenderer() {
     // Destructor implementation (if needed)
@@ -38,21 +57,23 @@ VulkanRenderer::~VulkanRenderer() {
 void VulkanRenderer::terminate(){
     if (deviceManager.getLogicalDevice() != VK_NULL_HANDLE) {
         vkDestroyDevice(deviceManager.getLogicalDevice(), nullptr);
+        deviceManager.clearLogicalDevice(); // Ensure the handle is cleared
     }
 
-    if (instance != VK_NULL_HANDLE) {
-        vkDestroyInstance(instance, nullptr);
+    if (surfaceManager) {
+        surfaceManager.reset();
     }
 
     if (validation.getValidationLayerState()) {
         validation.cleanup(instance);
     }
 
-    if (surfaceManager) {
-        delete surfaceManager;
-        surfaceManager = nullptr;
+    if (instance != VK_NULL_HANDLE) {
+        vkDestroyInstance(instance, nullptr);
+        instance = VK_NULL_HANDLE; // Ensure the handle is cleared
     }
 }
+
 
 void VulkanRenderer::createInstance() {
     VkApplicationInfo appInfo = {};

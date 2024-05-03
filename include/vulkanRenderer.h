@@ -7,6 +7,7 @@
 #include <set>
 #include <string.h>
 #include <iostream>
+#include <memory>
 #include <GLFW/glfw3.h>
 
 #include "deviceManager.h"
@@ -34,7 +35,9 @@ private:
 
     DeviceManager deviceManager;
     QueueManager queueManager;
-    SurfaceManager* surfaceManager;
+    
+    std::unique_ptr<SurfaceManager> surfaceManager;
+
     VulkanValidation validation;
 
     // Create functions
