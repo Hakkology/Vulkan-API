@@ -49,9 +49,6 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -fsanitize=address -fno-omit-frame-pointer"
-				},
-				{
 					"fragment" : "-std=gnu++17"
 				}
 			],
@@ -94,10 +91,6 @@
 	{
 		"commandFragments" : 
 		[
-			{
-				"fragment" : "-fsanitize=address -fno-omit-frame-pointer",
-				"role" : "flags"
-			},
 			{
 				"fragment" : "",
 				"role" : "flags"

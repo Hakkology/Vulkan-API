@@ -93,6 +93,7 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
 
     VkSwapchainCreateInfoKHR swapChainCreateInfo = {};
     swapChainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+    swapChainCreateInfo.surface = surface;
     swapChainCreateInfo.imageFormat = surfaceFormat.format;                                     // Swapchain format
     swapChainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;                             // Swapchain color space
     swapChainCreateInfo.presentMode = presentMode;                                              // Swapchain presentation mode
