@@ -37,7 +37,8 @@ private:
     QueueManager queueManager;
     
     std::unique_ptr<SurfaceManager> surfaceManager;
-
+    std::unique_ptr<SwapChainManager> swapChainManager;
+    
     VulkanValidation validation;
 
     // Create functions

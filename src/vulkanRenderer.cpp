@@ -30,7 +30,7 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
 
         // Step 3: Pick physical device
         std::cout << "Picking physical device..." << std::endl;
-        deviceManager.pickPhysicalDevice(instance, surfaceManager->getSurface());
+        deviceManager.pickPhysicalDevice(instance, surfaceManager->getSurface(), window);
 
         // Step 4: Create logical device
         std::cout << "Creating logical device..." << std::endl;
@@ -39,6 +39,12 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         // Step 5: Initialize queue manager
         std::cout << "Initializing queue manager..." << std::endl;
         queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
+
+        // Step 6: Initialize and create swap chain
+        std::cout << "Creating swap chain..." << std::endl;
+        swapChainManager = std::make_unique<SwapChainManager>(deviceManager.getPhysicalDevice(), surfaceManager->getSurface(), window);
+        swapChainManager->createSwapChain(deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice(), surfaceManager->getSurface(), window, 
+        swapChainManager->getSwapChainDetails(deviceManager.getPhysicalDevice(), surfaceManager->getSurface()));
 
     } catch(const std::runtime_error &e) {
         std::cerr << "ERROR during initialization: " << e.what() << std::endl;
@@ -55,6 +61,12 @@ VulkanRenderer::~VulkanRenderer() {
 }
 
 void VulkanRenderer::terminate(){
+
+    if (swapChainManager) {
+        swapChainManager->cleanupSwapChain(deviceManager.getLogicalDevice());  
+        swapChainManager.reset();  // Reset the unique_ptr, effectively destroying the SwapChainManager
+    }
+
     if (deviceManager.getLogicalDevice() != VK_NULL_HANDLE) {
         vkDestroyDevice(deviceManager.getLogicalDevice(), nullptr);
         deviceManager.clearLogicalDevice(); // Ensure the handle is cleared

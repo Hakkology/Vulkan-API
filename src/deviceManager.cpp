@@ -4,7 +4,7 @@ DeviceManager::DeviceManager() : physicalDevice(VK_NULL_HANDLE), logicalDevice(V
     // Constructor implementation
 }
 
-void DeviceManager::pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface) {
+void DeviceManager::pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface, GLFWwindow* window) {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
 
@@ -21,7 +21,7 @@ void DeviceManager::pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface
 
     // Iterate over all devices to find the first suitable one
     for (const auto& device : devices) {
-        if (checkDeviceSuitable(device, surface)) {
+        if (checkDeviceSuitable(device, surface, window)) {
             physicalDevice = device;
             break;
         }
@@ -84,7 +84,7 @@ VkDevice DeviceManager::getLogicalDevice() const {
     return logicalDevice;
 }
 
-bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
+bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface, GLFWwindow* window) {
     // Retrieve queue family indices that are necessary for device suitability
     QueueFamilyIndices indices = VulkanUtils::findQueueFamiliesForSurface(device, surface);
 
@@ -92,7 +92,7 @@ bool DeviceManager::checkDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR su
     bool extensionsSupported = checkDeviceExtensionSupport(device);
 
     // Create an instance of SwapChainManager and retrieve swap chain details
-    SwapChainManager swapChainManager(device, surface);
+    SwapChainManager swapChainManager(device, surface, window);
     SwapChainDetails swapChainDetails = swapChainManager.getSwapChainDetails(device, surface);
 
     // Check swap chain adequacy
