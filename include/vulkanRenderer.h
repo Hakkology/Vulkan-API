@@ -38,12 +38,13 @@ private:
     
     std::unique_ptr<SurfaceManager> surfaceManager;
     std::unique_ptr<SwapChainManager> swapChainManager;
-    
+
     VulkanValidation validation;
 
     // Create functions
-    void createInstance();
+    bool createInstance();
 
     // Support functions
     bool checkInstanceExtensionSupport(std::vector<const char*>* checkExtensions);
+    bool checkValidationLayerSupport(const std::vector<const char*>& validationLayers);
 };

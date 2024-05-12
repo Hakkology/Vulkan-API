@@ -17,8 +17,10 @@ public:
     ~SwapChainManager();
 
     SwapChainDetails getSwapChainDetails(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
-    void createSwapChain(VkPhysicalDevice physicalDevice, VkDevice logicalDevice, VkSurfaceKHR surface, GLFWwindow* window, const SwapChainDetails& details);
+    bool createSwapChain(VkPhysicalDevice physicalDevice, VkDevice logicalDevice, VkSurfaceKHR surface, GLFWwindow* window, const SwapChainDetails& details);
     void cleanupSwapChain(VkDevice device);
+
+    bool isSwapChainAdequate(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
 
 private:
 

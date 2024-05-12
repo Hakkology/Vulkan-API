@@ -1,4 +1,5 @@
 #include "surfaceManager.h"
+#include <iostream>
 
 SurfaceManager::SurfaceManager(VkInstance instance, GLFWwindow* window)
 : instance(instance), window(window), surface(VK_NULL_HANDLE) {
@@ -21,4 +22,5 @@ void SurfaceManager::initSurface() {
     if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS) {
         throw std::runtime_error("Failed to create window surface!");
     }
+    std::cout << "Surface created successfully." << std::endl;
 }

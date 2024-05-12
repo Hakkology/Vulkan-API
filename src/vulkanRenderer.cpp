@@ -10,43 +10,56 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
     std::cout << "Starting initialization..." << std::endl;
 
     // Initialize validation layer and debug messenger first if needed
-    if (validation.getValidationLayerState()) {
-        std::cout << "Setting up debug messenger..." << std::endl;
-        validation.setupDebugMessenger(instance);
+    if (validation.getValidationLayerState() && !validation.setupDebugMessenger(instance)) {
+        std::cerr << "ERROR: Failed to set up debug messenger!" << std::endl;
+        return EXIT_FAILURE;
     }
 
     try {
-        // Step 1: Create Vulkan instance
         std::cout << "Creating Vulkan instance..." << std::endl;
-        createInstance();
-        if (validation.getValidationLayerState()) {
-            std::cout << "Setting up debug messenger post-instance creation..." << std::endl;
-            validation.setupDebugMessenger(instance);
+        if (!createInstance()) {
+            std::cerr << "ERROR: Failed to create Vulkan instance!" << std::endl;
+            return EXIT_FAILURE;
+        }
+        
+        if (validation.getValidationLayerState() && !validation.setupDebugMessenger(instance)) {
+            std::cerr << "ERROR: Failed to set up debug messenger post-instance creation!" << std::endl;
+            return EXIT_FAILURE;
         }
 
-        // Step 2: Create surface
         std::cout << "Creating surface..." << std::endl;
         surfaceManager = std::make_unique<SurfaceManager>(instance, window);
+        if (!surfaceManager || !surfaceManager->getSurface()) {
+            std::cerr << "ERROR: Failed to create surface!" << std::endl;
+            return EXIT_FAILURE;
+        }
 
-        // Step 3: Pick physical device
         std::cout << "Picking physical device..." << std::endl;
-        deviceManager.pickPhysicalDevice(instance, surfaceManager->getSurface(), window);
+        if (!deviceManager.pickPhysicalDevice(instance, surfaceManager->getSurface(), window)) {
+            std::cerr << "ERROR: Failed to pick a suitable physical device!" << std::endl;
+            return EXIT_FAILURE;
+        }
 
-        // Step 4: Create logical device
         std::cout << "Creating logical device..." << std::endl;
-        deviceManager.createLogicalDevice(surfaceManager->getSurface()); 
+        if (!deviceManager.createLogicalDevice(surfaceManager->getSurface())) {
+            std::cerr << "ERROR: Failed to create logical device!" << std::endl;
+            return EXIT_FAILURE;
+        }
 
-        // Step 5: Initialize queue manager
         std::cout << "Initializing queue manager..." << std::endl;
-        queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
+        if (!queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(), surfaceManager->getSurface())) {
+            std::cerr << "ERROR: Failed to initialize queue manager!" << std::endl;
+            return EXIT_FAILURE;
+        }
 
-        // Step 6: Initialize and create swap chain
         std::cout << "Creating swap chain..." << std::endl;
         swapChainManager = std::make_unique<SwapChainManager>(deviceManager.getPhysicalDevice(), surfaceManager->getSurface(), window);
-        swapChainManager->createSwapChain(deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice(), surfaceManager->getSurface(), window, 
-        swapChainManager->getSwapChainDetails(deviceManager.getPhysicalDevice(), surfaceManager->getSurface()));
-
-    } catch(const std::runtime_error &e) {
+        if (!swapChainManager->createSwapChain(deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice(), surfaceManager->getSurface(), window, 
+        swapChainManager->getSwapChainDetails(deviceManager.getPhysicalDevice(), surfaceManager->getSurface()))) {
+            std::cerr << "ERROR: Failed to create swap chain!" << std::endl;
+            return EXIT_FAILURE;
+        }
+    } catch (const std::runtime_error &e) {
         std::cerr << "ERROR during initialization: " << e.what() << std::endl;
         return EXIT_FAILURE;
     }
@@ -87,7 +100,7 @@ void VulkanRenderer::terminate(){
 }
 
 
-void VulkanRenderer::createInstance() {
+bool VulkanRenderer::createInstance() {
     VkApplicationInfo appInfo = {};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = "Vulkan Renderer";
@@ -123,13 +136,19 @@ void VulkanRenderer::createInstance() {
 
     // Check instance extensions support
     if (!checkInstanceExtensionSupport(&instanceExtensions)) {
-        throw std::runtime_error("Vulkan Instance does not support required extensions!");
+        std::cerr << "ERROR: Vulkan Instance does not support required extensions!" << std::endl;
+        return false;
     }
 
     // Create the Vulkan instance
-    if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
-        throw std::runtime_error("Failed to create Vulkan instance!");
+    VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
+    if (result != VK_SUCCESS) {
+        std::cerr << "ERROR: Failed to create Vulkan instance!" << std::endl;
+        return false;
     }
+
+    std::cout << "Vulkan Instance created successfully." << std::endl;
+    return true;
 }
 
 
@@ -170,6 +189,31 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
     }
     return true;
     
+}
+
+bool checkValidationLayerSupport(const std::vector<const char*>& validationLayers) {
+    uint32_t layerCount;
+    vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+
+    std::vector<VkLayerProperties> availableLayers(layerCount);
+    vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+
+    for (const char* layerName : validationLayers) {
+        bool layerFound = false;
+
+        for (const auto& layerProperties : availableLayers) {
+            if (strcmp(layerName, layerProperties.layerName) == 0) {
+                layerFound = true;
+                break;
+            }
+        }
+
+        if (!layerFound) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void VulkanRenderer::setValidationEnabled(){

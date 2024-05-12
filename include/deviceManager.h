@@ -6,11 +6,16 @@
 #include "queueManager.h"
 #include "vulkanUtils.h"
 
+const std::vector<const char*> deviceExtensions = {
+    VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
+
+
 class DeviceManager {
 public:
     DeviceManager();
-    void pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface, GLFWwindow* window);
-    void createLogicalDevice(VkSurfaceKHR surface);
+    bool pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface, GLFWwindow* window);
+    bool createLogicalDevice(VkSurfaceKHR surface);
     void clearLogicalDevice() { logicalDevice = VK_NULL_HANDLE; }
     VkPhysicalDevice getPhysicalDevice() const;
     VkDevice getLogicalDevice() const;

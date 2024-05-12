@@ -9,7 +9,7 @@
 class VulkanValidation {
 public:
     VulkanValidation();
-    void setupDebugMessenger(VkInstance instance);
+    bool setupDebugMessenger(VkInstance instance);
     void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
     void cleanup(VkInstance instance);
 

@@ -14,7 +14,7 @@
 class QueueManager {
 public:
     QueueManager();
-    void init(VkDevice logicalDevice, VkPhysicalDevice physicalDevice);
+    bool init(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
     VkQueue getGraphicsQueue() const;
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device) const;
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) const;
@@ -22,6 +22,6 @@ public:
 private:
     VkQueue graphicsQueue;
     VkQueue presentationQueue;
-    void createQueues(VkDevice logicalDevice, QueueFamilyIndices indices);
+    bool createQueues(VkDevice logicalDevice, QueueFamilyIndices indices);
 
 };
