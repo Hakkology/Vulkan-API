@@ -129,6 +129,19 @@ Vulkan-Renderer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/build
 .PHONY : Vulkan-Renderer/fast
 
+#=============================================================================
+# Target rules for targets named Compile_Shaders
+
+# Build rule for target.
+Compile_Shaders: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Compile_Shaders
+.PHONY : Compile_Shaders
+
+# fast build rule for target.
+Compile_Shaders/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Compile_Shaders.dir/build.make CMakeFiles/Compile_Shaders.dir/build
+.PHONY : Compile_Shaders/fast
+
 src/Engine/deviceManager.o: src/Engine/deviceManager.cpp.o
 .PHONY : src/Engine/deviceManager.o
 
@@ -353,6 +366,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... Compile_Shaders"
 	@echo "... Vulkan-Renderer"
 	@echo "... src/Engine/deviceManager.o"
 	@echo "... src/Engine/deviceManager.i"

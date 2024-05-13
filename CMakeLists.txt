@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Find the Vulkan and glfw package.
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
 
 # Add the executable that will be built from the source files.
 add_executable(Vulkan-Renderer
@@ -27,11 +28,22 @@ target_include_directories(Vulkan-Renderer PRIVATE
     ${CMAKE_SOURCE_DIR}/src/Engine
     ${Vulkan_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}/lib/glm
+    ${GLM_INCLUDE_DIRS}  # GLM include dizini
 )
 
 # Link the Vulkan and GLFW libraries with the executable.
 target_link_libraries(Vulkan-Renderer PRIVATE Vulkan::Vulkan glfw)
+
+# Shader compilation
+add_custom_target(Compile_Shaders
+    COMMAND ${CMAKE_COMMAND} -E echo "Compiling shaders..."
+    COMMAND bash ${CMAKE_SOURCE_DIR}/src/Shaders/compile_shaders.sh
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/src/Shaders
+    COMMENT "Shaders are being compiled"
+)
+
+# Ensure the shaders are compiled before the Vulkan-Renderer is built
+add_dependencies(Vulkan-Renderer Compile_Shaders)
 
 message(STATUS "Vulkan include dirs: ${Vulkan_INCLUDE_DIRS}")
 message(STATUS "GLFW include dirs: ${GLFW_INCLUDE_DIRS}")
