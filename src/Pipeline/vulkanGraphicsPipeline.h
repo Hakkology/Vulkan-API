@@ -30,7 +30,6 @@ private:
     VkPipelineInputAssemblyStateCreateInfo createInputAssemblyState();
     VkPipelineRasterizationStateCreateInfo createRasterizerState();
     VkPipelineMultisampleStateCreateInfo createMultisampleState();
-    VkPipelineColorBlendAttachmentState createColorBlendAttachment();
     VkPipelineColorBlendStateCreateInfo createColorBlendState();
     VkPipelineLayoutCreateInfo createPipelineLayoutInfo();
     VkPipelineDepthStencilStateCreateInfo createDepthStencilState();

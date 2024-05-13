@@ -90,6 +90,11 @@ VulkanRenderer::~VulkanRenderer() {
 
 void VulkanRenderer::terminate(){
 
+    if (graphicsPipeline) {
+        graphicsPipeline->cleanup();
+        graphicsPipeline.reset();  // Reset the unique_ptr, effectively destroying the graphics pipeline.
+    }
+
     if (swapChainManager) {
         swapChainManager->cleanupSwapChain(deviceManager.getLogicalDevice());  
         swapChainManager.reset();  // Reset the unique_ptr, effectively destroying the SwapChainManager

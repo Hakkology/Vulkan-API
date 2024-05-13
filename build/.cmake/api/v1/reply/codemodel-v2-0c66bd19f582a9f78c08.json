@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.2"
@@ -20,7 +20,7 @@
 					]
 				}
 			],
-			"name" : "",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -41,14 +41,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Compile_Shaders::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Compile_Shaders-d9d304716cd726df1ffd.json",
+					"jsonFile" : "target-Compile_Shaders-Debug-d9d304716cd726df1ffd.json",
 					"name" : "Compile_Shaders",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "Vulkan-Renderer::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Vulkan-Renderer-f3f73a740acb48340e94.json",
+					"jsonFile" : "target-Vulkan-Renderer-Debug-ac19e02fd3efc2cb845f.json",
 					"name" : "Vulkan-Renderer",
 					"projectIndex" : 0
 				}
