@@ -37,7 +37,80 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     // Create pipeline
     std::cout << "Creating Pipeline..." << std::endl;
 
+    // Vertex Input 
+    VkPipelineVertexInputStateCreateInfo vertexInputCreateInfo = {};
+    vertexInputCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+    vertexInputCreateInfo.vertexBindingDescriptionCount = 0;
+    vertexInputCreateInfo.pVertexBindingDescriptions = nullptr;                             // list of vertex binding descriptions (data spacing & stride information)
+    vertexInputCreateInfo.vertexAttributeDescriptionCount = 0;                          
+    vertexInputCreateInfo.pVertexAttributeDescriptions = nullptr;                           // list of vertex attribute descriptions (data format and where to bind to/from)
+
+    // Input assembly
+    VkPipelineInputAssemblyStateCreateInfo InputAssembly = {};
+    InputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+    InputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;                           // Primitive type to assemble vertices as.
+    InputAssembly.primitiveRestartEnable = VK_FALSE;                                        // Allow overriding of "strip" topology to start new primitives.
     
+    // Viewport & Scissor
+    // Create a viewport
+    VkViewport viewport = {};
+    viewport.x = 0.0f;                                                                      // x Start coordinates
+    viewport.y = 0.0f;                                                                      // y Start coordinate.
+    viewport.width = (float) swapChainExtent.width;                                         // viewport width
+    viewport.height = (float) swapChainExtent.height;                                       // viewport height
+    viewport.minDepth = 0.0f;                                                               // min framebuffer depth
+    viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
+
+    // Create a scissor info struct
+    VkRect2D scissor = {};  
+    scissor.offset = {0,0};                                                                 // offset to use region from
+    scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
+    
+    VkPipelineViewportStateCreateInfo viewportStateCreateInfo = {};
+    viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+    viewportStateCreateInfo.viewportCount = 1;
+    viewportStateCreateInfo.pViewports = &viewport;
+    viewportStateCreateInfo.scissorCount = 1;
+    viewportStateCreateInfo.pScissors = &scissor;
+
+    // Dynamic State
+    // Dynamic states to enable:
+    // std::vector<VkDynamicState> dynamicStateEnables;
+    // dynamicStateEnables.push_back(VK_DYNAMIC_STATE_VIEWPORT);                               // Dynamic viewport: can resize in command buffer with vkCmdSetViewport(commandbuffer, 0, 1, &viewport)
+    // dynamicStateEnables.push_back(VK_DYNAMIC_STATE_SCISSOR);                                // Dynamic scissor: can resize in command buffer with vkCmdSetScissor(commandbuffer, 0 ,1, &scissor)
+    // // Do not destroy the pipeline but just pass the updated size to a new image on swapchain.
+
+    // VkPipelineDynamicStateCreateInfo dynamicStateCreateInfo = {};
+    // dynamicStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+    // dynamicStateCreateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicStateEnables.size());
+    // dynamicStateCreateInfo.pDynamicStates = dynamicStateEnables.data();
+
+    // Rasterizer
+    VkPipelineRasterizationStateCreateInfo rasterizerCreateInfo = {};
+    rasterizerCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+    rasterizerCreateInfo.depthClampEnable = VK_FALSE;                                           // Change if fragments beyond near/far planes are clipped or clamped.
+    // Device features in logical device must be enabled if this is toggled on.
+    rasterizerCreateInfo.rasterizerDiscardEnable = VK_FALSE;                                    // Whether to discard data and skip rasterizer. NEver creaters fragments, suitable for pipelines without graphics.
+    rasterizerCreateInfo.polygonMode = VK_POLYGON_MODE_FILL;                                    // How to handle filling points between vertices.
+    // GPU features are needed for some.
+    rasterizerCreateInfo.lineWidth = 1.0f;                                                      // How thick lines should be when drawn.
+    rasterizerCreateInfo.cullMode = VK_CULL_MODE_BACK_BIT;                                      // Culling, whether if both sides are rendered.
+    rasterizerCreateInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;                                   // Winding to determine which side is front.
+    rasterizerCreateInfo.depthBiasEnable = VK_FALSE;                                            // Whether to add depth bias to fragments for shadow acne fix.
+
+    // Multi sampling
+    VkPipelineMultisampleStateCreateInfo multiSamplingCreateInfo = {};
+    multiSamplingCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+    multiSamplingCreateInfo.sampleShadingEnable = VK_FALSE;                                     // Enable multi sampling shading or not.
+    multiSamplingCreateInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;                       // Number of samples to use per fragment.
+
+    // Blending
+    // Blending decides how to blend a new colour being written to a fragment with the old value.
+    VkPipelineColorBlendStateCreateInfo colourBlendingCreateInfo = {};
+    colourBlendingCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+    colourBlendingCreateInfo.logicOpEnable = VK_FALSE; 
+    colourBlendingCreateInfo.logicOp = VK_LOGIC_OP_COPY;
+
 
     // Destroy shader modules, no longer needed after pipeline is created.
     vkDestroyShaderModule(device, fragmentShaderModule, nullptr);

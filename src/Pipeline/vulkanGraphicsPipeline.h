@@ -1,13 +1,11 @@
 #pragma once
-
 #include <vulkan/vulkan.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 
-static constexpr char const* VERTEX_SHADER_PATH = "../src/Shaders/spv/shader.vert.spv";
-static constexpr char const* FRAGMENT_SHADER_PATH = "../src/Shaders/spv/shader.frag.spv";
+#include "vulkanShaderPaths.h"
 
 class GraphicsPipeline {
 public:
