@@ -12,20 +12,27 @@ find_package(glm REQUIRED)
 # Add the executable that will be built from the source files.
 add_executable(Vulkan-Renderer
     src/main.cpp
+
+    src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp
     src/Engine/queueManager.cpp
     src/Engine/surfaceManager.cpp
     src/Engine/swapChainManager.cpp
-    src/Engine/vulkanRenderer.cpp
+    src/Pipeline/vulkanGraphicsPipeline.cpp
     src/Engine/window.cpp
     src/Engine/vulkanUtils.cpp
-    src/Engine/vulkanValidation.cpp
+
+
+    src/vulkanRenderer.cpp
+
+
 )
 
 # Specify directories where the compiler can find headers
 target_include_directories(Vulkan-Renderer PRIVATE
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/Engine
+    ${CMAKE_SOURCE_DIR}/src/Pipeline
     ${Vulkan_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
     ${GLM_INCLUDE_DIRS}  # GLM include dizini

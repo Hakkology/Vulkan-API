@@ -238,30 +238,6 @@ src/Engine/swapChainManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/swapChainManager.cpp.s
 .PHONY : src/Engine/swapChainManager.cpp.s
 
-src/Engine/vulkanRenderer.o: src/Engine/vulkanRenderer.cpp.o
-.PHONY : src/Engine/vulkanRenderer.o
-
-# target to build an object file
-src/Engine/vulkanRenderer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanRenderer.cpp.o
-.PHONY : src/Engine/vulkanRenderer.cpp.o
-
-src/Engine/vulkanRenderer.i: src/Engine/vulkanRenderer.cpp.i
-.PHONY : src/Engine/vulkanRenderer.i
-
-# target to preprocess a source file
-src/Engine/vulkanRenderer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanRenderer.cpp.i
-.PHONY : src/Engine/vulkanRenderer.cpp.i
-
-src/Engine/vulkanRenderer.s: src/Engine/vulkanRenderer.cpp.s
-.PHONY : src/Engine/vulkanRenderer.s
-
-# target to generate assembly for a file
-src/Engine/vulkanRenderer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanRenderer.cpp.s
-.PHONY : src/Engine/vulkanRenderer.cpp.s
-
 src/Engine/vulkanUtils.o: src/Engine/vulkanUtils.cpp.o
 .PHONY : src/Engine/vulkanUtils.o
 
@@ -334,6 +310,30 @@ src/Engine/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s
 .PHONY : src/Engine/window.cpp.s
 
+src/Pipeline/vulkanGraphicsPipeline.o: src/Pipeline/vulkanGraphicsPipeline.cpp.o
+.PHONY : src/Pipeline/vulkanGraphicsPipeline.o
+
+# target to build an object file
+src/Pipeline/vulkanGraphicsPipeline.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o
+.PHONY : src/Pipeline/vulkanGraphicsPipeline.cpp.o
+
+src/Pipeline/vulkanGraphicsPipeline.i: src/Pipeline/vulkanGraphicsPipeline.cpp.i
+.PHONY : src/Pipeline/vulkanGraphicsPipeline.i
+
+# target to preprocess a source file
+src/Pipeline/vulkanGraphicsPipeline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.i
+.PHONY : src/Pipeline/vulkanGraphicsPipeline.cpp.i
+
+src/Pipeline/vulkanGraphicsPipeline.s: src/Pipeline/vulkanGraphicsPipeline.cpp.s
+.PHONY : src/Pipeline/vulkanGraphicsPipeline.s
+
+# target to generate assembly for a file
+src/Pipeline/vulkanGraphicsPipeline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.s
+.PHONY : src/Pipeline/vulkanGraphicsPipeline.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -358,6 +358,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/vulkanRenderer.o: src/vulkanRenderer.cpp.o
+.PHONY : src/vulkanRenderer.o
+
+# target to build an object file
+src/vulkanRenderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o
+.PHONY : src/vulkanRenderer.cpp.o
+
+src/vulkanRenderer.i: src/vulkanRenderer.cpp.i
+.PHONY : src/vulkanRenderer.i
+
+# target to preprocess a source file
+src/vulkanRenderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.i
+.PHONY : src/vulkanRenderer.cpp.i
+
+src/vulkanRenderer.s: src/vulkanRenderer.cpp.s
+.PHONY : src/vulkanRenderer.s
+
+# target to generate assembly for a file
+src/vulkanRenderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.s
+.PHONY : src/vulkanRenderer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -380,9 +404,6 @@ help:
 	@echo "... src/Engine/swapChainManager.o"
 	@echo "... src/Engine/swapChainManager.i"
 	@echo "... src/Engine/swapChainManager.s"
-	@echo "... src/Engine/vulkanRenderer.o"
-	@echo "... src/Engine/vulkanRenderer.i"
-	@echo "... src/Engine/vulkanRenderer.s"
 	@echo "... src/Engine/vulkanUtils.o"
 	@echo "... src/Engine/vulkanUtils.i"
 	@echo "... src/Engine/vulkanUtils.s"
@@ -392,9 +413,15 @@ help:
 	@echo "... src/Engine/window.o"
 	@echo "... src/Engine/window.i"
 	@echo "... src/Engine/window.s"
+	@echo "... src/Pipeline/vulkanGraphicsPipeline.o"
+	@echo "... src/Pipeline/vulkanGraphicsPipeline.i"
+	@echo "... src/Pipeline/vulkanGraphicsPipeline.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/vulkanRenderer.o"
+	@echo "... src/vulkanRenderer.i"
+	@echo "... src/vulkanRenderer.s"
 .PHONY : help
 
 

@@ -14,6 +14,8 @@
 #include "queueManager.h"
 #include "surfaceManager.h"
 #include "vulkanValidation.h"
+#include "vulkanGraphicsPipeline.h"
+
 
 
 class VulkanRenderer {
@@ -38,6 +40,7 @@ private:
     
     std::unique_ptr<SurfaceManager> surfaceManager;
     std::unique_ptr<SwapChainManager> swapChainManager;
+    std::unique_ptr<GraphicsPipeline> graphicsPipeline;
 
     VulkanValidation validation;
 

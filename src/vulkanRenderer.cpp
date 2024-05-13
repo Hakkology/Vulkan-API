@@ -64,6 +64,15 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
             std::cerr << "ERROR: Failed to update swap chain settings!" << std::endl;
             return EXIT_FAILURE;
         }
+
+        // Assume render pass is created somewhere here
+        VkRenderPass renderPass; // This needs to be properly initialized
+
+        // Create the graphics pipeline
+        GraphicsPipeline graphicsPipeline(deviceManager.getLogicalDevice(), renderPass, swapChainManager->getChosenExtent());
+        graphicsPipeline.createGraphicsPipeline(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
+
+        
     } catch (const std::runtime_error &e) {
         std::cerr << "ERROR during initialization: " << e.what() << std::endl;
         return EXIT_FAILURE;

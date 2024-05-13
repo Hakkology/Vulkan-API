@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <vulkan/vulkan.h>
-
 
 struct QueueFamilyIndices {
     int graphicsFamily = -1;                            // Graphics Queue Family location.
