@@ -59,10 +59,16 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
             std::cerr << "ERROR: Failed to create swap chain!" << std::endl;
             return EXIT_FAILURE;
         }
+
+        if (!updateSwapChainSettings()) {
+            std::cerr << "ERROR: Failed to update swap chain settings!" << std::endl;
+            return EXIT_FAILURE;
+        }
     } catch (const std::runtime_error &e) {
         std::cerr << "ERROR during initialization: " << e.what() << std::endl;
         return EXIT_FAILURE;
     }
+
 
     std::cout << "Initialization successful" << std::endl;
     return 0;
@@ -149,6 +155,25 @@ bool VulkanRenderer::createInstance() {
 
     std::cout << "Vulkan Instance created successfully." << std::endl;
     return true;
+}
+
+bool VulkanRenderer::updateSwapChainSettings()
+{
+    if (swapChainManager) {
+        this->swapChainImageFormat = swapChainManager->getChosenFormat();
+        this->swapChainExtent = swapChainManager->getChosenExtent();
+
+        if (this->swapChainImageFormat == VK_FORMAT_UNDEFINED || this->swapChainExtent.width == 0 || this->swapChainExtent.height == 0) {
+            std::cerr << "Invalid swap chain format or extent values." << std::endl;
+            return false; // Return false if the format or extent is not correctly set.
+        }
+
+        std::cout << "Updated swap chain settings." << std::endl;
+        return true; // Return true if the update is successful.
+    } else {
+        std::cerr << "SwapChainManager is not initialized." << std::endl;
+        return false; // Return false if the SwapChainManager is not initialized.
+    }
 }
 
 

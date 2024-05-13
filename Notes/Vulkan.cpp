@@ -115,6 +115,59 @@ VK_PRESENT_MODE_FIFO_RELAXEd_KHR => As soon as queue is empty, it will start act
 
     ImageView shall act as an interface to draw the image.
 
+-----------------
+
+Graphics Pipeline
+
+THe process in which graphics pipeline is created is as follows:
+
+Vertex, Index buffer => Input Assembler => Vertex Shader => Tesselation => Geometry Shader
+=> Rasterization => Fragment shader => Color blending => framebuffer.
+
+Input assembler receives the input and forms the vertices.
+Tesselation is used to divide shapes into lower triangles.
+Geometry shader adds further geometry.
+Rasterization looks at all our points and tries to figure out where all pixels should be.
+Massive array of pixels are then passed to the fragment shader, where colours are processed.
+Color blending adds colour and transparency.
+Final stage is the framebuffer.
+
+pre-compile shader code to intermediate code called SPIR-V and load it to a shader module.
+(Standard Portable Intermediate Representation - Vulkan)
+Compiled from GLSL => glslangValidator.exe (LunarG Vulkan SDK)
+.spv file is created loaded into shader modul passed to info struct.
+Put all shader into structs into list and use in Pipeline Create Info.
+
+Vertex Input => defines layout and format of vertex input data.
+Input Assembly => defines how to assemble vertices to primitives (Tris or lines).
+Viewport & Scissor => how to fit output to image and crop it.
+Dynamic States => pipelines are static and settings cant be changed at runtime. You need to create a pipeline to get new settings.
+However some settings can be given ability to change at runtime.
+Rasterizer => how to handle computation of fragments from primitives.
+Multisampling => multisampling information.
+Blending => how to blend fragments at the end of the pipeline.
+Depth Stencil => how to determine depth, stencil culling and writing.
+
+Pipeline layout:
+Layout of the data being given directly to the pipeline for a single draw operation.
+Defines layout of data for "Descriptor sets (uniform buffers)".
+Push Constants => smaller values, similar to descriptor sets. 
+
+Render Pass:
+Large operation that handles the execution and outputs of the pipeline.
+Can have multiple smaller subpasses inside it that each use a different pipeline, so you can combine draws together.
+Render passes have multiple attachments to all possible outputs (colour, depth).
+
+Sub passes can connect to different pipelines, resulting in different graphic settings.
+Sub passes rely on strict ordering to ensure data is in the right format at the right time.
+Swapchain image being written to will needs to be in a writable format at the stage of subpass (logical).
+However, when presented, it should be in a presentable format.
+Subpass dependencies define stages in pipeline for transitions.
+Implicit transitions, we only say when it should occur.
+We define the layout at each stage.
+
+
+
 
 
     

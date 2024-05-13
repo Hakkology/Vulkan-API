@@ -129,29 +129,197 @@ Vulkan-Renderer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/build
 .PHONY : Vulkan-Renderer/fast
 
-src/deviceManager.o: src/deviceManager.cpp.o
-.PHONY : src/deviceManager.o
+src/Engine/deviceManager.o: src/Engine/deviceManager.cpp.o
+.PHONY : src/Engine/deviceManager.o
 
 # target to build an object file
-src/deviceManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.o
-.PHONY : src/deviceManager.cpp.o
+src/Engine/deviceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o
+.PHONY : src/Engine/deviceManager.cpp.o
 
-src/deviceManager.i: src/deviceManager.cpp.i
-.PHONY : src/deviceManager.i
+src/Engine/deviceManager.i: src/Engine/deviceManager.cpp.i
+.PHONY : src/Engine/deviceManager.i
 
 # target to preprocess a source file
-src/deviceManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.i
-.PHONY : src/deviceManager.cpp.i
+src/Engine/deviceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.i
+.PHONY : src/Engine/deviceManager.cpp.i
 
-src/deviceManager.s: src/deviceManager.cpp.s
-.PHONY : src/deviceManager.s
+src/Engine/deviceManager.s: src/Engine/deviceManager.cpp.s
+.PHONY : src/Engine/deviceManager.s
 
 # target to generate assembly for a file
-src/deviceManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/deviceManager.cpp.s
-.PHONY : src/deviceManager.cpp.s
+src/Engine/deviceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.s
+.PHONY : src/Engine/deviceManager.cpp.s
+
+src/Engine/queueManager.o: src/Engine/queueManager.cpp.o
+.PHONY : src/Engine/queueManager.o
+
+# target to build an object file
+src/Engine/queueManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.o
+.PHONY : src/Engine/queueManager.cpp.o
+
+src/Engine/queueManager.i: src/Engine/queueManager.cpp.i
+.PHONY : src/Engine/queueManager.i
+
+# target to preprocess a source file
+src/Engine/queueManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.i
+.PHONY : src/Engine/queueManager.cpp.i
+
+src/Engine/queueManager.s: src/Engine/queueManager.cpp.s
+.PHONY : src/Engine/queueManager.s
+
+# target to generate assembly for a file
+src/Engine/queueManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.s
+.PHONY : src/Engine/queueManager.cpp.s
+
+src/Engine/surfaceManager.o: src/Engine/surfaceManager.cpp.o
+.PHONY : src/Engine/surfaceManager.o
+
+# target to build an object file
+src/Engine/surfaceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/surfaceManager.cpp.o
+.PHONY : src/Engine/surfaceManager.cpp.o
+
+src/Engine/surfaceManager.i: src/Engine/surfaceManager.cpp.i
+.PHONY : src/Engine/surfaceManager.i
+
+# target to preprocess a source file
+src/Engine/surfaceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/surfaceManager.cpp.i
+.PHONY : src/Engine/surfaceManager.cpp.i
+
+src/Engine/surfaceManager.s: src/Engine/surfaceManager.cpp.s
+.PHONY : src/Engine/surfaceManager.s
+
+# target to generate assembly for a file
+src/Engine/surfaceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/surfaceManager.cpp.s
+.PHONY : src/Engine/surfaceManager.cpp.s
+
+src/Engine/swapChainManager.o: src/Engine/swapChainManager.cpp.o
+.PHONY : src/Engine/swapChainManager.o
+
+# target to build an object file
+src/Engine/swapChainManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/swapChainManager.cpp.o
+.PHONY : src/Engine/swapChainManager.cpp.o
+
+src/Engine/swapChainManager.i: src/Engine/swapChainManager.cpp.i
+.PHONY : src/Engine/swapChainManager.i
+
+# target to preprocess a source file
+src/Engine/swapChainManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/swapChainManager.cpp.i
+.PHONY : src/Engine/swapChainManager.cpp.i
+
+src/Engine/swapChainManager.s: src/Engine/swapChainManager.cpp.s
+.PHONY : src/Engine/swapChainManager.s
+
+# target to generate assembly for a file
+src/Engine/swapChainManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/swapChainManager.cpp.s
+.PHONY : src/Engine/swapChainManager.cpp.s
+
+src/Engine/vulkanRenderer.o: src/Engine/vulkanRenderer.cpp.o
+.PHONY : src/Engine/vulkanRenderer.o
+
+# target to build an object file
+src/Engine/vulkanRenderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanRenderer.cpp.o
+.PHONY : src/Engine/vulkanRenderer.cpp.o
+
+src/Engine/vulkanRenderer.i: src/Engine/vulkanRenderer.cpp.i
+.PHONY : src/Engine/vulkanRenderer.i
+
+# target to preprocess a source file
+src/Engine/vulkanRenderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanRenderer.cpp.i
+.PHONY : src/Engine/vulkanRenderer.cpp.i
+
+src/Engine/vulkanRenderer.s: src/Engine/vulkanRenderer.cpp.s
+.PHONY : src/Engine/vulkanRenderer.s
+
+# target to generate assembly for a file
+src/Engine/vulkanRenderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanRenderer.cpp.s
+.PHONY : src/Engine/vulkanRenderer.cpp.s
+
+src/Engine/vulkanUtils.o: src/Engine/vulkanUtils.cpp.o
+.PHONY : src/Engine/vulkanUtils.o
+
+# target to build an object file
+src/Engine/vulkanUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanUtils.cpp.o
+.PHONY : src/Engine/vulkanUtils.cpp.o
+
+src/Engine/vulkanUtils.i: src/Engine/vulkanUtils.cpp.i
+.PHONY : src/Engine/vulkanUtils.i
+
+# target to preprocess a source file
+src/Engine/vulkanUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanUtils.cpp.i
+.PHONY : src/Engine/vulkanUtils.cpp.i
+
+src/Engine/vulkanUtils.s: src/Engine/vulkanUtils.cpp.s
+.PHONY : src/Engine/vulkanUtils.s
+
+# target to generate assembly for a file
+src/Engine/vulkanUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanUtils.cpp.s
+.PHONY : src/Engine/vulkanUtils.cpp.s
+
+src/Engine/vulkanValidation.o: src/Engine/vulkanValidation.cpp.o
+.PHONY : src/Engine/vulkanValidation.o
+
+# target to build an object file
+src/Engine/vulkanValidation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanValidation.cpp.o
+.PHONY : src/Engine/vulkanValidation.cpp.o
+
+src/Engine/vulkanValidation.i: src/Engine/vulkanValidation.cpp.i
+.PHONY : src/Engine/vulkanValidation.i
+
+# target to preprocess a source file
+src/Engine/vulkanValidation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanValidation.cpp.i
+.PHONY : src/Engine/vulkanValidation.cpp.i
+
+src/Engine/vulkanValidation.s: src/Engine/vulkanValidation.cpp.s
+.PHONY : src/Engine/vulkanValidation.s
+
+# target to generate assembly for a file
+src/Engine/vulkanValidation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanValidation.cpp.s
+.PHONY : src/Engine/vulkanValidation.cpp.s
+
+src/Engine/window.o: src/Engine/window.cpp.o
+.PHONY : src/Engine/window.o
+
+# target to build an object file
+src/Engine/window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o
+.PHONY : src/Engine/window.cpp.o
+
+src/Engine/window.i: src/Engine/window.cpp.i
+.PHONY : src/Engine/window.i
+
+# target to preprocess a source file
+src/Engine/window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.i
+.PHONY : src/Engine/window.cpp.i
+
+src/Engine/window.s: src/Engine/window.cpp.s
+.PHONY : src/Engine/window.s
+
+# target to generate assembly for a file
+src/Engine/window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s
+.PHONY : src/Engine/window.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -177,174 +345,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/queueManager.o: src/queueManager.cpp.o
-.PHONY : src/queueManager.o
-
-# target to build an object file
-src/queueManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.o
-.PHONY : src/queueManager.cpp.o
-
-src/queueManager.i: src/queueManager.cpp.i
-.PHONY : src/queueManager.i
-
-# target to preprocess a source file
-src/queueManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.i
-.PHONY : src/queueManager.cpp.i
-
-src/queueManager.s: src/queueManager.cpp.s
-.PHONY : src/queueManager.s
-
-# target to generate assembly for a file
-src/queueManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/queueManager.cpp.s
-.PHONY : src/queueManager.cpp.s
-
-src/surfaceManager.o: src/surfaceManager.cpp.o
-.PHONY : src/surfaceManager.o
-
-# target to build an object file
-src/surfaceManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.o
-.PHONY : src/surfaceManager.cpp.o
-
-src/surfaceManager.i: src/surfaceManager.cpp.i
-.PHONY : src/surfaceManager.i
-
-# target to preprocess a source file
-src/surfaceManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.i
-.PHONY : src/surfaceManager.cpp.i
-
-src/surfaceManager.s: src/surfaceManager.cpp.s
-.PHONY : src/surfaceManager.s
-
-# target to generate assembly for a file
-src/surfaceManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/surfaceManager.cpp.s
-.PHONY : src/surfaceManager.cpp.s
-
-src/swapChainManager.o: src/swapChainManager.cpp.o
-.PHONY : src/swapChainManager.o
-
-# target to build an object file
-src/swapChainManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.o
-.PHONY : src/swapChainManager.cpp.o
-
-src/swapChainManager.i: src/swapChainManager.cpp.i
-.PHONY : src/swapChainManager.i
-
-# target to preprocess a source file
-src/swapChainManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.i
-.PHONY : src/swapChainManager.cpp.i
-
-src/swapChainManager.s: src/swapChainManager.cpp.s
-.PHONY : src/swapChainManager.s
-
-# target to generate assembly for a file
-src/swapChainManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/swapChainManager.cpp.s
-.PHONY : src/swapChainManager.cpp.s
-
-src/vulkanRenderer.o: src/vulkanRenderer.cpp.o
-.PHONY : src/vulkanRenderer.o
-
-# target to build an object file
-src/vulkanRenderer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o
-.PHONY : src/vulkanRenderer.cpp.o
-
-src/vulkanRenderer.i: src/vulkanRenderer.cpp.i
-.PHONY : src/vulkanRenderer.i
-
-# target to preprocess a source file
-src/vulkanRenderer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.i
-.PHONY : src/vulkanRenderer.cpp.i
-
-src/vulkanRenderer.s: src/vulkanRenderer.cpp.s
-.PHONY : src/vulkanRenderer.s
-
-# target to generate assembly for a file
-src/vulkanRenderer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.s
-.PHONY : src/vulkanRenderer.cpp.s
-
-src/vulkanUtils.o: src/vulkanUtils.cpp.o
-.PHONY : src/vulkanUtils.o
-
-# target to build an object file
-src/vulkanUtils.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.o
-.PHONY : src/vulkanUtils.cpp.o
-
-src/vulkanUtils.i: src/vulkanUtils.cpp.i
-.PHONY : src/vulkanUtils.i
-
-# target to preprocess a source file
-src/vulkanUtils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.i
-.PHONY : src/vulkanUtils.cpp.i
-
-src/vulkanUtils.s: src/vulkanUtils.cpp.s
-.PHONY : src/vulkanUtils.s
-
-# target to generate assembly for a file
-src/vulkanUtils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanUtils.cpp.s
-.PHONY : src/vulkanUtils.cpp.s
-
-src/vulkanValidation.o: src/vulkanValidation.cpp.o
-.PHONY : src/vulkanValidation.o
-
-# target to build an object file
-src/vulkanValidation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.o
-.PHONY : src/vulkanValidation.cpp.o
-
-src/vulkanValidation.i: src/vulkanValidation.cpp.i
-.PHONY : src/vulkanValidation.i
-
-# target to preprocess a source file
-src/vulkanValidation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.i
-.PHONY : src/vulkanValidation.cpp.i
-
-src/vulkanValidation.s: src/vulkanValidation.cpp.s
-.PHONY : src/vulkanValidation.s
-
-# target to generate assembly for a file
-src/vulkanValidation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/vulkanValidation.cpp.s
-.PHONY : src/vulkanValidation.cpp.s
-
-src/window.o: src/window.cpp.o
-.PHONY : src/window.o
-
-# target to build an object file
-src/window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.o
-.PHONY : src/window.cpp.o
-
-src/window.i: src/window.cpp.i
-.PHONY : src/window.i
-
-# target to preprocess a source file
-src/window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.i
-.PHONY : src/window.cpp.i
-
-src/window.s: src/window.cpp.s
-.PHONY : src/window.s
-
-# target to generate assembly for a file
-src/window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/window.cpp.s
-.PHONY : src/window.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -354,33 +354,33 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Vulkan-Renderer"
-	@echo "... src/deviceManager.o"
-	@echo "... src/deviceManager.i"
-	@echo "... src/deviceManager.s"
+	@echo "... src/Engine/deviceManager.o"
+	@echo "... src/Engine/deviceManager.i"
+	@echo "... src/Engine/deviceManager.s"
+	@echo "... src/Engine/queueManager.o"
+	@echo "... src/Engine/queueManager.i"
+	@echo "... src/Engine/queueManager.s"
+	@echo "... src/Engine/surfaceManager.o"
+	@echo "... src/Engine/surfaceManager.i"
+	@echo "... src/Engine/surfaceManager.s"
+	@echo "... src/Engine/swapChainManager.o"
+	@echo "... src/Engine/swapChainManager.i"
+	@echo "... src/Engine/swapChainManager.s"
+	@echo "... src/Engine/vulkanRenderer.o"
+	@echo "... src/Engine/vulkanRenderer.i"
+	@echo "... src/Engine/vulkanRenderer.s"
+	@echo "... src/Engine/vulkanUtils.o"
+	@echo "... src/Engine/vulkanUtils.i"
+	@echo "... src/Engine/vulkanUtils.s"
+	@echo "... src/Engine/vulkanValidation.o"
+	@echo "... src/Engine/vulkanValidation.i"
+	@echo "... src/Engine/vulkanValidation.s"
+	@echo "... src/Engine/window.o"
+	@echo "... src/Engine/window.i"
+	@echo "... src/Engine/window.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/queueManager.o"
-	@echo "... src/queueManager.i"
-	@echo "... src/queueManager.s"
-	@echo "... src/surfaceManager.o"
-	@echo "... src/surfaceManager.i"
-	@echo "... src/surfaceManager.s"
-	@echo "... src/swapChainManager.o"
-	@echo "... src/swapChainManager.i"
-	@echo "... src/swapChainManager.s"
-	@echo "... src/vulkanRenderer.o"
-	@echo "... src/vulkanRenderer.i"
-	@echo "... src/vulkanRenderer.s"
-	@echo "... src/vulkanUtils.o"
-	@echo "... src/vulkanUtils.i"
-	@echo "... src/vulkanUtils.s"
-	@echo "... src/vulkanValidation.o"
-	@echo "... src/vulkanValidation.i"
-	@echo "... src/vulkanValidation.s"
-	@echo "... src/window.o"
-	@echo "... src/window.i"
-	@echo "... src/window.s"
 .PHONY : help
 
 

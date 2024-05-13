@@ -41,8 +41,12 @@ private:
 
     VulkanValidation validation;
 
+    VkFormat swapChainImageFormat;
+    VkExtent2D swapChainExtent;
+
     // Create functions
     bool createInstance();
+    bool updateSwapChainSettings();
 
     // Support functions
     bool checkInstanceExtensionSupport(std::vector<const char*>* checkExtensions);

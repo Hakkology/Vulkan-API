@@ -25,8 +25,8 @@ bool DeviceManager::pickPhysicalDevice(VkInstance instance, VkSurfaceKHR surface
     for (const auto& device : devices) {
         if (checkDeviceSuitable(device, surface, window)) {
             physicalDevice = device;
-            return true;
             std::cout << "Physical device picked successfully." << std::endl;
+            return true;
         }
     } 
 

@@ -22,15 +22,22 @@ public:
 
     bool isSwapChainAdequate(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
 
+    VkFormat getChosenFormat() const { return m_chosenFormat; }
+    VkExtent2D getChosenExtent() const { return m_chosenExtent; }
+
 private:
 
     VkSurfaceFormatKHR chooseBestSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats);
     VkPresentModeKHR chooseBestPresentationMode(const std::vector<VkPresentModeKHR> presentationModes);
     VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &surfaceCapabilities, GLFWwindow* window);
+    VkImageView createImageView(VkDevice logicalDevice, VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
 
     VkPhysicalDevice m_device;
     VkSurfaceKHR m_surface;
     GLFWwindow* m_window;
     VkSwapchainKHR swapchain;
 
+    VkFormat m_chosenFormat;
+    VkExtent2D m_chosenExtent;
+    std::vector<SwapchainImage> swapchainImages;
 };

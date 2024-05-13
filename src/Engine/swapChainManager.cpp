@@ -1,8 +1,6 @@
 #include "swapChainManager.h"
 
-SwapChainManager::~SwapChainManager(){
-
-}
+SwapChainManager::~SwapChainManager(){}
 
 SwapChainDetails SwapChainManager::getSwapChainDetails(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface){
     
@@ -47,7 +45,7 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     }
     
     // Fetch the current details to ensure we're using up-to-date information.
-    std::cout << "Getting swap chain details..." << std::endl;
+    // std::cout << "Getting swap chain details..." << std::endl;
     SwapChainDetails swapchainDetails = getSwapChainDetails(physicalDevice, surface);
 
     // 1. Choose best surface format.
@@ -55,12 +53,11 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     // 3. Choose swap chain image resolution.
 
     // Output the surface capabilities for debugging
-    std::cout << "Surface capabilities - minImageCount: " << swapchainDetails.surfaceCapabilities.minImageCount << ", maxImageCount: " << swapchainDetails.surfaceCapabilities.maxImageCount << std::endl;
-
+    // std::cout << "Surface capabilities - minImageCount: " << swapchainDetails.surfaceCapabilities.minImageCount << ", maxImageCount: " << swapchainDetails.surfaceCapabilities.maxImageCount << std::endl;
 
     // Output chosen surface format and present mode for debugging.
-    std::cout << "Chosen surface format: " << swapchainDetails.formats[0].format << std::endl;
-    std::cout << "Chosen present mode: " << swapchainDetails.presentationModes[0] << std::endl;
+    // std::cout << "Chosen surface format: " << swapchainDetails.formats[0].format << std::endl;
+    // std::cout << "Chosen present mode: " << swapchainDetails.presentationModes[0] << std::endl;
 
     // Find optimal surface values for our swapchain.
     VkSurfaceFormatKHR surfaceFormat = chooseBestSurfaceFormat(swapchainDetails.formats);
@@ -73,7 +70,7 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     std::cout << "Extent width: " << extent.width << ", height: " << extent.height << std::endl;
 
     // Calculate the number of images in the swap chain. Aim for 1 more than the minimum to allow triple buffering.
-    std::cout << "Calculating image count for swap chain..." << std::endl;
+    // std::cout << "Calculating image count for swap chain..." << std::endl;
     uint32_t imageCount = swapchainDetails.surfaceCapabilities.minImageCount + 1;
     if (swapchainDetails.surfaceCapabilities.maxImageCount > 0 && imageCount > swapchainDetails.surfaceCapabilities.maxImageCount) {
         imageCount = swapchainDetails.surfaceCapabilities.maxImageCount;
@@ -133,9 +130,9 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     }
 
     // Print the calculated image count for debugging
-    std::cout << "Final image count for swap chain: " << imageCount << std::endl;
+    // std::cout << "Final image count for swap chain: " << imageCount << std::endl;
 
-    std::cout << "Creating the swap chain..." << std::endl;
+    // std::cout << "Creating the swap chain..." << std::endl;
     VkResult result = vkCreateSwapchainKHR(logicalDevice, &swapChainCreateInfo, nullptr, &swapchain);
     if (result != VK_SUCCESS) {
         std::cerr << "Failed to create a swap chain! Error code: " << result << std::endl;
@@ -143,7 +140,71 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     }
 
     std::cout << "Swap chain created successfully." << std::endl;
-    return true; // Return true if swap chain is created successfully.
+
+    // Store for later reference
+    m_chosenFormat = surfaceFormat.format;
+    m_chosenExtent = extent;
+
+    // Get swap chain images, first count then values.
+    uint32_t swapChainImageCount;
+    vkGetSwapchainImagesKHR(logicalDevice, swapchain, &swapChainImageCount, nullptr);
+    std::vector<VkImage> images(swapChainImageCount);
+    vkGetSwapchainImagesKHR(logicalDevice, swapchain, &swapChainImageCount, images.data());
+
+    for (VkImage image : images)
+    {
+        // Store image handle
+        SwapchainImage swapchainImage = {};
+        swapchainImage.image = image;
+        swapchainImage.imageView = createImageView(logicalDevice, image, m_chosenFormat, VK_IMAGE_ASPECT_COLOR_BIT);
+
+        // Add to swapchain image list
+        swapchainImages.push_back(swapchainImage);
+    }
+    
+    return true; 
+}
+
+VkImageView SwapChainManager::createImageView(VkDevice logicalDevice, VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)
+{
+    VkImageViewCreateInfo viewCreateInfo = {};
+    viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+    viewCreateInfo.image = image;                                       // image to create a view for.
+    viewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;                    // type of image (1D, 2D, 3D, Cube, etc)
+    viewCreateInfo.format = format;                                     // Image format
+    viewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;        // Swizzle effect to change pixel rbg value.
+    viewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;        // allows remapping of rgba components to other rgba values.
+    viewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+    viewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+
+    // Subresources allow the view to view only a part of an image.
+    viewCreateInfo.subresourceRange.aspectMask = aspectFlags;           // which aspect of image to view
+    viewCreateInfo.subresourceRange.baseMipLevel = 0;                   // start mipmap level to view from
+    viewCreateInfo.subresourceRange.levelCount = 1;                     // number of mipmap levels to view
+    viewCreateInfo.subresourceRange.baseArrayLayer = 0;                 // start array level to view from
+    viewCreateInfo.subresourceRange.layerCount = 1;                     // number of array levels to view
+
+    // create image view
+    VkImageView imageView;
+    VkResult result = vkCreateImageView(logicalDevice, &viewCreateInfo, nullptr, &imageView);
+    if (result != VK_SUCCESS)
+    {
+        throw std::runtime_error("Failed to create an Image");
+    }
+    return imageView;
+    
+}
+
+void SwapChainManager::cleanupSwapChain(VkDevice device) {
+
+    for(auto image :  swapchainImages){
+        vkDestroyImageView(device, image.imageView, nullptr);
+    }
+
+    if (swapchain != VK_NULL_HANDLE) {
+        vkDestroySwapchainKHR(device, swapchain, nullptr);
+        swapchain = VK_NULL_HANDLE;  // Reset the handle
+    }
 }
 
 
@@ -221,14 +282,6 @@ VkExtent2D SwapChainManager::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &su
     
 }
 
-void SwapChainManager::cleanupSwapChain(VkDevice device) {
-    if (swapchain != VK_NULL_HANDLE) {
-        vkDestroySwapchainKHR(device, swapchain, nullptr);
-        swapchain = VK_NULL_HANDLE;  // Reset the handle
-    }
-}
-
-#include <iostream>
 
 bool SwapChainManager::isSwapChainAdequate(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface) {
     // Check surface capabilities
@@ -272,5 +325,3 @@ bool SwapChainManager::isSwapChainAdequate(VkPhysicalDevice physicalDevice, VkSu
 
     return isAdequate;
 }
-
-

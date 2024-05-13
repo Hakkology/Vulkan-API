@@ -154,7 +154,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanRenderer.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/vulkanRenderer.h \
  /usr/include/c++/11/set /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/ext/aligned_buffer.h \
  /usr/include/c++/11/bits/node_handle.h \
@@ -194,8 +194,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/vk_video/vulkan_video_codec_av1std_decode.h \
  /usr/include/vk_video/vulkan_video_codec_av1std.h /usr/include/GL/gl.h \
  /usr/include/GL/glext.h /usr/include/KHR/khrplatform.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/deviceManager.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/swapChainManager.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/deviceManager.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/swapChainManager.h \
  /usr/include/c++/11/algorithm /usr/include/c++/11/bits/stl_algo.h \
  /usr/include/c++/11/bits/algorithmfwd.h \
  /usr/include/c++/11/bits/stl_heap.h \
@@ -206,8 +206,8 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/hashtable_policy.h \
  /usr/include/c++/11/bits/enable_special_members.h \
  /usr/include/c++/11/bits/unordered_map.h /usr/include/c++/11/limits \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanUtils.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/queueManager.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/surfaceManager.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/vulkanValidation.h \
- /home/hakan/Desktop/Projects/C++/Vulkan/include/window.h
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/vulkanUtils.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/queueManager.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/surfaceManager.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/vulkanValidation.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/window.h

@@ -5,10 +5,6 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 
-// const std::vector<const char*> deviceExtensions = {
-//     VK_KHR_SWAPCHAIN_EXTENSION_NAME
-// };
-
 
 struct QueueFamilyIndices {
     int graphicsFamily = -1;                            // Graphics Queue Family location.
@@ -23,6 +19,11 @@ struct SwapChainDetails{
     VkSurfaceCapabilitiesKHR surfaceCapabilities;       // Surface Properties e.g. image size/extent.
     std::vector<VkSurfaceFormatKHR> formats;            // Surface Image format e.g. RGBA and size of each colour.
     std::vector<VkPresentModeKHR> presentationModes;    // How images should be presented to screen.
+};
+
+struct SwapchainImage{
+    VkImage image;
+    VkImageView imageView;
 };
 
 namespace VulkanUtils {
