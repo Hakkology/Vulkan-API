@@ -18,14 +18,12 @@ add_executable(Vulkan-Renderer
     src/Engine/queueManager.cpp
     src/Engine/surfaceManager.cpp
     src/Engine/swapChainManager.cpp
+    src/Pipeline/vulkanRenderpass.cpp
     src/Pipeline/vulkanGraphicsPipeline.cpp
     src/Engine/window.cpp
     src/Engine/vulkanUtils.cpp
 
-
     src/vulkanRenderer.cpp
-
-
 )
 
 # Specify directories where the compiler can find headers

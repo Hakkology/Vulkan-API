@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <memory>
 
 #include "vulkanShaderPaths.h"
 
@@ -19,8 +20,8 @@ private:
     VkPipeline graphicsPipeline;
     VkPipelineLayout pipelineLayout;
     VkDevice device;
-    VkRenderPass renderPass;
     VkExtent2D swapChainExtent;
+    VkRenderPass renderPass;
 
     VkShaderModule createShaderModule(const std::vector<char>& code);
     std::vector<char> readShaderFile(const std::string& filename);

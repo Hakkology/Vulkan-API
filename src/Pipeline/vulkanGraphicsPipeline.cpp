@@ -17,29 +17,78 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
 
     // Put shader stage creation info in to array.
     // graphics pipeline creation info requires array of shader stage creates
+    std::cout << "Shader stages are being set." << std::endl;
     VkPipelineShaderStageCreateInfo shaderStages[] = {
         createShaderStageInfo(VK_SHADER_STAGE_VERTEX_BIT, vertexShaderModule),
         createShaderStageInfo(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShaderModule)
     };
 
     // Create pipeline
-    std::cout << "Creating Pipeline..." << std::endl;
-    createVertexInputState();
-    createInputAssemblyState();
-    createViewportState();
-    createDynamicState();
-    createRasterizerState();
-    createMultisampleState();
-    createColorBlendState();
+    std::cout << "Creating Vertex Input State..." << std::endl;
+    VkPipelineVertexInputStateCreateInfo vertexInputState =  createVertexInputState();
+
+    std::cout << "Creating Input Assembly State..." << std::endl;
+    VkPipelineInputAssemblyStateCreateInfo inputAssembly = createInputAssemblyState();
+
+    std::cout << "Creating Viewport State..." << std::endl;
+    VkPipelineViewportStateCreateInfo viewportState = createViewportState();
+
+    std::cout << "Creating Dynamic State..." << std::endl;
+    VkPipelineDynamicStateCreateInfo dynamicState = createDynamicState();
+
+    std::cout << "Creating Rasterization State..." << std::endl;
+    VkPipelineRasterizationStateCreateInfo rasterizationState = createRasterizerState();
+
+    std::cout << "Creating Multisampling State..." << std::endl;
+    VkPipelineMultisampleStateCreateInfo multiSamplingState = createMultisampleState();
+
+    std::cout << "Creating Color Blend State..." << std::endl;
+    VkPipelineColorBlendStateCreateInfo colorBlendState = createColorBlendState();
+
+    std::cout << "Creating pipeline layout info..." << std::endl;
+    VkPipelineLayoutCreateInfo pipelineLayoutInfo = createPipelineLayoutInfo();
     
-    VkResult result = vkCreatePipelineLayout(device, &createPipelineLayoutInfo(), nullptr, &pipelineLayout);
+    VkResult result = vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &pipelineLayout);
     if (result != VK_SUCCESS)
     {
         throw std::runtime_error("Failed to create Pipeline Layout");
     }
+    std::cout << "Graphics Pipeline configured successfully." << std::endl;
     
     createDepthStencilState();
 
+    // Creating graphics pipeline.
+    VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
+    pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+    pipelineCreateInfo.stageCount = 2;                              // number of shader stages
+    pipelineCreateInfo.pStages = shaderStages;
+    pipelineCreateInfo.pVertexInputState = &vertexInputState;       // All the fixed function pipeline states
+    pipelineCreateInfo.pInputAssemblyState = &inputAssembly;
+    pipelineCreateInfo.pViewportState = &viewportState;
+    pipelineCreateInfo.pDynamicState = nullptr;
+    pipelineCreateInfo.pRasterizationState = &rasterizationState;
+    pipelineCreateInfo.pMultisampleState = &multiSamplingState;
+    pipelineCreateInfo.pColorBlendState = &colorBlendState;
+    pipelineCreateInfo.pDepthStencilState = nullptr;
+    pipelineCreateInfo.layout = pipelineLayout;                     // pipeline layout pipeline should use.
+    pipelineCreateInfo.renderPass = renderPass;                     // render pass description the pipeline is compatible with
+    pipelineCreateInfo.subpass = 0;                                 // subpass of render pass to use with pipeline
+    // pipeline derivatives : can create multiple pipelines that derive from one another for optimization.
+    pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;         // Existing pipeline to derive from...
+    pipelineCreateInfo.basePipelineIndex = -1;                      // index of pipeline being created to derive from if multiple pipelines are being created.
+    // You may as well have a pipeline which is 0 and other pipelines can simply be varied from that 0.
+
+    // cache helps you save that data and make new ones from it.
+    // Create graphics pipeline.
+    std::cout << "Creating graphics pipeline..." << std::endl;
+    result = vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &graphicsPipeline);
+    if (result != VK_SUCCESS)
+    {
+        throw std::runtime_error("Failed to create a graphics pipeline.");
+    }
+
+    std::cout << "Graphics pipeline create successfully..." << std::endl;
+    
     // Destroy shader modules, no longer needed after pipeline is created.
     vkDestroyShaderModule(device, fragmentShaderModule, nullptr);
     vkDestroyShaderModule(device, vertexShaderModule, nullptr);
@@ -47,16 +96,16 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
 
 void GraphicsPipeline::cleanup()
 {
-    if (pipelineLayout != VK_NULL_HANDLE) {
-        vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
-        pipelineLayout = VK_NULL_HANDLE;
-        std::cout << "Pipeline layout destroyed." << std::endl;
-    }
-
     if (graphicsPipeline != VK_NULL_HANDLE) {
         vkDestroyPipeline(device, graphicsPipeline, nullptr);
         graphicsPipeline = VK_NULL_HANDLE;
         std::cout << "Graphics pipeline destroyed." << std::endl;
+    }
+
+    if (pipelineLayout != VK_NULL_HANDLE) {
+        vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
+        pipelineLayout = VK_NULL_HANDLE;
+        std::cout << "Pipeline layout destroyed." << std::endl;
     }
 }
 
@@ -202,12 +251,16 @@ VkPipelineLayoutCreateInfo GraphicsPipeline::createPipelineLayoutInfo()
     pipelineLayoutCreateInfo.pSetLayouts = nullptr;
     pipelineLayoutCreateInfo.pushConstantRangeCount = 0;
     pipelineLayoutCreateInfo.pPushConstantRanges = nullptr;   
+
+    return pipelineLayoutCreateInfo;
 }
 
 VkPipelineDepthStencilStateCreateInfo GraphicsPipeline::createDepthStencilState()
 {
+    VkPipelineDepthStencilStateCreateInfo depthStencilStateInfo;
     // Depth stencil testing.
     // TODO: Set up depth stencil testing.
+    return depthStencilStateInfo;
 }
 
 VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
@@ -246,10 +299,10 @@ VkPipelineDynamicStateCreateInfo GraphicsPipeline::createDynamicState()
     // dynamicStateEnables.push_back(VK_DYNAMIC_STATE_SCISSOR);                                // Dynamic scissor: can resize in command buffer with vkCmdSetScissor(commandbuffer, 0 ,1, &scissor)
     // // Do not destroy the pipeline but just pass the updated size to a new image on swapchain.
 
-    // VkPipelineDynamicStateCreateInfo dynamicStateCreateInfo = {};
+    VkPipelineDynamicStateCreateInfo dynamicStateCreateInfo = {};
     // dynamicStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
     // dynamicStateCreateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicStateEnables.size());
     // dynamicStateCreateInfo.pDynamicStates = dynamicStateEnables.data();
 
-    // return dynamicStateCreateInfo;
+    return dynamicStateCreateInfo;
 }

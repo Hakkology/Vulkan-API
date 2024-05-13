@@ -65,11 +65,12 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
             return EXIT_FAILURE;
         }
 
-        // Assume render pass is created somewhere here
-        VkRenderPass renderPass; // This needs to be properly initialized
-
-        // Create the graphics pipeline
-        GraphicsPipeline graphicsPipeline(deviceManager.getLogicalDevice(), renderPass, swapChainManager->getChosenExtent());
+        std::cout << "Creating render pass..." << std::endl;
+        Renderpass renderPass(deviceManager.getLogicalDevice(), swapChainImageFormat);
+        renderPass.createRenderPass();  // Create the render pass
+        
+        std::cout << "Creating graphics pipeline..." << std::endl;
+        GraphicsPipeline graphicsPipeline(deviceManager.getLogicalDevice(), renderPass.getRenderPass(), swapChainManager->getChosenExtent());
         graphicsPipeline.createGraphicsPipeline(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
 
         
@@ -92,9 +93,15 @@ void VulkanRenderer::terminate(){
 
     if (graphicsPipeline) {
         graphicsPipeline->cleanup();
-        graphicsPipeline.reset();  // Reset the unique_ptr, effectively destroying the graphics pipeline.
+        graphicsPipeline.reset();  
     }
 
+    if (renderPass)
+    {
+        renderPass->cleanup();
+        renderPass.reset();
+    }
+    
     if (swapChainManager) {
         swapChainManager->cleanupSwapChain(deviceManager.getLogicalDevice());  
         swapChainManager.reset();  // Reset the unique_ptr, effectively destroying the SwapChainManager

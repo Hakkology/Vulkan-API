@@ -15,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanRenderpass.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanRenderpass.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
