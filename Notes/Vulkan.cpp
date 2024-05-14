@@ -119,11 +119,12 @@ VK_PRESENT_MODE_FIFO_RELAXEd_KHR => As soon as queue is empty, it will start act
 
 Graphics Pipeline
 
-THe process in which graphics pipeline is created is as follows:
+The process in which graphics pipeline is created is as follows:
 
 Vertex, Index buffer => Input Assembler => Vertex Shader => Tesselation => Geometry Shader
 => Rasterization => Fragment shader => Color blending => framebuffer.
 
+General flow -------------
 Input assembler receives the input and forms the vertices.
 Tesselation is used to divide shapes into lower triangles.
 Geometry shader adds further geometry.
@@ -132,12 +133,14 @@ Massive array of pixels are then passed to the fragment shader, where colours ar
 Color blending adds colour and transparency.
 Final stage is the framebuffer.
 
+Data state, SPIR-V for shaders -------------
 pre-compile shader code to intermediate code called SPIR-V and load it to a shader module.
 (Standard Portable Intermediate Representation - Vulkan)
 Compiled from GLSL => glslangValidator.exe (LunarG Vulkan SDK)
 .spv file is created loaded into shader modul passed to info struct.
 Put all shader into structs into list and use in Pipeline Create Info.
 
+Fixed functions required for Graphics pipeline ----------
 Vertex Input => defines layout and format of vertex input data.
 Input Assembly => defines how to assemble vertices to primitives (Tris or lines).
 Viewport & Scissor => how to fit output to image and crop it.
@@ -148,16 +151,17 @@ Multisampling => multisampling information.
 Blending => how to blend fragments at the end of the pipeline.
 Depth Stencil => how to determine depth, stencil culling and writing.
 
-Pipeline layout:
+Pipeline layout ---------
 Layout of the data being given directly to the pipeline for a single draw operation.
 Defines layout of data for "Descriptor sets (uniform buffers)".
 Push Constants => smaller values, similar to descriptor sets. 
 
-Render Pass:
+Render Pass ----------------
 Large operation that handles the execution and outputs of the pipeline.
 Can have multiple smaller subpasses inside it that each use a different pipeline, so you can combine draws together.
 Render passes have multiple attachments to all possible outputs (colour, depth).
 
+Sub Passes -------------
 Sub passes can connect to different pipelines, resulting in different graphic settings.
 Sub passes rely on strict ordering to ensure data is in the right format at the right time.
 Swapchain image being written to will needs to be in a writable format at the stage of subpass (logical).
@@ -166,13 +170,56 @@ Subpass dependencies define stages in pipeline for transitions.
 Implicit transitions, we only say when it should occur.
 We define the layout at each stage.
 
+Framebuffer ---------
 
+Framebuffer is a connection between an image (or images) and the Render pass.
+Attach image or multiple images to framebuffer.
+Render pass outputs fragment data from a pipeline's execution, to images bound to the framebuffers attachment.
+Framebuffer images line up 1-to-1 with the attachments in render pass, order should be right.
 
+Commandbuffer --------
 
+Vulkan works on pre-recording a group of commands and submit them all to a queue at once.
+Commands will usually be in the form of:
+1- Start a render pass.
+2- Bind a pipeline.
+3- Bind vertex/index data.
+4- Bind descripter sets and push constants.
+5- Draw.
+A command can be submitted to begin a new subpass but a new appropriate pipeline should also be added.
 
-    
+Command buffers are not created like most objects in Vulkan. They are allocated from a pool.
+This is a minor memory management concept:
+A pool creates a space of memory partitioned into blocks of the same size, without defining their details.
+Memory pools...
+We can allocate one of these blocks for a command buffer.
+This pool concept is useful for things that are dynamically created and destroyed frequently.
 
-    
+Command buffers cannot be executed directly. They need to be submitted to the appropriate queue.
+In our case, we have a graphics queue so our command buffers must be performing graphical actions, such as render passes.
+If the command buffer is executed, we simply submit it to a queue. The queue will constantly move and execute command buffers.
+Like a conveyer belt.
+
+Synchronization:
+We should not accidentally try to access something twice.
+We draw to swapchain image1 then begin to present it.
+For some reason system lags and the loop returns to drawing image 1.
+While its drawing, the presentation system gets over the lag and tries to display the image whilst its being drawn to.
+This memory clash is unwanted.
+As a fix, Semaphores and Fences are introduced.
+
+Semaphores are flags that state if a resources can be accessed. If they are "signalled" (set to true) then the resource is available to use.
+If it is "unsignalled", then the resource is in use, the program must wait.
+In case of Vulkan, semaphores are used solely on the GPU itself, meaning they only create synchronization between GPU functions.
+Semaphores are to indicated:
+1. When an image has become available following presentation (GPU will not draw until it is available.)
+2. When an image has finished being rendered and is therefore ready to present (the presentation command will await this, until rendering is complete.)
+
+Fences are similar to semaphores, except we have the ability to unsignal a fence and wait on a fence CPU side (helps us block the CPU).
+The GPU can still signal a fence to say a resource has become available. It is then up to us to unsignal when we want to use it.
+vkWaitForFences: This will block the CPU code until the GPU signals the Fence.
+vkResetFences: This will unsignal a fence until the gpu signals it again.
+Fences are to be used to ensure a frame is available, in order to not to flood the queue with too many draw/present commands.
 
 
 

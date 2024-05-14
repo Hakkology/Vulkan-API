@@ -310,6 +310,54 @@ src/Engine/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s
 .PHONY : src/Engine/window.cpp.s
 
+src/Pipeline/vulkanCommandBuffer.o: src/Pipeline/vulkanCommandBuffer.cpp.o
+.PHONY : src/Pipeline/vulkanCommandBuffer.o
+
+# target to build an object file
+src/Pipeline/vulkanCommandBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanCommandBuffer.cpp.o
+.PHONY : src/Pipeline/vulkanCommandBuffer.cpp.o
+
+src/Pipeline/vulkanCommandBuffer.i: src/Pipeline/vulkanCommandBuffer.cpp.i
+.PHONY : src/Pipeline/vulkanCommandBuffer.i
+
+# target to preprocess a source file
+src/Pipeline/vulkanCommandBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanCommandBuffer.cpp.i
+.PHONY : src/Pipeline/vulkanCommandBuffer.cpp.i
+
+src/Pipeline/vulkanCommandBuffer.s: src/Pipeline/vulkanCommandBuffer.cpp.s
+.PHONY : src/Pipeline/vulkanCommandBuffer.s
+
+# target to generate assembly for a file
+src/Pipeline/vulkanCommandBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanCommandBuffer.cpp.s
+.PHONY : src/Pipeline/vulkanCommandBuffer.cpp.s
+
+src/Pipeline/vulkanFrameBuffer.o: src/Pipeline/vulkanFrameBuffer.cpp.o
+.PHONY : src/Pipeline/vulkanFrameBuffer.o
+
+# target to build an object file
+src/Pipeline/vulkanFrameBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanFrameBuffer.cpp.o
+.PHONY : src/Pipeline/vulkanFrameBuffer.cpp.o
+
+src/Pipeline/vulkanFrameBuffer.i: src/Pipeline/vulkanFrameBuffer.cpp.i
+.PHONY : src/Pipeline/vulkanFrameBuffer.i
+
+# target to preprocess a source file
+src/Pipeline/vulkanFrameBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanFrameBuffer.cpp.i
+.PHONY : src/Pipeline/vulkanFrameBuffer.cpp.i
+
+src/Pipeline/vulkanFrameBuffer.s: src/Pipeline/vulkanFrameBuffer.cpp.s
+.PHONY : src/Pipeline/vulkanFrameBuffer.s
+
+# target to generate assembly for a file
+src/Pipeline/vulkanFrameBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanFrameBuffer.cpp.s
+.PHONY : src/Pipeline/vulkanFrameBuffer.cpp.s
+
 src/Pipeline/vulkanGraphicsPipeline.o: src/Pipeline/vulkanGraphicsPipeline.cpp.o
 .PHONY : src/Pipeline/vulkanGraphicsPipeline.o
 
@@ -437,6 +485,12 @@ help:
 	@echo "... src/Engine/window.o"
 	@echo "... src/Engine/window.i"
 	@echo "... src/Engine/window.s"
+	@echo "... src/Pipeline/vulkanCommandBuffer.o"
+	@echo "... src/Pipeline/vulkanCommandBuffer.i"
+	@echo "... src/Pipeline/vulkanCommandBuffer.s"
+	@echo "... src/Pipeline/vulkanFrameBuffer.o"
+	@echo "... src/Pipeline/vulkanFrameBuffer.i"
+	@echo "... src/Pipeline/vulkanFrameBuffer.s"
 	@echo "... src/Pipeline/vulkanGraphicsPipeline.o"
 	@echo "... src/Pipeline/vulkanGraphicsPipeline.i"
 	@echo "... src/Pipeline/vulkanGraphicsPipeline.s"

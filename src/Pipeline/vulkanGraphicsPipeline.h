@@ -10,18 +10,20 @@
 
 class GraphicsPipeline {
 public:
-    GraphicsPipeline(VkDevice device, VkRenderPass renderPass, VkExtent2D swapChainExtent);
+    GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D swapChainExtent);
     ~GraphicsPipeline();
 
     void createGraphicsPipeline(const std::string& vertShaderPath, const std::string& fragShaderPath);
     void cleanup();
+    
+    VkPipeline getGraphicsPipeline() const {return graphicsPipeline;}
 
 private:
     VkPipeline graphicsPipeline;
     VkPipelineLayout pipelineLayout;
     VkDevice device;
     VkExtent2D swapChainExtent;
-    VkRenderPass renderPass;
+    VkRenderPass& renderPass;
 
     VkShaderModule createShaderModule(const std::vector<char>& code);
     std::vector<char> readShaderFile(const std::string& filename);

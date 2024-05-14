@@ -66,13 +66,22 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         }
 
         std::cout << "Creating render pass..." << std::endl;
-        Renderpass renderPass(deviceManager.getLogicalDevice(), swapChainImageFormat);
-        renderPass.createRenderPass();  // Create the render pass
+        renderPass = std::make_unique<Renderpass>(deviceManager.getLogicalDevice(), swapChainImageFormat);
+        renderPass->createRenderPass();  // Create the render pass
         
         std::cout << "Creating graphics pipeline..." << std::endl;
-        GraphicsPipeline graphicsPipeline(deviceManager.getLogicalDevice(), renderPass.getRenderPass(), swapChainManager->getChosenExtent());
-        graphicsPipeline.createGraphicsPipeline(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
+        graphicsPipeline =std::make_unique<GraphicsPipeline>(deviceManager.getLogicalDevice(), renderPass->getRenderPass(), swapChainManager->getChosenExtent());
+        graphicsPipeline->createGraphicsPipeline(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
 
+        std::cout << "Creating frame buffers..." << std::endl;
+        frameBuffer = std::make_unique<FrameManager>(deviceManager.getLogicalDevice(), *swapChainManager, renderPass->getRenderPass());
+        frameBuffer->createFrameBuffers();
+
+        std::cout << "Creating command buffers..." << std::endl;
+        commandBuffer = std::make_unique<CommandManager>(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(), surfaceManager->getSurface(), graphicsPipeline->getGraphicsPipeline());
+        commandBuffer->createCommandPool();
+        commandBuffer->allocateCommandBuffers(frameBuffer->getSwapchainFramebuffers());
+        commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(), renderPass->getRenderPass(), swapChainManager->getChosenExtent());
         
     } catch (const std::runtime_error &e) {
         std::cerr << "ERROR during initialization: " << e.what() << std::endl;
@@ -91,6 +100,18 @@ VulkanRenderer::~VulkanRenderer() {
 
 void VulkanRenderer::terminate(){
 
+    if (commandBuffer)
+    {
+        commandBuffer->cleanup();
+        commandBuffer.reset();
+    }
+    
+    if (frameBuffer)
+    {
+        frameBuffer->cleanup();
+        frameBuffer.reset();
+    }
+    
     if (graphicsPipeline) {
         graphicsPipeline->cleanup();
         graphicsPipeline.reset();  

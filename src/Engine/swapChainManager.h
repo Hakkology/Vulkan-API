@@ -24,6 +24,8 @@ public:
 
     VkFormat getChosenFormat() const { return m_chosenFormat; }
     VkExtent2D getChosenExtent() const { return m_chosenExtent; }
+    VkSwapchainKHR getSwapchain() const {return swapchain; }
+    std::vector<SwapchainImage> getSwapChainImages() const { return swapchainImages;}
 
 private:
 

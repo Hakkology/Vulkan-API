@@ -16,8 +16,8 @@
 #include "vulkanValidation.h"
 #include "vulkanRenderpass.h"
 #include "vulkanGraphicsPipeline.h"
-
-
+#include "vulkanFrameBuffer.h"
+#include "vulkanCommandBuffer.h"
 
 class VulkanRenderer {
 public:
@@ -43,7 +43,8 @@ private:
     std::unique_ptr<SwapChainManager> swapChainManager;
     std::unique_ptr<GraphicsPipeline> graphicsPipeline;
     std::unique_ptr<Renderpass> renderPass;
-
+    std::unique_ptr<FrameManager> frameBuffer;
+    std::unique_ptr<CommandManager> commandBuffer;
 
     VulkanValidation validation;
 

@@ -15,7 +15,7 @@ public:
     void cleanup();
 
     // Get a reference to the render pass
-    VkRenderPass getRenderPass() const { return renderPass; }
+    VkRenderPass& getRenderPass() { return renderPass; }
 
 private:
     VkDevice device;
@@ -26,6 +26,4 @@ private:
     std::vector<VkAttachmentDescription> createAttachmentDescriptions();
     std::vector<VkSubpassDescription> createSubpassDescriptions();
     std::vector<VkSubpassDependency> createSubpassDependencies();
-
-    VkResult initializeRenderPass();
 };

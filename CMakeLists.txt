@@ -19,6 +19,8 @@ add_executable(Vulkan-Renderer
     src/Engine/surfaceManager.cpp
     src/Engine/swapChainManager.cpp
     src/Pipeline/vulkanRenderpass.cpp
+    src/Pipeline/vulkanFrameBuffer.cpp
+    src/Pipeline/vulkanCommandBuffer.cpp
     src/Pipeline/vulkanGraphicsPipeline.cpp
     src/Engine/window.cpp
     src/Engine/vulkanUtils.cpp
