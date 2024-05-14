@@ -22,6 +22,7 @@ add_executable(Vulkan-Renderer
     src/Pipeline/vulkanFrameBuffer.cpp
     src/Pipeline/vulkanCommandBuffer.cpp
     src/Pipeline/vulkanGraphicsPipeline.cpp
+    src/Pipeline/vulkanSyncHandler.cpp
     src/Engine/window.cpp
     src/Engine/vulkanUtils.cpp
 

@@ -406,6 +406,30 @@ src/Pipeline/vulkanRenderpass.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanRenderpass.cpp.s
 .PHONY : src/Pipeline/vulkanRenderpass.cpp.s
 
+src/Pipeline/vulkanSyncHandler.o: src/Pipeline/vulkanSyncHandler.cpp.o
+.PHONY : src/Pipeline/vulkanSyncHandler.o
+
+# target to build an object file
+src/Pipeline/vulkanSyncHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o
+.PHONY : src/Pipeline/vulkanSyncHandler.cpp.o
+
+src/Pipeline/vulkanSyncHandler.i: src/Pipeline/vulkanSyncHandler.cpp.i
+.PHONY : src/Pipeline/vulkanSyncHandler.i
+
+# target to preprocess a source file
+src/Pipeline/vulkanSyncHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.i
+.PHONY : src/Pipeline/vulkanSyncHandler.cpp.i
+
+src/Pipeline/vulkanSyncHandler.s: src/Pipeline/vulkanSyncHandler.cpp.s
+.PHONY : src/Pipeline/vulkanSyncHandler.s
+
+# target to generate assembly for a file
+src/Pipeline/vulkanSyncHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.s
+.PHONY : src/Pipeline/vulkanSyncHandler.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -497,6 +521,9 @@ help:
 	@echo "... src/Pipeline/vulkanRenderpass.o"
 	@echo "... src/Pipeline/vulkanRenderpass.i"
 	@echo "... src/Pipeline/vulkanRenderpass.s"
+	@echo "... src/Pipeline/vulkanSyncHandler.o"
+	@echo "... src/Pipeline/vulkanSyncHandler.i"
+	@echo "... src/Pipeline/vulkanSyncHandler.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

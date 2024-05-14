@@ -18,6 +18,7 @@
 #include "vulkanGraphicsPipeline.h"
 #include "vulkanFrameBuffer.h"
 #include "vulkanCommandBuffer.h"
+#include "vulkanSyncHandler.h"
 
 class VulkanRenderer {
 public:
@@ -28,6 +29,7 @@ public:
     ~VulkanRenderer();
 
     void terminate();
+    void draw();
 
     // Validation functions
     void setValidationEnabled();
@@ -45,11 +47,15 @@ private:
     std::unique_ptr<Renderpass> renderPass;
     std::unique_ptr<FrameManager> frameBuffer;
     std::unique_ptr<CommandManager> commandBuffer;
+    std::unique_ptr<SynchronizationHandler> syncHandler;
 
     VulkanValidation validation;
 
     VkFormat swapChainImageFormat;
     VkExtent2D swapChainExtent;
+
+    int currentFrame = 0;
+    const int maxFramesInFlight = 2;
 
     // Create functions
     bool createInstance();

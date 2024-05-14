@@ -141,4 +141,10 @@ void CommandManager::cleanup() {
     }
 }
 
-
+VkCommandBuffer CommandManager::getCommandBuffer(uint32_t index) const
+{
+    if (index >= commandBuffers.size()) {
+        throw std::out_of_range("Index out of range in getCommandBuffer.");
+    }
+    return commandBuffers[index];
+}

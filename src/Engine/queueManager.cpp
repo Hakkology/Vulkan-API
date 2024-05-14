@@ -16,10 +16,6 @@ bool QueueManager::init(VkDevice logicalDevice, VkPhysicalDevice physicalDevice,
     std::cout << "Queue Manager created successfully." << std::endl;
 }
 
-VkQueue QueueManager::getGraphicsQueue() const {
-    return graphicsQueue;
-}
-
 bool QueueManager::createQueues(VkDevice logicalDevice, QueueFamilyIndices indices) {
     // Assuming there's only one graphics queue to be initialized
     vkGetDeviceQueue(logicalDevice, indices.graphicsFamily, 0, &graphicsQueue);

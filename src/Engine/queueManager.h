@@ -15,7 +15,9 @@ class QueueManager {
 public:
     QueueManager();
     bool init(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
-    VkQueue getGraphicsQueue() const;
+    
+    VkQueue getGraphicsQueue() const {return graphicsQueue;}
+    VkQueue getPresentationQueue() const {return presentationQueue;}
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device) const;
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) const;
 

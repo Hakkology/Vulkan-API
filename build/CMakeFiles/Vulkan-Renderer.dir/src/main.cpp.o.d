@@ -219,4 +219,5 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanShaderPaths.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanFrameBuffer.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanCommandBuffer.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanSyncHandler.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/window.h

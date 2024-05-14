@@ -32,6 +32,7 @@ int main (int argc, char** argv){
     while (!window.shouldClose())
     {
         window.pollEvents();
+        vulkanRenderer.draw();
     }
 
     vulkanRenderer.terminate();
