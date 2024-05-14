@@ -57,5 +57,5 @@ private:
 
     // Support functions
     bool checkInstanceExtensionSupport(std::vector<const char*>* checkExtensions);
-    bool checkValidationLayerSupport(const std::vector<const char*>& validationLayers);
+    static bool checkValidationLayerSupport(const std::vector<const char*>& validationLayers);
 };

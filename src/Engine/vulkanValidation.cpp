@@ -1,7 +1,5 @@
 #include "vulkanValidation.h"
 
-
-
 VulkanValidation::VulkanValidation() : debugMessenger(VK_NULL_HANDLE) {
 }
 
@@ -13,9 +11,12 @@ bool VulkanValidation::setupDebugMessenger(VkInstance instance) {
 
     auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
     if (func != nullptr) {
+        std::cout << "Debug messenger function pointer retrieved successfully." << std::endl;
         return func(instance, &createInfo, nullptr, &debugMessenger) == VK_SUCCESS;
+    } else {
+        std::cerr << "Failed to retrieve debug messenger function pointer." << std::endl;
+        return false;
     }
-    return false;
 }
 
 void VulkanValidation::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo) {

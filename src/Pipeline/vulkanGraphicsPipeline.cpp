@@ -270,8 +270,8 @@ VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
     VkViewport viewport = {};
     viewport.x = 0.0f;                                                                      // x Start coordinates
     viewport.y = 0.0f;                                                                      // y Start coordinate.
-    viewport.width = (float) swapChainExtent.width;                                         // viewport width
-    viewport.height = (float) swapChainExtent.height;                                       // viewport height
+    viewport.width = static_cast<float> (swapChainExtent.width);                                         // viewport width
+    viewport.height = static_cast<float> (swapChainExtent.height);                                       // viewport height
     viewport.minDepth = 0.0f;                                                               // min framebuffer depth
     viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
 

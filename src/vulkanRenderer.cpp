@@ -10,9 +10,11 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
     std::cout << "Starting initialization..." << std::endl;
 
     // Initialize validation layer and debug messenger first if needed
-    if (validation.getValidationLayerState() && !validation.setupDebugMessenger(instance)) {
-        std::cerr << "ERROR: Failed to set up debug messenger!" << std::endl;
-        return EXIT_FAILURE;
+    if (validation.getValidationLayerState()) {
+        if (!checkValidationLayerSupport({"VK_LAYER_KHRONOS_validation"})) {
+            std::cerr << "ERROR: Validation layers requested, but not available!" << std::endl;
+            return EXIT_FAILURE;
+        }
     }
 
     try {
@@ -22,9 +24,13 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
             return EXIT_FAILURE;
         }
         
-        if (validation.getValidationLayerState() && !validation.setupDebugMessenger(instance)) {
-            std::cerr << "ERROR: Failed to set up debug messenger post-instance creation!" << std::endl;
-            return EXIT_FAILURE;
+        // Set up debug messenger if validation layers are enabled
+        std::cout << "Initializing validation module..." << std::endl;
+        if (validation.getValidationLayerState()) {
+            if (!validation.setupDebugMessenger(instance)) {
+                std::cerr << "ERROR: Failed to set up debug messenger!" << std::endl;
+                return EXIT_FAILURE;
+            }
         }
 
         std::cout << "Creating surface..." << std::endl;
@@ -162,31 +168,33 @@ bool VulkanRenderer::createInstance() {
     createInfo.pApplicationInfo = &appInfo;
 
     // Validation layers
-    std::vector<const char*> validationLayers = {"VK_LAYER_KHRONOS_validation"};
+    std::vector<const char*> validationLayers;
     if (validation.getValidationLayerState()) {
-        createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-        createInfo.ppEnabledLayerNames = validationLayers.data();
-
-        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
-        validation.populateDebugMessengerCreateInfo(debugCreateInfo);
-        createInfo.pNext = &debugCreateInfo;  // Chain debug messenger create info
-    } else {
-        createInfo.enabledLayerCount = 0;
-        createInfo.ppEnabledLayerNames = nullptr;
+        validationLayers.push_back("VK_LAYER_KHRONOS_validation");
     }
+    
+    // Resize arrays to correct size
+    createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+    createInfo.ppEnabledLayerNames = validationLayers.data();
 
     // Extensions required by GLFW and potentially by the validation layers
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
     std::vector<const char*> instanceExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+    if (validation.getValidationLayerState()) {
+        instanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME); // Add debug utils extension
+    }
     createInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
     createInfo.ppEnabledExtensionNames = instanceExtensions.data();
-
     // Check instance extensions support
     if (!checkInstanceExtensionSupport(&instanceExtensions)) {
         std::cerr << "ERROR: Vulkan Instance does not support required extensions!" << std::endl;
         return false;
     }
+
+    // Resize arrays to correct size
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
+    createInfo.ppEnabledExtensionNames = instanceExtensions.data();
 
     // Create the Vulkan instance
     VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
@@ -258,7 +266,7 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
     
 }
 
-bool checkValidationLayerSupport(const std::vector<const char*>& validationLayers) {
+bool VulkanRenderer::checkValidationLayerSupport(const std::vector<const char*>& validationLayers) {
     uint32_t layerCount;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
