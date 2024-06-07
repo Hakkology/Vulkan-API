@@ -62,12 +62,12 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     // Find optimal surface values for our swapchain.
     VkSurfaceFormatKHR surfaceFormat = chooseBestSurfaceFormat(swapchainDetails.formats);
     VkPresentModeKHR presentMode = chooseBestPresentationMode(swapchainDetails.presentationModes);
-    VkExtent2D extent = chooseSwapExtent(swapchainDetails.surfaceCapabilities, window);
+    VkExtent2D* extent = new VkExtent2D(chooseSwapExtent(swapchainDetails.surfaceCapabilities, window));
 
     // Log the chosen surface format and presentation mode for verification.
     std::cout << "Surface format chosen: " << surfaceFormat.format << std::endl;
     std::cout << "Presentation mode chosen: " << presentMode << std::endl;
-    std::cout << "Extent width: " << extent.width << ", height: " << extent.height << std::endl;
+    std::cout << "Extent width: " << extent->width << ", height: " << extent->height << std::endl;
 
     // Calculate the number of images in the swap chain. Aim for 1 more than the minimum to allow triple buffering.
     // std::cout << "Calculating image count for swap chain..." << std::endl;
@@ -94,7 +94,7 @@ bool SwapChainManager::createSwapChain(VkPhysicalDevice physicalDevice, VkDevice
     swapChainCreateInfo.imageFormat = surfaceFormat.format;                                     // Swapchain format
     swapChainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;                             // Swapchain color space
     swapChainCreateInfo.presentMode = presentMode;                                              // Swapchain presentation mode
-    swapChainCreateInfo.imageExtent = extent;                                                   // Swapchain image extent
+    swapChainCreateInfo.imageExtent = *extent;                                                   // Swapchain image extent
     swapChainCreateInfo.minImageCount = imageCount;                                             // Swapchain image count
     swapChainCreateInfo.imageArrayLayers = 1;                                                   // amount of layers for each image in chain
     swapChainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;                       // what attachment images will be used as
@@ -214,6 +214,7 @@ void SwapChainManager::cleanupSwapChain(VkDevice device) {
 // colorSpace => graphical theory
 VkSurfaceFormatKHR SwapChainManager::chooseBestSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats)
 {
+    
     // If only 1 format available and is undefined, then this means ALL formats are available (no restrictions).
     if (formats.size() == 1 && formats[0].format == VK_FORMAT_UNDEFINED)
     {
@@ -221,10 +222,13 @@ VkSurfaceFormatKHR SwapChainManager::chooseBestSurfaceFormat(const std::vector<V
     }
     
     // If restricted, search for optimal format.
+    // Prefer R8G8B8A8_UNORM format with SRGB color space
     for(const auto &format: formats)
     {
+        
         if (format.format == VK_FORMAT_R8G8B8A8_UNORM || format.format == VK_FORMAT_B8G8R8A8_UNORM && format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
         {
+            std::cout << "Format: " << format.format << ", Color Space: " << format.colorSpace << std::endl;
             return format;
         }
     }

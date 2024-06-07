@@ -10,7 +10,7 @@
 
 class GraphicsPipeline {
 public:
-    GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D swapChainExtent);
+    GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D& swapChainExtent);
     ~GraphicsPipeline();
 
     void createGraphicsPipeline(const std::string& vertShaderPath, const std::string& fragShaderPath);

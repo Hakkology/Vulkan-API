@@ -1,7 +1,9 @@
 #include "vulkanGraphicsPipeline.h"
 
-GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D swapChainExtent)
-: device(device), renderPass(renderPass), swapChainExtent(swapChainExtent) {}
+GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D& swapChainExtent)
+: device(device), renderPass(renderPass), swapChainExtent(swapChainExtent) {
+    std::cout << "Initialized Graphics Pipeline with swapChainExtent: " << swapChainExtent.width << "x" << swapChainExtent.height << std::endl;
+}
 
 GraphicsPipeline::~GraphicsPipeline() {}
 
@@ -224,6 +226,7 @@ VkPipelineColorBlendStateCreateInfo GraphicsPipeline::createColorBlendState()
     VkPipelineColorBlendAttachmentState colourState = {};                                       // Colours to apply blending to.
     colourState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
     colourState.blendEnable = VK_TRUE;                                                          // Enable blending
+
     // Blending uses equation: (srcCOlorBlendFactor * new colour) colorBlendOp (dstColorBlendFactor * old colour)
     colourState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
     colourState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
@@ -234,6 +237,7 @@ VkPipelineColorBlendStateCreateInfo GraphicsPipeline::createColorBlendState()
     colourState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
     colourState.alphaBlendOp = VK_BLEND_OP_ADD;
     // Summarized: (1* newalpha) + (0* oldalpha)
+
     VkPipelineColorBlendStateCreateInfo colourBlendingCreateInfo = {};
     colourBlendingCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
     colourBlendingCreateInfo.logicOpEnable = VK_FALSE;                                          // Alternative to calculations is to use logical operations.
@@ -268,6 +272,8 @@ VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
 {
     // Viewport & Scissor
     // Create a viewport
+    
+
     VkViewport viewport = {};
     viewport.x = 0.0f;                                                                      // x Start coordinates
     viewport.y = 0.0f;                                                                      // y Start coordinate.

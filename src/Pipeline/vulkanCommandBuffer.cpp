@@ -9,7 +9,7 @@ CommandManager::~CommandManager() {}
 void CommandManager::createCommandPool()
 {
     std::cout << "Command pool being configured." << std::endl;
-
+    
     // Get indices of queue families from device.
     QueueFamilyIndices queueFamilyIndices = VulkanUtils::findQueueFamiliesForSurface(physicalDevice, surface);
 
@@ -19,16 +19,21 @@ void CommandManager::createCommandPool()
         return;
     }
 
+    // Check the address of queueFamilyIndices to see if it's accessible
+    std::cout << "Address of queueFamilyIndices: " << &queueFamilyIndices << std::endl;
+
     // Graphics family queue index.
     VkCommandPoolCreateInfo poolInfo = {};
     poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-    poolInfo.flags = 0;  // Optional flags
+    poolInfo.flags = 0;
     poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily;      // Queue family type that buffers from this command pool will use.
+
+    std::cout << "Using queue family index: " << poolInfo.queueFamilyIndex << std::endl;
 
     // Create a graphics queue family command pool.
     VkResult result = vkCreateCommandPool(device, &poolInfo, nullptr, &graphicsCommandPool);
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
+        std::cerr << "Failed to create a command pool. Error code: " << result << std::endl;
         throw std::runtime_error("Failed to create a command pool.");
     }
 

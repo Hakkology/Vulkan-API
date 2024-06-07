@@ -23,7 +23,7 @@ public:
     bool isSwapChainAdequate(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
 
     VkFormat getChosenFormat() const { return m_chosenFormat; }
-    VkExtent2D getChosenExtent() const { return m_chosenExtent; }
+    VkExtent2D& getChosenExtent() const { return *m_chosenExtent; }
     VkSwapchainKHR getSwapchain() const {return swapchain; }
     std::vector<SwapchainImage> getSwapChainImages() const { return swapchainImages;}
 
@@ -40,6 +40,6 @@ private:
     VkSwapchainKHR swapchain;
 
     VkFormat m_chosenFormat;
-    VkExtent2D m_chosenExtent;
+    VkExtent2D* m_chosenExtent;
     std::vector<SwapchainImage> swapchainImages;
 };

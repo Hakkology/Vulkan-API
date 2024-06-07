@@ -31,9 +31,13 @@ namespace VulkanUtils{
     }
 
     QueueFamilyIndices findQueueFamiliesForSurface(VkPhysicalDevice device, VkSurfaceKHR surface) {
-        // If the stored indices are valid, return them directly
+        std::cout << "Finding queue families for surface." << std::endl;
+
         if (storedIndices.isValid()) {
-            std::cout << "Returning stored queue family indices." << std::endl;
+            
+            std::cout << "Using stored queue family indices." << std::endl;
+            std::cout << "Stored Graphics Family Index: " << storedIndices.graphicsFamily << std::endl;
+            std::cout << "Stored Presentation Family Index: " << storedIndices.presentationFamily << std::endl;
             return storedIndices;
         }
 
@@ -41,6 +45,7 @@ namespace VulkanUtils{
 
         uint32_t queueFamilyCount = 0;
         vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+        std::cout << "Number of queue families: " << queueFamilyCount << std::endl;
 
         if (queueFamilyCount == 0) {
             std::cerr << "No queue families found." << std::endl;
@@ -52,21 +57,29 @@ namespace VulkanUtils{
 
         int i = 0;
         for (const auto& queueFamily : queueFamilyList) {
-            // Graphics queue family
+            std::cout << "Checking queue family " << i << ": Queue Count = " << queueFamily.queueCount
+                    << ", Queue Flags = " << queueFamily.queueFlags << std::endl;
+
             if (queueFamily.queueCount > 0 && (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)) {
                 indices.graphicsFamily = i;
+                std::cout << "Graphics family set to " << i << std::endl;
             }
 
-            // Presentation support check
             VkBool32 presentSupport = false;
             vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
+            std::cout << "Presentation support for family " << i << ": " << (presentSupport ? "Yes" : "No") << std::endl;
+
             if (queueFamily.queueCount > 0 && presentSupport) {
                 indices.presentationFamily = i;
+                std::cout << "Presentation family set to " << i << std::endl;
             }
 
-            // Check if a suitable combination is found
+            std::cout << "Queue Family Indices to be returned - Graphics: " << indices.graphicsFamily
+              << ", Presentation: " << indices.presentationFamily << std::endl;
+
             if (indices.isValid()) {
-                std::cout << "Queue Family " << i << ": Graphics and Presentation Support found." << std::endl;
+                std::cout << "Valid queue families found: Graphics = " << indices.graphicsFamily
+                        << ", Presentation = " << indices.presentationFamily << std::endl;
                 storedIndices = indices; // Store the valid indices
                 break;
             }
