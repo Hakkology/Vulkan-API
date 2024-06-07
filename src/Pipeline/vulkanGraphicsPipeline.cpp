@@ -223,9 +223,8 @@ VkPipelineColorBlendStateCreateInfo GraphicsPipeline::createColorBlendState()
     // Blending decides how to blend a new colour being written to a fragment with the old value.
 
     // Blend attachment State (how blending is handled)
-    VkPipelineColorBlendAttachmentState colourState = {};                                       // Colours to apply blending to.
-    colourState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-    colourState.blendEnable = VK_TRUE;                                                          // Enable blending
+    colourState = {};                                       // Colours to apply blending to.
+    colourState.blendEnable = VK_FALSE;                                                          // Enable blending
 
     // Blending uses equation: (srcCOlorBlendFactor * new colour) colorBlendOp (dstColorBlendFactor * old colour)
     colourState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
@@ -237,6 +236,7 @@ VkPipelineColorBlendStateCreateInfo GraphicsPipeline::createColorBlendState()
     colourState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
     colourState.alphaBlendOp = VK_BLEND_OP_ADD;
     // Summarized: (1* newalpha) + (0* oldalpha)
+    colourState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 
     VkPipelineColorBlendStateCreateInfo colourBlendingCreateInfo = {};
     colourBlendingCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
@@ -273,8 +273,7 @@ VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
     // Viewport & Scissor
     // Create a viewport
     
-
-    VkViewport viewport = {};
+    viewport = {};
     viewport.x = 0.0f;                                                                      // x Start coordinates
     viewport.y = 0.0f;                                                                      // y Start coordinate.
     viewport.width = static_cast<float> (swapChainExtent.width);                                         // viewport width
@@ -285,7 +284,7 @@ VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
     std::cout << "Viewport - Width: " << viewport.width << ", Height: " << viewport.height << std::endl;
 
     // Create a scissor info struct
-    VkRect2D scissor = {};  
+    scissor = {};  
     scissor.offset = {0,0};                                                                 // offset to use region from
     scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
     

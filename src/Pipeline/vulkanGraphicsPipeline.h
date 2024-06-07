@@ -23,6 +23,9 @@ private:
     VkPipelineLayout pipelineLayout;
     VkDevice device;
     VkExtent2D swapChainExtent;
+    VkViewport viewport;
+    VkRect2D scissor;
+    VkPipelineColorBlendAttachmentState colourState;
     VkRenderPass& renderPass;
 
     VkShaderModule createShaderModule(const std::vector<char>& code);
