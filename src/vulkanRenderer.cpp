@@ -94,8 +94,9 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(), renderPass->getRenderPass(), swapChainManager->getChosenExtent());
         
         std::cout << "Initializing synchronization functionality..." << std::endl;
-        syncHandler = std::make_unique<SynchronizationHandler>(deviceManager.getLogicalDevice(), maxFramesInFlight);
-        syncHandler->createSynchronization();
+        // Assuming `frameCount` is defined and represents the number of frames you are managing
+        syncHandler = std::make_unique<SynchronizationHandler>(deviceManager.getLogicalDevice(), 3);
+        syncHandler->createSynchronizationObjects();
 
         
     } catch (const std::runtime_error &e) {
@@ -108,70 +109,17 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
     return 0;
 }
 
-void VulkanRenderer::draw()
-{
-    // 1. Get next available image to draw to and set something to signal when we are finished with the image.
 
-    vkWaitForFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
-    vkResetFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame]);
 
-    uint32_t imageIndex;
-    VkResult result = vkAcquireNextImageKHR(deviceManager.getLogicalDevice(), swapChainManager->getSwapchain(), std::numeric_limits<uint64_t>::max(), syncHandler->imageAvailable[currentFrame], VK_NULL_HANDLE, &imageIndex);
-    if (result != VK_SUCCESS) {
-        throw std::runtime_error("Failed to acquire next image from swap chain!");
-    }
-
-    // 2. Submit command buffer to queue for execution, making sure it waits for the image to be signalled as available before drawing and signal is received.
-
-    VkCommandBuffer commandBuffers[] = { commandBuffer->getCommandBuffer(imageIndex) };
-    VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-    VkSemaphore waitSemaphores[] = { syncHandler->imageAvailable[currentFrame] };
-    VkSemaphore signalSemaphores[] = { syncHandler->renderFinished[currentFrame] };
-    VkSwapchainKHR swapchainPtr[] = { swapChainManager->getSwapchain() };
-
-    // Queue submission information
-
-    VkSubmitInfo submitInfo = {};
-    submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-    submitInfo.waitSemaphoreCount = 1;                          // number of semaphores to wait on
-    submitInfo.pWaitSemaphores = waitSemaphores;                // list of semaphores to wait on.
-    submitInfo.pWaitDstStageMask = waitStages;                  // stages to check semaphores at.
-    submitInfo.commandBufferCount = 1;                          // number of command buffers to submit.
-    submitInfo.pCommandBuffers = commandBuffers;                // command buffer to submit.
-    submitInfo.signalSemaphoreCount = 1;                        // number of semaphores to signal.
-    submitInfo.pSignalSemaphores = signalSemaphores;            //semaphores to signal when command buffer finishes.
-
-    result = vkQueueSubmit(queueManager.getGraphicsQueue(), 1, &submitInfo, syncHandler->inFlightFences[currentFrame]);
-    if (result != VK_SUCCESS)
-    {
-        throw std::runtime_error("Failed to submit command buffer to queue.");
-    }
-
-    // 3. Present image to screen when it has signalled finished rendering.
-    
-    VkPresentInfoKHR presentInfo = {};
-    presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-    presentInfo.waitSemaphoreCount = 1;                             // number of semaphores to wait on.
-    presentInfo.pWaitSemaphores = signalSemaphores;                 // list of semaphores to wait on.
-    presentInfo.swapchainCount = 1;                                 // amount of swapchains.
-    presentInfo.pSwapchains = swapchainPtr;                         // swapchain itself.
-    presentInfo.pImageIndices = &imageIndex;                        // image index in swapchain to be presented.
-
-    // Present Image
-    result = vkQueuePresentKHR(queueManager.getPresentationQueue(), &presentInfo);
-    if (result != VK_SUCCESS)
-    {
-        throw std::runtime_error("Failed to present image.");
-    }
-
-    currentFrame = (currentFrame + 1) % maxFramesInFlight;
-}
 
 void VulkanRenderer::terminate(){
 
-    if (deviceManager.getLogicalDevice() != VK_NULL_HANDLE) {
+    // wait until no actions being run on device.
+    if (deviceManager.getLogicalDevice() != nullptr)
+    {
         vkDeviceWaitIdle(deviceManager.getLogicalDevice());
     }
+
 
     if (syncHandler)
     {
@@ -226,12 +174,82 @@ void VulkanRenderer::terminate(){
     }
 }
 
+
+void VulkanRenderer::draw()
+{
+    // 1. Get next available image to draw to and set something to signal when we are finished with the image.
+    vkWaitForFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
+    vkResetFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame]);
+
+    uint32_t imageIndex;
+    VkResult result = vkAcquireNextImageKHR(deviceManager.getLogicalDevice(), swapChainManager->getSwapchain(), UINT64_MAX, syncHandler->imageAvailableSemaphores[currentFrame], syncHandler->inFlightFences[currentFrame], &imageIndex);
+
+    if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
+        // Handle swap chain recreation or handle as needed
+        throw std::runtime_error("Swap chain is not adequate for presentation.");
+    } else if (result != VK_SUCCESS) {
+        throw std::runtime_error("Failed to acquire next image from swap chain!");
+    }
+
+    // 2. Submit command buffer to queue for execution, making sure it waits for the image to be signalled as available before drawing and signal is received.
+
+    // Wait on the current fence before using the image
+    vkWaitForFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
+    vkResetFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame]);
+
+    VkCommandBuffer commandBuffers[] = { commandBuffer->getCommandBuffer(imageIndex) };
+    VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+    VkSemaphore waitSemaphores[] = { syncHandler->imageAvailableSemaphores[currentFrame] };
+    VkSemaphore signalSemaphores[] = { syncHandler->renderFinishedSemaphores[currentFrame] };
+    VkSwapchainKHR swapchainPtr[] = { swapChainManager->getSwapchain() };
+
+    // Queue submission information
+
+    VkSubmitInfo submitInfo = {};
+    submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+    submitInfo.waitSemaphoreCount = 1;                          // number of semaphores to wait on
+    submitInfo.pWaitSemaphores = waitSemaphores;                // list of semaphores to wait on.
+    submitInfo.pWaitDstStageMask = waitStages;                  // stages to check semaphores at.
+    submitInfo.commandBufferCount = 1;                          // number of command buffers to submit.
+    submitInfo.pCommandBuffers = commandBuffers;                // command buffer to submit.
+    submitInfo.signalSemaphoreCount = 1;                        // number of semaphores to signal.
+    submitInfo.pSignalSemaphores = signalSemaphores;            //semaphores to signal when command buffer finishes.
+
+    result = vkQueueSubmit(queueManager.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+    if (result != VK_SUCCESS)
+    {
+        throw std::runtime_error("Failed to submit command buffer to queue.");
+    }
+
+    // 3. Present image to screen when it has signalled finished rendering.
+    
+
+    VkPresentInfoKHR presentInfo = {};
+    presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+    presentInfo.waitSemaphoreCount = 1;                             // number of semaphores to wait on.
+    presentInfo.pWaitSemaphores = signalSemaphores;                 // list of semaphores to wait on.
+    presentInfo.swapchainCount = 1;                                 // amount of swapchains.
+    presentInfo.pSwapchains = swapchainPtr;                         // swapchain itself.
+    presentInfo.pImageIndices = &imageIndex;                        // image index in swapchain to be presented.
+    presentInfo.pResults = nullptr; 
+
+    // Present Image
+    result = vkQueuePresentKHR(queueManager.getPresentationQueue(), &presentInfo);
+    if (result != VK_SUCCESS)
+    {
+        throw std::runtime_error("Failed to present image.");
+    }
+
+    // Move to the next frame
+    currentFrame = (currentFrame + 1) % syncHandler->frameCount;
+}
+
 bool VulkanRenderer::createInstance() {
     VkApplicationInfo appInfo = {};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = "Vulkan Renderer";
     appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-    appInfo.pEngineName = "Koprulu Engine";
+    appInfo.pEngineName = "Koprulu";
     appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
     appInfo.apiVersion = VK_API_VERSION_1_3;
 

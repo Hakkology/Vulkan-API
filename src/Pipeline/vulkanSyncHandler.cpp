@@ -1,48 +1,54 @@
 #include "vulkanSyncHandler.h"
 
-SynchronizationHandler::SynchronizationHandler(VkDevice device, int maxFramesInFlight)
-    : device(device), maxFramesInFlight(maxFramesInFlight) {}
-
-SynchronizationHandler::~SynchronizationHandler() {
-    cleanup();
+SynchronizationHandler::SynchronizationHandler(VkDevice device, size_t frameCount)
+    : device(device), frameCount(frameCount) {
+    createSynchronizationObjects();  // Optionally, create objects on construction
 }
 
-void SynchronizationHandler::createSynchronization() {
-    imageAvailable.resize(maxFramesInFlight);
-    renderFinished.resize(maxFramesInFlight);
-    inFlightFences.resize(maxFramesInFlight);
+SynchronizationHandler::~SynchronizationHandler() {
+    cleanup();  // Clean up resources in the destructor.
+}
 
-    VkSemaphoreCreateInfo semaphoreCreateInfo = {};
-    semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+void SynchronizationHandler::createSynchronizationObjects() {
+    imageAvailableSemaphores.resize(frameCount);
+    renderFinishedSemaphores.resize(frameCount);
+    inFlightFences.resize(frameCount);
 
-    VkFenceCreateInfo fenceCreateInfo = {};
-    fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-    fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+    VkSemaphoreCreateInfo semaphoreInfo = {};
+    semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-    for (int i = 0; i < maxFramesInFlight; ++i) {
-        if (vkCreateSemaphore(device, &semaphoreCreateInfo, nullptr, &imageAvailable[i]) != VK_SUCCESS ||
-            vkCreateSemaphore(device, &semaphoreCreateInfo, nullptr, &renderFinished[i]) != VK_SUCCESS ||
-            vkCreateFence(device, &fenceCreateInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
+    VkFenceCreateInfo fenceInfo = {};
+    fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+    fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT; // Initialize as signaled
+
+    for (size_t i = 0; i < frameCount; i++) {
+        if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != VK_SUCCESS ||
+            vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != VK_SUCCESS ||
+            vkCreateFence(device, &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
+            cleanup();  // Cleanup in case of failure during initialization
             throw std::runtime_error("Failed to create synchronization objects for a frame!");
         }
     }
 }
 
 void SynchronizationHandler::cleanup() {
-    for (int i = 0; i < maxFramesInFlight; ++i) {
-        if (renderFinished[i] != VK_NULL_HANDLE) {
-            vkDestroySemaphore(device, renderFinished[i], nullptr);
-            renderFinished[i] = VK_NULL_HANDLE;
+    for (auto& semaphore : imageAvailableSemaphores) {
+        if (semaphore != VK_NULL_HANDLE) {
+            vkDestroySemaphore(device, semaphore, nullptr);
+            semaphore = VK_NULL_HANDLE;
         }
-
-        if (imageAvailable[i] != VK_NULL_HANDLE) {
-            vkDestroySemaphore(device, imageAvailable[i], nullptr);
-            imageAvailable[i] = VK_NULL_HANDLE;
+    }
+    for (auto& semaphore : renderFinishedSemaphores) {
+        if (semaphore != VK_NULL_HANDLE) {
+            vkDestroySemaphore(device, semaphore, nullptr);
+            semaphore = VK_NULL_HANDLE;
         }
-
-        if (inFlightFences[i] != VK_NULL_HANDLE) {
-            vkDestroyFence(device, inFlightFences[i], nullptr);
-            inFlightFences[i] = VK_NULL_HANDLE;
+    }
+    for (auto& fence : inFlightFences) {
+        if (fence != VK_NULL_HANDLE) {
+            vkWaitForFences(device, 1, &fence, VK_TRUE, UINT64_MAX); // Wait for fence before destruction
+            vkDestroyFence(device, fence, nullptr);
+            fence = VK_NULL_HANDLE;
         }
     }
 }

@@ -55,7 +55,8 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     }
     std::cout << "Graphics Pipeline configured successfully." << std::endl;
     
-    createDepthStencilState();
+    std::cout << "Creating depth stencil info..." << std::endl;
+    VkPipelineDepthStencilStateCreateInfo depthStencilInfo = createDepthStencilState();
 
     // Creating graphics pipeline.
     VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
@@ -69,7 +70,7 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     pipelineCreateInfo.pRasterizationState = &rasterizationState;
     pipelineCreateInfo.pMultisampleState = &multiSamplingState;
     pipelineCreateInfo.pColorBlendState = &colorBlendState;
-    pipelineCreateInfo.pDepthStencilState = nullptr;
+    pipelineCreateInfo.pDepthStencilState = &depthStencilInfo;
     pipelineCreateInfo.layout = pipelineLayout;                     // pipeline layout pipeline should use.
     pipelineCreateInfo.renderPass = renderPass;                     // render pass description the pipeline is compatible with
     pipelineCreateInfo.subpass = 0;                                 // subpass of render pass to use with pipeline
@@ -275,11 +276,15 @@ VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
     viewport.minDepth = 0.0f;                                                               // min framebuffer depth
     viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
 
+    std::cout << "Viewport - Width: " << viewport.width << ", Height: " << viewport.height << std::endl;
+
     // Create a scissor info struct
     VkRect2D scissor = {};  
     scissor.offset = {0,0};                                                                 // offset to use region from
     scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
     
+    std::cout << "Scissor - Offset X: " << scissor.offset.x << ", Offset Y: " << scissor.offset.y << ", Width: " << scissor.extent.width << ", Height: " << scissor.extent.height << std::endl;
+
     VkPipelineViewportStateCreateInfo viewportStateCreateInfo = {};
     viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
     viewportStateCreateInfo.viewportCount = 1;
