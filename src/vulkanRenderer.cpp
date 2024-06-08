@@ -95,7 +95,7 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         
         std::cout << "Initializing synchronization functionality..." << std::endl;
         // Assuming `frameCount` is defined and represents the number of frames you are managing
-        syncHandler = std::make_unique<SynchronizationHandler>(deviceManager.getLogicalDevice(), 3);
+        syncHandler = std::make_unique<SynchronizationHandler>(deviceManager.getLogicalDevice(), 2);
         syncHandler->createSynchronizationObjects();
 
         
@@ -194,6 +194,8 @@ void VulkanRenderer::draw()
     // 2. Submit command buffer to queue for execution, making sure it waits for the image to be signalled as available before drawing and signal is received.
 
     // Wait on the current fence before using the image
+    // Repeated just before command buffer submission to confirm that all previous operations associated with this frame (like image acquisition) have completed 
+    // and the resources are truly ready for reuse.
     vkWaitForFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
     vkResetFences(deviceManager.getLogicalDevice(), 1, &syncHandler->inFlightFences[currentFrame]);
 
@@ -215,7 +217,7 @@ void VulkanRenderer::draw()
     submitInfo.signalSemaphoreCount = 1;                        // number of semaphores to signal.
     submitInfo.pSignalSemaphores = signalSemaphores;            //semaphores to signal when command buffer finishes.
 
-    result = vkQueueSubmit(queueManager.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+    result = vkQueueSubmit(queueManager.getGraphicsQueue(), 1, &submitInfo, syncHandler->inFlightFences[currentFrame]);
     if (result != VK_SUCCESS)
     {
         throw std::runtime_error("Failed to submit command buffer to queue.");
@@ -223,7 +225,6 @@ void VulkanRenderer::draw()
 
     // 3. Present image to screen when it has signalled finished rendering.
     
-
     VkPresentInfoKHR presentInfo = {};
     presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
     presentInfo.waitSemaphoreCount = 1;                             // number of semaphores to wait on.

@@ -42,7 +42,7 @@ target_include_directories(Vulkan-Renderer PRIVATE
 # Link the Vulkan and GLFW libraries with the executable.
 target_link_libraries(Vulkan-Renderer PRIVATE Vulkan::Vulkan glfw)
 
-# # Enable AddressSanitizer
+# Enable AddressSanitizer
 # target_compile_options(Vulkan-Renderer PRIVATE -fsanitize=address -g)
 # target_link_options(Vulkan-Renderer PRIVATE -fsanitize=address)
 

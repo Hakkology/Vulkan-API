@@ -164,6 +164,7 @@ VkPipelineShaderStageCreateInfo GraphicsPipeline::createShaderStageInfo(VkShader
     return shaderStageInfo;
 }
 
+// Vertex Input, we should put in vertex descriptions when resources are created.
 VkPipelineVertexInputStateCreateInfo GraphicsPipeline::createVertexInputState()
 {
     // Vertex Input 

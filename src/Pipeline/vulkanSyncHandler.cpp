@@ -10,6 +10,8 @@ SynchronizationHandler::~SynchronizationHandler() {
 }
 
 void SynchronizationHandler::createSynchronizationObjects() {
+    // Semaphores handle GPU to GPU synchronization.
+    // Fences handle CPU synchronization.
     imageAvailableSemaphores.resize(frameCount);
     renderFinishedSemaphores.resize(frameCount);
     inFlightFences.resize(frameCount);
