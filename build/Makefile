@@ -310,6 +310,54 @@ src/Engine/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s
 .PHONY : src/Engine/window.cpp.s
 
+src/Pipeline/PipelineUnits/pipelineShaderModule.o: src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineShaderModule.i: src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineShaderModule.s: src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s
+
+src/Pipeline/PipelineUnits/pipelineViewportState.o: src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineViewportState.i: src/Pipeline/PipelineUnits/pipelineViewportState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineViewportState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineViewportState.s: src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s
+
 src/Pipeline/vulkanCommandBuffer.o: src/Pipeline/vulkanCommandBuffer.cpp.o
 .PHONY : src/Pipeline/vulkanCommandBuffer.o
 
@@ -509,6 +557,12 @@ help:
 	@echo "... src/Engine/window.o"
 	@echo "... src/Engine/window.i"
 	@echo "... src/Engine/window.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.s"
 	@echo "... src/Pipeline/vulkanCommandBuffer.o"
 	@echo "... src/Pipeline/vulkanCommandBuffer.i"
 	@echo "... src/Pipeline/vulkanCommandBuffer.s"

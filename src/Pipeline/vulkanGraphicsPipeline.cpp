@@ -3,6 +3,11 @@
 GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D& swapChainExtent)
 : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent) {
     std::cout << "Initialized Graphics Pipeline with swapChainExtent: " << swapChainExtent.width << "x" << swapChainExtent.height << std::endl;
+
+    vertexShaderModule = std::make_unique<PipelineShaderModule>(device, VK_SHADER_STAGE_VERTEX_BIT, VERTEX_SHADER_PATH);
+    fragmentShaderModule = std::make_unique<PipelineShaderModule>(device, VK_SHADER_STAGE_FRAGMENT_BIT, FRAGMENT_SHADER_PATH);
+
+    viewportState = std::make_unique<PipelineViewportState>(device, swapChainExtent);
 }
 
 GraphicsPipeline::~GraphicsPipeline() {}
@@ -10,20 +15,14 @@ GraphicsPipeline::~GraphicsPipeline() {}
 void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath, const std::string &fragShaderPath)
 {
     // Read in SPIR-V code of shaders.
-    auto vertexShaderCode = readShaderFile(vertShaderPath);
-    auto fragmentShaderCode = readShaderFile(fragShaderPath);
-
     // Build Shader Modules to link to graphics pipeline.
-    VkShaderModule vertexShaderModule = createShaderModule(vertexShaderCode);
-    VkShaderModule fragmentShaderModule = createShaderModule(fragmentShaderCode);
-
     // Put shader stage creation info in to array.
     // graphics pipeline creation info requires array of shader stage creates
+    auto vertShaderStageInfo = vertexShaderModule->createShaderStageInfo();
+    auto fragShaderStageInfo = fragmentShaderModule->createShaderStageInfo();
+
     std::cout << "Shader stages are being set." << std::endl;
-    VkPipelineShaderStageCreateInfo shaderStages[] = {
-        createShaderStageInfo(VK_SHADER_STAGE_VERTEX_BIT, vertexShaderModule),
-        createShaderStageInfo(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShaderModule)
-    };
+    VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
 
     // Create pipeline
     std::cout << "Creating Vertex Input State..." << std::endl;
@@ -33,7 +32,7 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     VkPipelineInputAssemblyStateCreateInfo inputAssembly = createInputAssemblyState();
 
     std::cout << "Creating Viewport State..." << std::endl;
-    VkPipelineViewportStateCreateInfo viewportState = createViewportState();
+    const VkPipelineViewportStateCreateInfo* viewportStateInfo = viewportState->getViewportStateCreateInfo();
 
     std::cout << "Creating Dynamic State..." << std::endl;
     VkPipelineDynamicStateCreateInfo dynamicState = createDynamicState();
@@ -67,7 +66,7 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     pipelineCreateInfo.pStages = shaderStages;
     pipelineCreateInfo.pVertexInputState = &vertexInputState;       // All the fixed function pipeline states
     pipelineCreateInfo.pInputAssemblyState = &inputAssembly;
-    pipelineCreateInfo.pViewportState = &viewportState;
+    pipelineCreateInfo.pViewportState = viewportStateInfo;
     pipelineCreateInfo.pDynamicState = nullptr;
     pipelineCreateInfo.pRasterizationState = &rasterizationState;
     pipelineCreateInfo.pMultisampleState = &multiSamplingState;
@@ -93,8 +92,8 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     std::cout << "Graphics pipeline create successfully..." << std::endl;
     
     // Destroy shader modules, no longer needed after pipeline is created.
-    vkDestroyShaderModule(device, fragmentShaderModule, nullptr);
-    vkDestroyShaderModule(device, vertexShaderModule, nullptr);
+    // vkDestroyShaderModule(device, fragmentShaderModule, nullptr);
+    // vkDestroyShaderModule(device, vertexShaderModule, nullptr);
 }
 
 void GraphicsPipeline::cleanup()
@@ -110,58 +109,6 @@ void GraphicsPipeline::cleanup()
         pipelineLayout = VK_NULL_HANDLE;
         std::cout << "Pipeline layout destroyed." << std::endl;
     }
-}
-
-VkShaderModule GraphicsPipeline::createShaderModule(const std::vector<char> &code)
-{
-    VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
-    shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-    shaderModuleCreateInfo.codeSize = code.size();                                      // size of code.
-    shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());      // pointer to code.
-
-    VkShaderModule shaderModule;
-    VkResult result = vkCreateShaderModule(device, &shaderModuleCreateInfo, nullptr, &shaderModule);
-    if (result!= VK_SUCCESS)
-    {
-        throw std::runtime_error("Failed to create a shader module.");
-    }
-
-    return shaderModule;
-    
-}
-
-std::vector<char> GraphicsPipeline::readShaderFile(const std::string &filename)
-{
-    // Open stream from given file
-    // std::ios::binary tells stream to read file as binary
-    // std::ios::ate tells stream to start reading from the eof
-    std::ifstream file(filename, std::ios::binary | std::ios::ate);
-    if (!file.is_open()) {
-        throw std::runtime_error("Failed to open file.");
-    }
-
-    // Get current read position and use to resize file buffer
-    size_t fileSize = (size_t)file.tellg();
-    std::vector<char> fileBuffer(fileSize);
-
-    // Move read position to start of file and read the file data completely.
-    file.seekg(0);
-    file.read(fileBuffer.data(), fileSize);
-    file.close();
-
-    return fileBuffer;
-}
-
-VkPipelineShaderStageCreateInfo GraphicsPipeline::createShaderStageInfo(VkShaderStageFlagBits stage, VkShaderModule shaderModule)
-{
-    // Shader stage creation information --
-    VkPipelineShaderStageCreateInfo shaderStageInfo = {};
-    shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-    shaderStageInfo.stage = stage;                      // Specify the pipeline stage the shader belongs to.
-    shaderStageInfo.module = shaderModule;              // Specify the shader module to use.
-    shaderStageInfo.pName = "main";                     // Entry point of the shader; "main" by default.
-
-    return shaderStageInfo;
 }
 
 // Vertex Input, we should put in vertex descriptions when resources are created.
@@ -269,37 +216,37 @@ VkPipelineDepthStencilStateCreateInfo GraphicsPipeline::createDepthStencilState(
     return depthStencilStateInfo;
 }
 
-VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
-{
-    // Viewport & Scissor
-    // Create a viewport
+// VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
+// {
+//     // Viewport & Scissor
+//     // Create a viewport
     
-    viewport = {};
-    viewport.x = 0.0f;                                                                      // x Start coordinates
-    viewport.y = 0.0f;                                                                      // y Start coordinate.
-    viewport.width = static_cast<float> (swapChainExtent.width);                                         // viewport width
-    viewport.height = static_cast<float> (swapChainExtent.height);                                       // viewport height
-    viewport.minDepth = 0.0f;                                                               // min framebuffer depth
-    viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
+//     viewport = {};
+//     viewport.x = 0.0f;                                                                      // x Start coordinates
+//     viewport.y = 0.0f;                                                                      // y Start coordinate.
+//     viewport.width = static_cast<float> (swapChainExtent.width);                                         // viewport width
+//     viewport.height = static_cast<float> (swapChainExtent.height);                                       // viewport height
+//     viewport.minDepth = 0.0f;                                                               // min framebuffer depth
+//     viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
 
-    std::cout << "Viewport - Width: " << viewport.width << ", Height: " << viewport.height << std::endl;
+//     std::cout << "Viewport - Width: " << viewport.width << ", Height: " << viewport.height << std::endl;
 
-    // Create a scissor info struct
-    scissor = {};  
-    scissor.offset = {0,0};                                                                 // offset to use region from
-    scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
+//     // Create a scissor info struct
+//     scissor = {};  
+//     scissor.offset = {0,0};                                                                 // offset to use region from
+//     scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
     
-    std::cout << "Scissor - Offset X: " << scissor.offset.x << ", Offset Y: " << scissor.offset.y << ", Width: " << scissor.extent.width << ", Height: " << scissor.extent.height << std::endl;
+//     std::cout << "Scissor - Offset X: " << scissor.offset.x << ", Offset Y: " << scissor.offset.y << ", Width: " << scissor.extent.width << ", Height: " << scissor.extent.height << std::endl;
 
-    VkPipelineViewportStateCreateInfo viewportStateCreateInfo = {};
-    viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
-    viewportStateCreateInfo.viewportCount = 1;
-    viewportStateCreateInfo.pViewports = &viewport;
-    viewportStateCreateInfo.scissorCount = 1;
-    viewportStateCreateInfo.pScissors = &scissor;
+//     VkPipelineViewportStateCreateInfo viewportStateCreateInfo = {};
+//     viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+//     viewportStateCreateInfo.viewportCount = 1;
+//     viewportStateCreateInfo.pViewports = &viewport;
+//     viewportStateCreateInfo.scissorCount = 1;
+//     viewportStateCreateInfo.pScissors = &scissor;
 
-    return viewportStateCreateInfo;
-}
+//     return viewportStateCreateInfo;
+// }
 
 VkPipelineDynamicStateCreateInfo GraphicsPipeline::createDynamicState()
 {

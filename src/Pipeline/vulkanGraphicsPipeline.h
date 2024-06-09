@@ -6,7 +6,8 @@
 #include <string>
 #include <memory>
 
-#include "vulkanShaderPaths.h"
+#include "pipelineShaderModule.h"
+#include "pipelineViewportState.h"
 
 class GraphicsPipeline {
 public:
@@ -28,8 +29,11 @@ private:
     VkPipelineColorBlendAttachmentState colourState;
     VkRenderPass& renderPass;
 
-    VkShaderModule createShaderModule(const std::vector<char>& code);
-    std::vector<char> readShaderFile(const std::string& filename);
+    // VkShaderModule createShaderModule(const std::vector<char>& code);
+    // std::vector<char> readShaderFile(const std::string& filename);
+    std::unique_ptr<PipelineViewportState> viewportState;
+    std::unique_ptr<PipelineShaderModule> vertexShaderModule;
+    std::unique_ptr<PipelineShaderModule> fragmentShaderModule;
 
     VkPipelineShaderStageCreateInfo createShaderStageInfo(VkShaderStageFlagBits stage, VkShaderModule shaderModule);
     VkPipelineVertexInputStateCreateInfo createVertexInputState();

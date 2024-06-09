@@ -18,10 +18,15 @@ add_executable(Vulkan-Renderer
     src/Engine/queueManager.cpp
     src/Engine/surfaceManager.cpp
     src/Engine/swapChainManager.cpp
+
     src/Pipeline/vulkanRenderpass.cpp
     src/Pipeline/vulkanFrameBuffer.cpp
     src/Pipeline/vulkanCommandBuffer.cpp
     src/Pipeline/vulkanGraphicsPipeline.cpp
+
+    src/Pipeline/PipelineUnits/pipelineShaderModule.cpp
+    src/Pipeline/PipelineUnits/pipelineViewportState.cpp
+
     src/Pipeline/vulkanSyncHandler.cpp
     src/Engine/window.cpp
     src/Engine/vulkanUtils.cpp
@@ -34,6 +39,7 @@ target_include_directories(Vulkan-Renderer PRIVATE
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/Engine
     ${CMAKE_SOURCE_DIR}/src/Pipeline
+    ${CMAKE_SOURCE_DIR}/src/Pipeline/PipelineUnits
     ${Vulkan_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
     ${GLM_INCLUDE_DIRS}  # GLM include dizini

@@ -221,6 +221,59 @@ vkWaitForFences: This will block the CPU code until the GPU signals the Fence.
 vkResetFences: This will unsignal a fence until the gpu signals it again.
 Fences are to be used to ensure a frame is available, in order to not to flood the queue with too many draw/present commands.
 
+Loading Vertex Data ---------------
+VkPipelineVErtexInputStateCreateInfo
+shader binding information is passed through as this.
+vertex data is represented with a buffer and a device memory.
+Buffer then bound as vkCmd and executed.
+
+Staging Buffers --------------------
+Vertex Buffer:
+Created but does not hold data by itself.
+Describes size of data in memory with usage and queue sharing.
+Holds vertex data, index data, storage data etc.
+Queue sharing is used if a buffer is to be used by multiple queue families simultaneously.
+
+Device Memory:
+Raw data that holds the actual vertex data.
+Memory is allocated from heap on physical device.
+Ask the buffer whats needed and iterate over available memory types to find compatible type.
+VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT: Memory is optimized for Device (GPU) usage, not accessible by the CPU.
+VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT: Memory is accessible by the CPI, map data in application to GPU.
+VK_MEMORY_PROPERTY_HOST_COHERENT_BIT: Data mapping bypass caching commands, mapped data does not need to be flushed to memory.
+
+Mapping Memory ----------------------
+Create buffer, device memory, bind two together.
+vkMapMemory(...) => allows mapping of GPU memory to chosen point in Host memory.
+Create arbitrary point in memory with void pointer, use vkMapMemory with memcpy.
+Unmap with vkUnmapMemory.
+
+vkCmdBindVertexBuffers binds vertex data before draw command.
+vkCmdDraw with vertex count as number of vertices to draw.
+If more data is needed, add another attribute to VkPipelineVertexInputStateCreateInfo.
+Add new input in shader.
+
+Index Buffer ------------------
+For repeated vertices, avoid duplicated code.
+Use numbers to re-reference a vertex from a list of unique vertices. Same process with creating vertex buffers.
+vkCmdBindIndexBuffer instead of vertex buffer.
+vkCmdDrawIndexed draws using indices and takes number of indices to draw.
+
+Staging Buffers consists of using two kinds of memory.
+One that is host visible, one that is GPU only.
+Use command buffer to copy data from one another.
+Host visible part of buffer+memory is staging buffer.
+This would function as a Transfer Source buffer.
+VK_BUFFER_USAGE_TRANSFER_SRC_BIT => source of transfer
+vkMapMemory && vkUnMapMemory
+VK_BUFFER_USAGE_tRANSFER_DST_BIT => destination of transfer
+No need for render pass, no graphical operations.
+vkCmdCopyBuffer => copy one buffer to another, takes source and destination buffers.
+VkBufferCopy => struct that defines offset to copy from, offset to copy to and size of data to copy.
+Command buffer is submitted to queue immediately then destroyed.
+Staging buffer can also be destroyed.
+
+
 
 
 */
