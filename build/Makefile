@@ -358,6 +358,54 @@ src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s
 .PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s
 
+src/Pipeline/PipelineUnits/pipelineDynamicState.o: src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineDynamicState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineDynamicState.i: src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineDynamicState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineDynamicState.s: src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineDynamicState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineDynamicState.cpp.s
+
+src/Pipeline/PipelineUnits/pipelineInputAssemblyState.o: src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineInputAssemblyState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineInputAssemblyState.i: src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineInputAssemblyState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineInputAssemblyState.s: src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineInputAssemblyState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp.s
+
 src/Pipeline/PipelineUnits/pipelineLayoutState.o: src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o
 .PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.o
 
@@ -707,6 +755,12 @@ help:
 	@echo "... src/Pipeline/PipelineUnits/pipelineDepthStencilState.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineDepthStencilState.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineDepthStencilState.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineDynamicState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineDynamicState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineDynamicState.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineInputAssemblyState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineInputAssemblyState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineInputAssemblyState.s"
 	@echo "... src/Pipeline/PipelineUnits/pipelineLayoutState.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineLayoutState.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineLayoutState.s"

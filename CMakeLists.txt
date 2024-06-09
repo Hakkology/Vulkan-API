@@ -28,12 +28,14 @@ add_executable(Vulkan-Renderer
 
     src/Pipeline/PipelineUnits/pipelineShaderModule.cpp
     src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp
+    src/Pipeline/PipelineUnits/pipelineInputAssemblyState.cpp
     src/Pipeline/PipelineUnits/pipelineViewportState.cpp
     src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp
     src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp
     src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp
     src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp
     src/Pipeline/PipelineUnits/pipelineLayoutState.cpp
+    src/Pipeline/PipelineUnits/pipelineDynamicState.cpp
 
     src/Engine/window.cpp
 

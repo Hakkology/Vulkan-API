@@ -23,7 +23,7 @@ void GraphicsPipeline::createGraphicsPipeline()
     auto fragShaderStageInfo = fragmentShaderModule->createShaderStageInfo();
 
     std::cout << "Shader stages are being set." << std::endl;
-    VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
+    VkPipelineShaderStageCreateInfo shaderStagesInfo[] = {vertShaderStageInfo, fragShaderStageInfo};
 
     // Create pipeline
     std::cout << "Creating Vertex Input State..." << std::endl;
@@ -31,14 +31,16 @@ void GraphicsPipeline::createGraphicsPipeline()
     const VkPipelineVertexInputStateCreateInfo* vertexInputStateInfo =  vertexInputState->getVertexInputState();
 
     std::cout << "Creating Input Assembly State..." << std::endl;
-    VkPipelineInputAssemblyStateCreateInfo inputAssembly = createInputAssemblyState();
+    inputAssemblyState = std::make_unique<PipelineInputAssemblyState>();
+    const VkPipelineInputAssemblyStateCreateInfo* inputAssemblyStateInfo = inputAssemblyState->getInputAssemblyStateInfo();
 
     std::cout << "Creating Viewport State..." << std::endl;
     viewportState = std::make_unique<PipelineViewportState>(device, swapChainExtent);
     const VkPipelineViewportStateCreateInfo* viewportStateInfo = viewportState->getViewportStateCreateInfo();
 
     std::cout << "Creating Dynamic State..." << std::endl;
-    VkPipelineDynamicStateCreateInfo dynamicState = createDynamicState();
+    dynamicState = std::make_unique<PipelineDynamicState>();
+    const VkPipelineDynamicStateCreateInfo* dynamicStateInfo = dynamicState->getDynamicStateInfo();
 
     std::cout << "Creating Rasterization State..." << std::endl;
     rasterizationState = std::make_unique<PipelineRasterizerState>();
@@ -65,9 +67,9 @@ void GraphicsPipeline::createGraphicsPipeline()
     VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
     pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     pipelineCreateInfo.stageCount = 2;                              // number of shader stages
-    pipelineCreateInfo.pStages = shaderStages;
+    pipelineCreateInfo.pStages = shaderStagesInfo;
     pipelineCreateInfo.pVertexInputState = vertexInputStateInfo;       // All the fixed function pipeline states
-    pipelineCreateInfo.pInputAssemblyState = &inputAssembly;
+    pipelineCreateInfo.pInputAssemblyState = inputAssemblyStateInfo;
     pipelineCreateInfo.pViewportState = viewportStateInfo;
     pipelineCreateInfo.pDynamicState = nullptr;
     pipelineCreateInfo.pRasterizationState = rasterizationStateInfo;
@@ -81,7 +83,6 @@ void GraphicsPipeline::createGraphicsPipeline()
     pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;         // Existing pipeline to derive from...
     pipelineCreateInfo.basePipelineIndex = -1;                      // index of pipeline being created to derive from if multiple pipelines are being created.
     // You may as well have a pipeline which is 0 and other pipelines can simply be varied from that 0.
-
     // cache helps you save that data and make new ones from it.
 
     // Create graphics pipeline.
@@ -106,90 +107,39 @@ void GraphicsPipeline::cleanup()
 
 void GraphicsPipeline::resetPipelineUnits()
 {
-    if (vertexShaderModule) {
+    if (vertexShaderModule) 
         vertexShaderModule.reset();
-        std::cout << "Vertex shader module destroyed." << std::endl;
-    }
 
-    if (fragmentShaderModule) {
+    if (fragmentShaderModule) 
         fragmentShaderModule.reset();
-        std::cout << "Fragment shader module destroyed." << std::endl;
-    }
 
-    if (vertexInputState) {
+    if (vertexInputState) 
         vertexInputState.reset();
-        std::cout << "Vertex Input state destroyed." << std::endl;
-    }
 
-    if (viewportState) {
+    if (inputAssemblyState) 
+        inputAssemblyState.reset();
+
+    if (viewportState) 
         viewportState.reset();
-        std::cout << "Viewport state destroyed." << std::endl;
-    }
 
-    if (rasterizationState) {
+    if (rasterizationState) 
         rasterizationState.reset();
-        std::cout << "Rasterization state destroyed." << std::endl;
-    }
 
-    if (multisampleState) {
+    if (multisampleState) 
         multisampleState.reset();
-        std::cout << "Multisample state destroyed." << std::endl;
-    }
 
-    if (colorBlendState) {
+    if (colorBlendState) 
         colorBlendState.reset();
-        std::cout << "Color Blend state destroyed." << std::endl;
-    }
 
-    if (depthStencilState) {
+    if (depthStencilState)
         depthStencilState.reset();
-        std::cout << "Depth Stencil state destroyed." << std::endl;
-    }
 
-    if (pipelineLayoutState) {
+    if (pipelineLayoutState) 
         pipelineLayoutState.reset();
-        std::cout << "Depth Stencil state destroyed." << std::endl;
-    }
+
+    if (dynamicState) 
+        dynamicState.reset();
+    
+    std::cout << "All pipeline units are reset." << std::endl;
 }
 
-// // Vertex Input, we should put in vertex descriptions when resources are created.
-// VkPipelineVertexInputStateCreateInfo GraphicsPipeline::createVertexInputState()
-// {
-//     // Vertex Input 
-//     VkPipelineVertexInputStateCreateInfo vertexInputCreateInfo = {};
-//     vertexInputCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-//     vertexInputCreateInfo.vertexBindingDescriptionCount = 0;
-//     vertexInputCreateInfo.pVertexBindingDescriptions = nullptr;                             // list of vertex binding descriptions (data spacing & stride information)
-//     vertexInputCreateInfo.vertexAttributeDescriptionCount = 0;                          
-//     vertexInputCreateInfo.pVertexAttributeDescriptions = nullptr;                           // list of vertex attribute descriptions (data format and where to bind to/from)
-
-//     return vertexInputCreateInfo;
-// }
-
-VkPipelineInputAssemblyStateCreateInfo GraphicsPipeline::createInputAssemblyState()
-{
-    // Input assembly
-    VkPipelineInputAssemblyStateCreateInfo InputAssembly = {};
-    InputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-    InputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;                           // Primitive type to assemble vertices as.
-    InputAssembly.primitiveRestartEnable = VK_FALSE;                                        // Allow overriding of "strip" topology to start new primitives.
-
-    return InputAssembly;
-}
-
-VkPipelineDynamicStateCreateInfo GraphicsPipeline::createDynamicState()
-{
-    // Dynamic State
-    // Dynamic states to enable:
-    // std::vector<VkDynamicState> dynamicStateEnables;
-    // dynamicStateEnables.push_back(VK_DYNAMIC_STATE_VIEWPORT);                               // Dynamic viewport: can resize in command buffer with vkCmdSetViewport(commandbuffer, 0, 1, &viewport)
-    // dynamicStateEnables.push_back(VK_DYNAMIC_STATE_SCISSOR);                                // Dynamic scissor: can resize in command buffer with vkCmdSetScissor(commandbuffer, 0 ,1, &scissor)
-    // // Do not destroy the pipeline but just pass the updated size to a new image on swapchain.
-
-    VkPipelineDynamicStateCreateInfo dynamicStateCreateInfo = {};
-    // dynamicStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-    // dynamicStateCreateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicStateEnables.size());
-    // dynamicStateCreateInfo.pDynamicStates = dynamicStateEnables.data();
-
-    return dynamicStateCreateInfo;
-}
