@@ -310,6 +310,54 @@ src/Engine/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s
 .PHONY : src/Engine/window.cpp.s
 
+src/Pipeline/PipelineUnits/pipelineMultiSampleState.o: src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineMultiSampleState.i: src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineMultiSampleState.s: src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.s
+
+src/Pipeline/PipelineUnits/pipelineRasterizerState.o: src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineRasterizerState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineRasterizerState.i: src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineRasterizerState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineRasterizerState.s: src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineRasterizerState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.s
+
 src/Pipeline/PipelineUnits/pipelineShaderModule.o: src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o
 .PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.o
 
@@ -557,6 +605,12 @@ help:
 	@echo "... src/Engine/window.o"
 	@echo "... src/Engine/window.i"
 	@echo "... src/Engine/window.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineMultiSampleState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineMultiSampleState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineMultiSampleState.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineRasterizerState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineRasterizerState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineRasterizerState.s"
 	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.s"

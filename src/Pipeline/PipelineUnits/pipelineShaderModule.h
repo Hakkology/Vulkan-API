@@ -21,6 +21,7 @@ private:
 
     std::string shaderPath;
     VkShaderStageFlagBits shaderStage;
+    VkPipelineShaderStageCreateInfo shaderStageInfo;
 
     std::vector<char> readShaderFile(const std::string& filename);
     VkShaderModule createShaderModule(const std::string& filename);

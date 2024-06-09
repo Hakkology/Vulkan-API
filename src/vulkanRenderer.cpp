@@ -81,7 +81,7 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         
         std::cout << "Creating graphics pipeline..." << std::endl;
         graphicsPipeline =std::make_unique<GraphicsPipeline>(deviceManager.getLogicalDevice(), renderPass->getRenderPass(), swapChainManager->getChosenExtent());
-        graphicsPipeline->createGraphicsPipeline(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
+        graphicsPipeline->createGraphicsPipeline();
 
         std::cout << "Creating frame buffers..." << std::endl;
         frameBuffer = std::make_unique<FrameManager>(deviceManager.getLogicalDevice(), *swapChainManager, renderPass->getRenderPass());

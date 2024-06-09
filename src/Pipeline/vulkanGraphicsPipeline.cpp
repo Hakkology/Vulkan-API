@@ -3,21 +3,22 @@
 GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass& renderPass, VkExtent2D& swapChainExtent)
 : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent) {
     std::cout << "Initialized Graphics Pipeline with swapChainExtent: " << swapChainExtent.width << "x" << swapChainExtent.height << std::endl;
-
-    vertexShaderModule = std::make_unique<PipelineShaderModule>(device, VK_SHADER_STAGE_VERTEX_BIT, VERTEX_SHADER_PATH);
-    fragmentShaderModule = std::make_unique<PipelineShaderModule>(device, VK_SHADER_STAGE_FRAGMENT_BIT, FRAGMENT_SHADER_PATH);
-
-    viewportState = std::make_unique<PipelineViewportState>(device, swapChainExtent);
 }
 
-GraphicsPipeline::~GraphicsPipeline() {}
+GraphicsPipeline::~GraphicsPipeline() {
+    cleanup();
+}
 
-void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath, const std::string &fragShaderPath)
+void GraphicsPipeline::createGraphicsPipeline()
 {
+    resetPipelineUnits();
     // Read in SPIR-V code of shaders.
     // Build Shader Modules to link to graphics pipeline.
     // Put shader stage creation info in to array.
     // graphics pipeline creation info requires array of shader stage creates
+    vertexShaderModule = std::make_unique<PipelineShaderModule>(device, VK_SHADER_STAGE_VERTEX_BIT, VERTEX_SHADER_PATH);
+    fragmentShaderModule = std::make_unique<PipelineShaderModule>(device, VK_SHADER_STAGE_FRAGMENT_BIT, FRAGMENT_SHADER_PATH);
+
     auto vertShaderStageInfo = vertexShaderModule->createShaderStageInfo();
     auto fragShaderStageInfo = fragmentShaderModule->createShaderStageInfo();
 
@@ -32,16 +33,22 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     VkPipelineInputAssemblyStateCreateInfo inputAssembly = createInputAssemblyState();
 
     std::cout << "Creating Viewport State..." << std::endl;
+    //VkPipelineViewportStateCreateInfo viewportStateInfo = createViewportState();
+    viewportState = std::make_unique<PipelineViewportState>(device, swapChainExtent);
     const VkPipelineViewportStateCreateInfo* viewportStateInfo = viewportState->getViewportStateCreateInfo();
 
     std::cout << "Creating Dynamic State..." << std::endl;
     VkPipelineDynamicStateCreateInfo dynamicState = createDynamicState();
 
     std::cout << "Creating Rasterization State..." << std::endl;
-    VkPipelineRasterizationStateCreateInfo rasterizationState = createRasterizerState();
+    //VkPipelineRasterizationStateCreateInfo rasterizationState = createRasterizerState();
+    rasterizationState = std::make_unique<PipelineRasterizerState>();
+    const VkPipelineRasterizationStateCreateInfo* rasterizationStateInfo = rasterizationState->getRasterizationStateInfo();
 
     std::cout << "Creating Multisampling State..." << std::endl;
-    VkPipelineMultisampleStateCreateInfo multiSamplingState = createMultisampleState();
+    //VkPipelineMultisampleStateCreateInfo multiSamplingState = createMultisampleState();
+    multisampleState = std::make_unique<PipelineMultisampleState>();
+    const VkPipelineMultisampleStateCreateInfo* multisampleStateInfo = multisampleState->getMultisampleState();
 
     std::cout << "Creating Color Blend State..." << std::endl;
     VkPipelineColorBlendStateCreateInfo colorBlendState = createColorBlendState();
@@ -68,8 +75,8 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     pipelineCreateInfo.pInputAssemblyState = &inputAssembly;
     pipelineCreateInfo.pViewportState = viewportStateInfo;
     pipelineCreateInfo.pDynamicState = nullptr;
-    pipelineCreateInfo.pRasterizationState = &rasterizationState;
-    pipelineCreateInfo.pMultisampleState = &multiSamplingState;
+    pipelineCreateInfo.pRasterizationState = rasterizationStateInfo;
+    pipelineCreateInfo.pMultisampleState = multisampleStateInfo;
     pipelineCreateInfo.pColorBlendState = &colorBlendState;
     pipelineCreateInfo.pDepthStencilState = &depthStencilInfo;
     pipelineCreateInfo.layout = pipelineLayout;                     // pipeline layout pipeline should use.
@@ -90,10 +97,6 @@ void GraphicsPipeline::createGraphicsPipeline(const std::string &vertShaderPath,
     }
 
     std::cout << "Graphics pipeline create successfully..." << std::endl;
-    
-    // Destroy shader modules, no longer needed after pipeline is created.
-    // vkDestroyShaderModule(device, fragmentShaderModule, nullptr);
-    // vkDestroyShaderModule(device, vertexShaderModule, nullptr);
 }
 
 void GraphicsPipeline::cleanup()
@@ -108,6 +111,36 @@ void GraphicsPipeline::cleanup()
         vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
         pipelineLayout = VK_NULL_HANDLE;
         std::cout << "Pipeline layout destroyed." << std::endl;
+    }
+
+    resetPipelineUnits();
+}
+
+void GraphicsPipeline::resetPipelineUnits()
+{
+    if (vertexShaderModule) {
+        vertexShaderModule.reset();
+        std::cout << "Vertex shader module destroyed." << std::endl;
+    }
+
+    if (fragmentShaderModule) {
+        fragmentShaderModule.reset();
+        std::cout << "Fragment shader module destroyed." << std::endl;
+    }
+
+    if (viewportState) {
+        viewportState.reset();
+        std::cout << "Viewport state destroyed." << std::endl;
+    }
+
+    if (rasterizationState) {
+        rasterizationState.reset();
+        std::cout << "Rasterization state destroyed." << std::endl;
+    }
+
+    if (multisampleState) {
+        multisampleState.reset();
+        std::cout << "Multisample state destroyed." << std::endl;
     }
 }
 
@@ -136,34 +169,61 @@ VkPipelineInputAssemblyStateCreateInfo GraphicsPipeline::createInputAssemblyStat
     return InputAssembly;
 }
 
-VkPipelineRasterizationStateCreateInfo GraphicsPipeline::createRasterizerState()
-{
-    // Rasterizer
-    VkPipelineRasterizationStateCreateInfo rasterizerCreateInfo = {};
-    rasterizerCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-    rasterizerCreateInfo.depthClampEnable = VK_FALSE;                                           // Change if fragments beyond near/far planes are clipped or clamped.
-    // Device features in logical device must be enabled if this is toggled on.
-    rasterizerCreateInfo.rasterizerDiscardEnable = VK_FALSE;                                    // Whether to discard data and skip rasterizer. NEver creaters fragments, suitable for pipelines without graphics.
-    rasterizerCreateInfo.polygonMode = VK_POLYGON_MODE_FILL;                                    // How to handle filling points between vertices.
-    // GPU features are needed for some.
-    rasterizerCreateInfo.lineWidth = 1.0f;                                                      // How thick lines should be when drawn.
-    rasterizerCreateInfo.cullMode = VK_CULL_MODE_BACK_BIT;                                      // Culling, whether if both sides are rendered.
-    rasterizerCreateInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;                                   // Winding to determine which side is front.
-    rasterizerCreateInfo.depthBiasEnable = VK_FALSE;                                            // Whether to add depth bias to fragments for shadow acne fix.
+// VkPipelineRasterizationStateCreateInfo GraphicsPipeline::createRasterizerState()
+// {
+//     // Rasterizer
+//     VkPipelineRasterizationStateCreateInfo rasterizerCreateInfo = {};
+//     rasterizerCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+//     rasterizerCreateInfo.depthClampEnable = VK_FALSE;                                           // Change if fragments beyond near/far planes are clipped or clamped.
+//     // Device features in logical device must be enabled if this is toggled on.
+//     rasterizerCreateInfo.rasterizerDiscardEnable = VK_FALSE;                                    // Whether to discard data and skip rasterizer. NEver creaters fragments, suitable for pipelines without graphics.
+//     rasterizerCreateInfo.polygonMode = VK_POLYGON_MODE_FILL;                                    // How to handle filling points between vertices.
+//     // GPU features are needed for some.
+//     rasterizerCreateInfo.lineWidth = 1.0f;                                                      // How thick lines should be when drawn.
+//     rasterizerCreateInfo.cullMode = VK_CULL_MODE_BACK_BIT;                                      // Culling, whether if both sides are rendered.
+//     rasterizerCreateInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;                                   // Winding to determine which side is front.
+//     rasterizerCreateInfo.depthBiasEnable = VK_FALSE;                                            // Whether to add depth bias to fragments for shadow acne fix.
 
-    return rasterizerCreateInfo;
-}
+//     return rasterizerCreateInfo;
+// }
 
-VkPipelineMultisampleStateCreateInfo GraphicsPipeline::createMultisampleState()
-{
-    // Multi sampling
-    VkPipelineMultisampleStateCreateInfo multiSamplingCreateInfo = {};
-    multiSamplingCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-    multiSamplingCreateInfo.sampleShadingEnable = VK_FALSE;                                     // Enable multi sampling shading or not.
-    multiSamplingCreateInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;                       // Number of samples to use per fragment.
+// VkPipelineMultisampleStateCreateInfo GraphicsPipeline::createMultisampleState()
+// {
+//     // Multi sampling
+//     VkPipelineMultisampleStateCreateInfo multiSamplingCreateInfo = {};
+//     multiSamplingCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+//     multiSamplingCreateInfo.sampleShadingEnable = VK_FALSE;                                     // Enable multi sampling shading or not.
+//     multiSamplingCreateInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;                       // Number of samples to use per fragment.
 
-    return multiSamplingCreateInfo;
-}
+//     return multiSamplingCreateInfo;
+// }
+
+// VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState() {
+//     // Viewport & Scissor
+
+//     // Create a viewport
+//     viewport.x = 0.0f;                                                                      // x Start coordinates
+//     viewport.y = 0.0f;                                                                      // y Start coordinate.
+//     viewport.width = static_cast<float> (swapChainExtent.width);                                         // viewport width
+//     viewport.height = static_cast<float> (swapChainExtent.height);                                       // viewport height
+//     viewport.minDepth = 0.0f;                                                               // min framebuffer depth
+//     viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
+
+//     // Scissor configuration
+//     scissor.offset = {0,0};                                                                 // offset to use region from
+//     scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
+
+//     std::cout << "Scissor - Offset X: " << scissor.offset.x << ", Offset Y: " << scissor.offset.y << ", Width: " << scissor.extent.width << ", Height: " << scissor.extent.height << std::endl;
+
+//     VkPipelineViewportStateCreateInfo viewportStateCreateInfo = {};
+//     viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+//     viewportStateCreateInfo.viewportCount = 1;
+//     viewportStateCreateInfo.pViewports = &viewport;
+//     viewportStateCreateInfo.scissorCount = 1;
+//     viewportStateCreateInfo.pScissors = &scissor;
+
+//     return viewportStateCreateInfo;
+// }
 
 VkPipelineColorBlendStateCreateInfo GraphicsPipeline::createColorBlendState()
 {
@@ -215,38 +275,6 @@ VkPipelineDepthStencilStateCreateInfo GraphicsPipeline::createDepthStencilState(
     // TODO: Set up depth stencil testing.
     return depthStencilStateInfo;
 }
-
-// VkPipelineViewportStateCreateInfo GraphicsPipeline::createViewportState()
-// {
-//     // Viewport & Scissor
-//     // Create a viewport
-    
-//     viewport = {};
-//     viewport.x = 0.0f;                                                                      // x Start coordinates
-//     viewport.y = 0.0f;                                                                      // y Start coordinate.
-//     viewport.width = static_cast<float> (swapChainExtent.width);                                         // viewport width
-//     viewport.height = static_cast<float> (swapChainExtent.height);                                       // viewport height
-//     viewport.minDepth = 0.0f;                                                               // min framebuffer depth
-//     viewport.maxDepth = 1.0f;                                                               // max framebuffer depth
-
-//     std::cout << "Viewport - Width: " << viewport.width << ", Height: " << viewport.height << std::endl;
-
-//     // Create a scissor info struct
-//     scissor = {};  
-//     scissor.offset = {0,0};                                                                 // offset to use region from
-//     scissor.extent = swapChainExtent;                                                       // extent to describe region to use, starting at offset
-    
-//     std::cout << "Scissor - Offset X: " << scissor.offset.x << ", Offset Y: " << scissor.offset.y << ", Width: " << scissor.extent.width << ", Height: " << scissor.extent.height << std::endl;
-
-//     VkPipelineViewportStateCreateInfo viewportStateCreateInfo = {};
-//     viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
-//     viewportStateCreateInfo.viewportCount = 1;
-//     viewportStateCreateInfo.pViewports = &viewport;
-//     viewportStateCreateInfo.scissorCount = 1;
-//     viewportStateCreateInfo.pScissors = &scissor;
-
-//     return viewportStateCreateInfo;
-// }
 
 VkPipelineDynamicStateCreateInfo GraphicsPipeline::createDynamicState()
 {

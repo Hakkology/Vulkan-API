@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <vector>
 #include <iostream>
+#include <csignal>
 
 #include "vulkanRenderer.h"
 #include "window.h"
@@ -10,8 +11,11 @@
 GLFWwindow* window;
 VulkanRenderer vulkanRenderer;
 
+void signalHandler(int signum);
+
 int main (int argc, char** argv){
 
+    signal(SIGINT, signalHandler);
     // Create window
     Window window ("Vulkan Renderer, 800, 600");
 
@@ -36,7 +40,10 @@ int main (int argc, char** argv){
     }
 
     vulkanRenderer.terminate();
-
     return 0;
+}
 
+void signalHandler(int signum) {
+    vulkanRenderer.terminate();
+    exit(signum);
 }

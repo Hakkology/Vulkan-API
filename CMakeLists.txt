@@ -12,6 +12,7 @@ find_package(glm REQUIRED)
 # Add the executable that will be built from the source files.
 add_executable(Vulkan-Renderer
     src/main.cpp
+    src/Engine/vulkanUtils.cpp
 
     src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp
@@ -23,13 +24,15 @@ add_executable(Vulkan-Renderer
     src/Pipeline/vulkanFrameBuffer.cpp
     src/Pipeline/vulkanCommandBuffer.cpp
     src/Pipeline/vulkanGraphicsPipeline.cpp
+    src/Pipeline/vulkanSyncHandler.cpp
 
     src/Pipeline/PipelineUnits/pipelineShaderModule.cpp
     src/Pipeline/PipelineUnits/pipelineViewportState.cpp
+    src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp
+    src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp
 
-    src/Pipeline/vulkanSyncHandler.cpp
     src/Engine/window.cpp
-    src/Engine/vulkanUtils.cpp
+
 
     src/vulkanRenderer.cpp
 )

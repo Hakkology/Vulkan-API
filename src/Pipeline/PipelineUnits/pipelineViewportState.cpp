@@ -29,6 +29,7 @@ VkPipelineViewportStateCreateInfo PipelineViewportState::createViewportState() {
     std::cout << "Scissor - Offset X: " << scissor.offset.x << ", Offset Y: " << scissor.offset.y << ", Width: " << scissor.extent.width << ", Height: " << scissor.extent.height << std::endl;
 
     viewportStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+    viewportStateCreateInfo.pNext = nullptr;
     viewportStateCreateInfo.viewportCount = 1;
     viewportStateCreateInfo.pViewports = &viewport;
     viewportStateCreateInfo.scissorCount = 1;

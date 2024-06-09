@@ -14,10 +14,13 @@ PipelineShaderModule::~PipelineShaderModule() {
 
 VkShaderModule PipelineShaderModule::createShaderModule(const std::string& filename) {
     auto shaderCode = readShaderFile(filename);
+    if (shaderCode.empty()) {
+        throw std::runtime_error("Shader file is empty or not read correctly.");
+    }
     VkShaderModuleCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-    createInfo.codeSize = shaderCode.size();                                    // size to pointer
-    createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());    // written data
+    createInfo.codeSize = shaderCode.size();
+    createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
 
     VkShaderModule shaderModule;
     if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS) {
@@ -27,7 +30,8 @@ VkShaderModule PipelineShaderModule::createShaderModule(const std::string& filen
 }
 
 VkPipelineShaderStageCreateInfo PipelineShaderModule::createShaderStageInfo() {
-    VkPipelineShaderStageCreateInfo shaderStageInfo{};
+    
+    shaderStageInfo = {};
     shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
     shaderStageInfo.stage = shaderStage;                     // Specify the pipeline stage the shader belongs to.
     shaderStageInfo.module = module;                         // Specify the shader module to use.
