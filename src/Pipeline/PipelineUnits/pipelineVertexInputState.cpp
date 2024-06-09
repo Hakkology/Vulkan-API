@@ -12,6 +12,23 @@ PipelineVertexInputState::~PipelineVertexInputState() {
 void PipelineVertexInputState::createVertexInputState()
 {
     // Vertex Input 
+
+    // How the data for a single vertex (including info such as position, colour, texture coords, normals etc.)
+
+    VkVertexInputBindingDescription bindingDescription = {};
+    bindingDescription.binding = 0;                                                        // Can bind multiple streams of data, this defines which one
+    bindingDescription.stride = sizeof(Vertex);                                            // Size of a single vertex object
+    bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;                            // How to move between data after each vertex.
+                                                                                           // VK_VERTEX_INPUT_RATE_INDEX : Move on to the next vertex
+                                                                                           // VK_VERTEX_INPUT_RATE_INSTANCE : Move to a vertex for the next
+    
+    // How the data for an attribute is defined within a vertex.
+    std::array<VkVertexInputAttributeDescription, 1> attributeDescriptions;
+
+    // Position attributes.
+    attributeDescriptions[0].binding = 0;
+
+
     vertexInputStateInfo = {};
     vertexInputStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
     vertexInputStateInfo.vertexBindingDescriptionCount = 0;
