@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "pipelineShaderModule.h"
+#include "pipelineVertexInputState.h"
 #include "pipelineViewportState.h"
 #include "pipelineRasterizerState.h"
 #include "pipelineMultiSampleState.h"
@@ -43,12 +44,13 @@ private:
     std::unique_ptr<PipelineColorBlendState> colorBlendState;
     std::unique_ptr<PipelineDepthStencilState> depthStencilState;
     std::unique_ptr<PipelineLayout> pipelineLayoutState;
+    std::unique_ptr<PipelineVertexInputState> vertexInputState;
 
     std::unique_ptr<PipelineShaderModule> vertexShaderModule;
     std::unique_ptr<PipelineShaderModule> fragmentShaderModule;
 
     //VkPipelineShaderStageCreateInfo createShaderStageInfo(VkShaderStageFlagBits stage, VkShaderModule shaderModule);
-    VkPipelineVertexInputStateCreateInfo createVertexInputState();
+    //VkPipelineVertexInputStateCreateInfo createVertexInputState();
     VkPipelineInputAssemblyStateCreateInfo createInputAssemblyState();
     //VkPipelineRasterizationStateCreateInfo createRasterizerState();
     //VkPipelineMultisampleStateCreateInfo createMultisampleState();

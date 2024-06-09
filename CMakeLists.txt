@@ -27,6 +27,7 @@ add_executable(Vulkan-Renderer
     src/Pipeline/vulkanSyncHandler.cpp
 
     src/Pipeline/PipelineUnits/pipelineShaderModule.cpp
+    src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp
     src/Pipeline/PipelineUnits/pipelineViewportState.cpp
     src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp
     src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp

@@ -25,6 +25,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanCommandBuffer.cpp.o"

@@ -27,7 +27,8 @@ void GraphicsPipeline::createGraphicsPipeline()
 
     // Create pipeline
     std::cout << "Creating Vertex Input State..." << std::endl;
-    VkPipelineVertexInputStateCreateInfo vertexInputState =  createVertexInputState();
+    vertexInputState = std::make_unique<PipelineVertexInputState>();
+    const VkPipelineVertexInputStateCreateInfo* vertexInputStateInfo =  vertexInputState->getVertexInputState();
 
     std::cout << "Creating Input Assembly State..." << std::endl;
     VkPipelineInputAssemblyStateCreateInfo inputAssembly = createInputAssemblyState();
@@ -65,7 +66,7 @@ void GraphicsPipeline::createGraphicsPipeline()
     pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     pipelineCreateInfo.stageCount = 2;                              // number of shader stages
     pipelineCreateInfo.pStages = shaderStages;
-    pipelineCreateInfo.pVertexInputState = &vertexInputState;       // All the fixed function pipeline states
+    pipelineCreateInfo.pVertexInputState = vertexInputStateInfo;       // All the fixed function pipeline states
     pipelineCreateInfo.pInputAssemblyState = &inputAssembly;
     pipelineCreateInfo.pViewportState = viewportStateInfo;
     pipelineCreateInfo.pDynamicState = nullptr;
@@ -115,6 +116,11 @@ void GraphicsPipeline::resetPipelineUnits()
         std::cout << "Fragment shader module destroyed." << std::endl;
     }
 
+    if (vertexInputState) {
+        vertexInputState.reset();
+        std::cout << "Vertex Input state destroyed." << std::endl;
+    }
+
     if (viewportState) {
         viewportState.reset();
         std::cout << "Viewport state destroyed." << std::endl;
@@ -146,19 +152,19 @@ void GraphicsPipeline::resetPipelineUnits()
     }
 }
 
-// Vertex Input, we should put in vertex descriptions when resources are created.
-VkPipelineVertexInputStateCreateInfo GraphicsPipeline::createVertexInputState()
-{
-    // Vertex Input 
-    VkPipelineVertexInputStateCreateInfo vertexInputCreateInfo = {};
-    vertexInputCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-    vertexInputCreateInfo.vertexBindingDescriptionCount = 0;
-    vertexInputCreateInfo.pVertexBindingDescriptions = nullptr;                             // list of vertex binding descriptions (data spacing & stride information)
-    vertexInputCreateInfo.vertexAttributeDescriptionCount = 0;                          
-    vertexInputCreateInfo.pVertexAttributeDescriptions = nullptr;                           // list of vertex attribute descriptions (data format and where to bind to/from)
+// // Vertex Input, we should put in vertex descriptions when resources are created.
+// VkPipelineVertexInputStateCreateInfo GraphicsPipeline::createVertexInputState()
+// {
+//     // Vertex Input 
+//     VkPipelineVertexInputStateCreateInfo vertexInputCreateInfo = {};
+//     vertexInputCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+//     vertexInputCreateInfo.vertexBindingDescriptionCount = 0;
+//     vertexInputCreateInfo.pVertexBindingDescriptions = nullptr;                             // list of vertex binding descriptions (data spacing & stride information)
+//     vertexInputCreateInfo.vertexAttributeDescriptionCount = 0;                          
+//     vertexInputCreateInfo.pVertexAttributeDescriptions = nullptr;                           // list of vertex attribute descriptions (data format and where to bind to/from)
 
-    return vertexInputCreateInfo;
-}
+//     return vertexInputCreateInfo;
+// }
 
 VkPipelineInputAssemblyStateCreateInfo GraphicsPipeline::createInputAssemblyState()
 {

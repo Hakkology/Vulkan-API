@@ -454,6 +454,30 @@ src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s
 .PHONY : src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s
 
+src/Pipeline/PipelineUnits/pipelineVertexInputState.o: src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineVertexInputState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineVertexInputState.i: src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineVertexInputState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineVertexInputState.s: src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineVertexInputState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s
+
 src/Pipeline/PipelineUnits/pipelineViewportState.o: src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o
 .PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.o
 
@@ -695,6 +719,9 @@ help:
 	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineShaderModule.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineVertexInputState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineVertexInputState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineVertexInputState.s"
 	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.s"

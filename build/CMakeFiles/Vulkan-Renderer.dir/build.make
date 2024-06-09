@@ -251,10 +251,24 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.c
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.s
 
+CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
+CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp
+CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp
+
+CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp > CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.i
+
+CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.s
+
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineViewportState.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineViewportState.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.i: cmake_force
@@ -268,7 +282,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.i: cmake_force
@@ -282,7 +296,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerStat
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.i: cmake_force
@@ -296,7 +310,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleSta
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.i: cmake_force
@@ -310,7 +324,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendStat
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.i: cmake_force
@@ -324,7 +338,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilSt
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o: ../src/Pipeline/PipelineUnits/pipelineLayoutState.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.i: cmake_force
@@ -338,7 +352,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cp
 CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o: ../src/Engine/window.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/Engine/window.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.i: cmake_force
@@ -352,7 +366,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s: cmake_force
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: CMakeFiles/Vulkan-Renderer.dir/flags.make
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: ../src/vulkanRenderer.cpp
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o: CMakeFiles/Vulkan-Renderer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o -MF CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o.d -o CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.o -c /home/hakan/Desktop/Projects/C++/Vulkan/src/vulkanRenderer.cpp
 
 CMakeFiles/Vulkan-Renderer.dir/src/vulkanRenderer.cpp.i: cmake_force
@@ -378,6 +392,7 @@ Vulkan__Renderer_OBJECTS = \
 "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o" \
+"CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o" \
 "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o" \
@@ -403,6 +418,7 @@ Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanCommandBuffer
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineShaderModule.cpp.o
+Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineRasterizerState.cpp.o
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o
@@ -415,7 +431,7 @@ Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/build.make
 Vulkan-Renderer: /usr/lib/x86_64-linux-gnu/libvulkan.so
 Vulkan-Renderer: /usr/lib/x86_64-linux-gnu/libglfw.so.3.3
 Vulkan-Renderer: CMakeFiles/Vulkan-Renderer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX executable Vulkan-Renderer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hakan/Desktop/Projects/C++/Vulkan/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking CXX executable Vulkan-Renderer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Vulkan-Renderer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

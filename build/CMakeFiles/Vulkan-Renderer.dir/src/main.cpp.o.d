@@ -247,6 +247,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanGraphicsPipeline.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineShaderModule.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanShaderPaths.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineVertexInputState.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineViewportState.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineRasterizerState.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineMultiSampleState.h \
