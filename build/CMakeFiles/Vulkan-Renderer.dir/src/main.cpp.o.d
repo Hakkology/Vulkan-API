@@ -250,6 +250,9 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineViewportState.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineRasterizerState.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineMultiSampleState.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineColorBlendState.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineDepthStencilState.h \
+ /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits/pipelineLayoutState.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanFrameBuffer.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanCommandBuffer.h \
  /home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/vulkanSyncHandler.h \

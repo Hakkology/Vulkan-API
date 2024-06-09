@@ -10,6 +10,9 @@
 #include "pipelineViewportState.h"
 #include "pipelineRasterizerState.h"
 #include "pipelineMultiSampleState.h"
+#include "pipelineColorBlendState.h"
+#include "pipelineDepthStencilState.h"
+#include "pipelineLayoutState.h"
 
 class GraphicsPipeline {
 public:
@@ -24,12 +27,12 @@ public:
 
 private:
     VkPipeline graphicsPipeline;
-    VkPipelineLayout pipelineLayout;
+    //VkPipelineLayout pipelineLayout;
     VkDevice device;
     VkExtent2D swapChainExtent;
     // VkViewport viewport;
     // VkRect2D scissor;
-    VkPipelineColorBlendAttachmentState colourState;
+    // VkPipelineColorBlendAttachmentState colourState;
     VkRenderPass& renderPass;
 
     // VkShaderModule createShaderModule(const std::vector<char>& code);
@@ -37,6 +40,9 @@ private:
     std::unique_ptr<PipelineViewportState> viewportState;
     std::unique_ptr<PipelineRasterizerState> rasterizationState;
     std::unique_ptr<PipelineMultisampleState> multisampleState;
+    std::unique_ptr<PipelineColorBlendState> colorBlendState;
+    std::unique_ptr<PipelineDepthStencilState> depthStencilState;
+    std::unique_ptr<PipelineLayout> pipelineLayoutState;
 
     std::unique_ptr<PipelineShaderModule> vertexShaderModule;
     std::unique_ptr<PipelineShaderModule> fragmentShaderModule;
@@ -46,9 +52,9 @@ private:
     VkPipelineInputAssemblyStateCreateInfo createInputAssemblyState();
     //VkPipelineRasterizationStateCreateInfo createRasterizerState();
     //VkPipelineMultisampleStateCreateInfo createMultisampleState();
-    VkPipelineColorBlendStateCreateInfo createColorBlendState();
-    VkPipelineLayoutCreateInfo createPipelineLayoutInfo();
-    VkPipelineDepthStencilStateCreateInfo createDepthStencilState();
+    //VkPipelineColorBlendStateCreateInfo createColorBlendState();
+    //VkPipelineLayoutCreateInfo createPipelineLayoutInfo();
+    //VkPipelineDepthStencilStateCreateInfo createDepthStencilState();
     //VkPipelineViewportStateCreateInfo createViewportState();
     VkPipelineDynamicStateCreateInfo createDynamicState();
 };

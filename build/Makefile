@@ -310,6 +310,78 @@ src/Engine/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/window.cpp.s
 .PHONY : src/Engine/window.cpp.s
 
+src/Pipeline/PipelineUnits/pipelineColorBlendState.o: src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineColorBlendState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineColorBlendState.i: src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineColorBlendState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineColorBlendState.s: src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineColorBlendState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineColorBlendState.cpp.s
+
+src/Pipeline/PipelineUnits/pipelineDepthStencilState.o: src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineDepthStencilState.i: src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineDepthStencilState.s: src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineDepthStencilState.cpp.s
+
+src/Pipeline/PipelineUnits/pipelineLayoutState.o: src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.o
+
+# target to build an object file
+src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o
+.PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.o
+
+src/Pipeline/PipelineUnits/pipelineLayoutState.i: src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.i
+
+# target to preprocess a source file
+src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.i
+.PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.i
+
+src/Pipeline/PipelineUnits/pipelineLayoutState.s: src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.s
+
+# target to generate assembly for a file
+src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.s
+.PHONY : src/Pipeline/PipelineUnits/pipelineLayoutState.cpp.s
+
 src/Pipeline/PipelineUnits/pipelineMultiSampleState.o: src/Pipeline/PipelineUnits/pipelineMultiSampleState.cpp.o
 .PHONY : src/Pipeline/PipelineUnits/pipelineMultiSampleState.o
 
@@ -605,6 +677,15 @@ help:
 	@echo "... src/Engine/window.o"
 	@echo "... src/Engine/window.i"
 	@echo "... src/Engine/window.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineColorBlendState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineColorBlendState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineColorBlendState.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineDepthStencilState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineDepthStencilState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineDepthStencilState.s"
+	@echo "... src/Pipeline/PipelineUnits/pipelineLayoutState.o"
+	@echo "... src/Pipeline/PipelineUnits/pipelineLayoutState.i"
+	@echo "... src/Pipeline/PipelineUnits/pipelineLayoutState.s"
 	@echo "... src/Pipeline/PipelineUnits/pipelineMultiSampleState.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineMultiSampleState.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineMultiSampleState.s"
