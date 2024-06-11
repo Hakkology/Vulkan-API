@@ -108,10 +108,16 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers, VkR
         vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
         // we might have different bind pipelines bound to different set of functions here.
 
+        // temporary.
+        Mesh firstMesh;
+        VkBuffer vertexBuffers[] = {firstMesh.getVertexBuffer()};               // Buffers to bind
+        VkDeviceSize offsets[] = {0};                                           // Offsets into buffers being bound
+        vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);// Command to bind vertex buffer before drawing with them.
+        
         std::cout << "Executing draw command." << std::endl;
         // Execute pipeline
 
-        vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+        vkCmdDraw(commandBuffers[i], firstMesh.getVertexCount(), 1, 0, 0);
 
         std::cout << "Ending renderpass." << std::endl;
         // end render pass

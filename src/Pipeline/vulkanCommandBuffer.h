@@ -5,6 +5,8 @@
 #include <vulkanUtils.h>
 #include <swapChainManager.h>
 
+#include "vulkanMeshHandler.h"
+
 class CommandManager {
 public:
     CommandManager(VkDevice device, VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkPipeline graphicsPipeline);

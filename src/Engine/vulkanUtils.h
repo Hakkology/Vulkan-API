@@ -26,6 +26,10 @@ struct SwapchainImage {
     VkImageView imageView;
 };
 
+struct Vertex{
+    glm::vec3 pos; // vertex position (x, y, z)
+};
+
 namespace VulkanUtils {
     extern QueueFamilyIndices storedIndices;  // Extern declaration.
 

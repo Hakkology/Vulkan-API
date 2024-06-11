@@ -4,18 +4,19 @@
 #include <glm/glm.hpp>
 #include <array>
 
-struct Vertex{
-    glm::vec3 pos; // vertex position (x, y, z)
-};
+#include "vulkanUtils.h"
+
+
 
 class PipelineVertexInputState {
 public:
-    PipelineVertexInputState();
+    PipelineVertexInputState(VkDevice device);
     ~PipelineVertexInputState();
 
     const VkPipelineVertexInputStateCreateInfo* getVertexInputState() const;
 
 private:
+    VkDevice device;
     VkPipelineVertexInputStateCreateInfo vertexInputStateInfo;
     void createVertexInputState();
 };

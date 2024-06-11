@@ -19,6 +19,7 @@
 #include "vulkanFrameBuffer.h"
 #include "vulkanCommandBuffer.h"
 #include "vulkanSyncHandler.h"
+#include "vulkanMeshHandler.h"
 
 class VulkanRenderer {
 public:
@@ -40,6 +41,8 @@ private:
 
     DeviceManager deviceManager;
     QueueManager queueManager;
+
+    Mesh firstMesh;
     
     std::unique_ptr<SurfaceManager> surfaceManager;
     std::unique_ptr<SwapChainManager> swapChainManager;

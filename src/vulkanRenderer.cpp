@@ -56,6 +56,14 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
             return EXIT_FAILURE;
         }
 
+        std::cout << "Creating Mesh" << std::endl;
+        std::vector<Vertex> meshVertices = {
+            {{.0, -0.4, 0}},
+            {{.4, .4, 0}},
+            {{-.4, .4, 0}}
+        };
+        firstMesh = Mesh(deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice(), &meshVertices);
+
         std::cout << "Initializing queue manager..." << std::endl;
         if (!queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(), surfaceManager->getSurface())) {
             std::cerr << "ERROR: Failed to initialize queue manager!" << std::endl;
@@ -119,7 +127,8 @@ void VulkanRenderer::terminate(){
     {
         vkDeviceWaitIdle(deviceManager.getLogicalDevice());
     }
-
+    
+    firstMesh.destroyVertexBuffer();
 
     if (syncHandler)
     {

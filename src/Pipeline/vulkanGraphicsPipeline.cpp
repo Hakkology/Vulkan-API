@@ -27,7 +27,7 @@ void GraphicsPipeline::createGraphicsPipeline()
 
     // Create pipeline
     std::cout << "Creating Vertex Input State..." << std::endl;
-    vertexInputState = std::make_unique<PipelineVertexInputState>();
+    vertexInputState = std::make_unique<PipelineVertexInputState>(device);
     const VkPipelineVertexInputStateCreateInfo* vertexInputStateInfo =  vertexInputState->getVertexInputState();
 
     std::cout << "Creating Input Assembly State..." << std::endl;

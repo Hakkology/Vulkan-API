@@ -19,6 +19,7 @@ add_executable(Vulkan-Renderer
     src/Engine/queueManager.cpp
     src/Engine/surfaceManager.cpp
     src/Engine/swapChainManager.cpp
+    src/Engine/window.cpp
 
     src/Pipeline/vulkanRenderpass.cpp
     src/Pipeline/vulkanFrameBuffer.cpp
@@ -37,9 +38,7 @@ add_executable(Vulkan-Renderer
     src/Pipeline/PipelineUnits/pipelineLayoutState.cpp
     src/Pipeline/PipelineUnits/pipelineDynamicState.cpp
 
-    src/Engine/window.cpp
-
-
+    src/Renderer/vulkanMeshHandler.cpp
     src/vulkanRenderer.cpp
 )
 
@@ -48,6 +47,7 @@ target_include_directories(Vulkan-Renderer PRIVATE
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/Engine
     ${CMAKE_SOURCE_DIR}/src/Pipeline
+    ${CMAKE_SOURCE_DIR}/src/Renderer
     ${CMAKE_SOURCE_DIR}/src/Pipeline/PipelineUnits
     ${Vulkan_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
