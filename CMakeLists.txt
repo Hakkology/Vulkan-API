@@ -39,6 +39,9 @@ add_executable(Vulkan-Renderer
     src/Pipeline/PipelineUnits/pipelineDynamicState.cpp
 
     src/Renderer/vulkanMeshHandler.cpp
+    src/Renderer/vulkanMeshManager.cpp
+    src/Renderer/vulkanMeshDrawer.cpp
+    src/Renderer/vulkanGraphicsInitializer.cpp
     src/vulkanRenderer.cpp
 )
 

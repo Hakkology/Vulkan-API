@@ -37,7 +37,7 @@ void PipelineVertexInputState::createVertexInputState()
 
     vertexInputStateInfo = {};
     vertexInputStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-    vertexInputStateInfo.vertexBindingDescriptionCount = 0;
+    vertexInputStateInfo.vertexBindingDescriptionCount = 1;
     vertexInputStateInfo.pVertexBindingDescriptions = &bindingDescription;                  // list of vertex binding descriptions (data spacing & stride information)
     vertexInputStateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescription.size());                          
     vertexInputStateInfo.pVertexAttributeDescriptions = attributeDescription.data();        // list of vertex attribute descriptions (data format and where to bind to/from)

@@ -13,11 +13,6 @@ Mesh::~Mesh()
     destroyVertexBuffer();
 }
 
-int Mesh::getVertexCount()
-{
-    return 0;
-}
-
 void Mesh::destroyVertexBuffer()
 {
     if (vertexBuffer != VK_NULL_HANDLE)

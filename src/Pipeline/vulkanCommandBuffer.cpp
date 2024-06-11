@@ -65,7 +65,8 @@ void CommandManager::allocateCommandBuffers(std::vector<VkFramebuffer> frameBuff
     std::cout << "Command buffers are allocated successfully." << std::endl;
 }
 
-void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers, VkRenderPass& renderPass, VkExtent2D chosenExtent)
+void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers, VkRenderPass& renderPass, VkExtent2D chosenExtent, 
+                                    MeshDrawer* meshDrawer, MeshManager* meshManager)
 {
     std::cout << "Command recording has begun." << std::endl;
     // Information about how to begin each command buffer.
@@ -81,10 +82,7 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers, VkR
     renderPassBeginInfo.renderArea = {0, 0};                                    // start point of render pass in pixels.
     renderPassBeginInfo.renderArea.extent = chosenExtent;                       // size of region to run render pass on (starting at offset)
 
-    VkClearValue clearValues[]={
-        {.6f, .65f, .4f, 1.0f}
-    };
-
+    VkClearValue clearValues[]={{.6f, .65f, .4f, 1.0f}};
     renderPassBeginInfo.pClearValues = clearValues;                              // list of clear values (TODO: Depth attachment clear value)
     renderPassBeginInfo.clearValueCount = 1;
 
@@ -102,26 +100,10 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers, VkR
         // anything with vkCmd are commands that are being recorded.
         // all our render pass commands are primary pipeline.
         vkCmdBeginRenderPass(commandBuffers[i], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-        std::cout << "Binding the graphics pipeline." << std::endl;
-        // bind render pass to graphics pipeline.
-        vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
-        // we might have different bind pipelines bound to different set of functions here.
-
-        // temporary.
-        Mesh firstMesh;
-        VkBuffer vertexBuffers[] = {firstMesh.getVertexBuffer()};               // Buffers to bind
-        VkDeviceSize offsets[] = {0};                                           // Offsets into buffers being bound
-        vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);// Command to bind vertex buffer before drawing with them.
-        
-        std::cout << "Executing draw command." << std::endl;
-        // Execute pipeline
-
-        vkCmdDraw(commandBuffers[i], firstMesh.getVertexCount(), 1, 0, 0);
-
-        std::cout << "Ending renderpass." << std::endl;
-        // end render pass
-        vkCmdEndRenderPass(commandBuffers[i]);
+        for (auto& meshPair : meshManager->getAllMeshes()) {
+            meshDrawer->drawMesh(commandBuffers[i], meshPair.second.get());
+        }
+        vkCmdEndRenderPass(commandBuffers[i]);          // end render pass
 
         // Stop recording the command buffer.
         result = vkEndCommandBuffer(commandBuffers[i]);
@@ -129,7 +111,6 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers, VkR
         {
             throw std::runtime_error("Failed to stop recording a command buffer.");
         }
-        
     }
     
     std::cout << "Command buffers are recorded successfully." << std::endl;

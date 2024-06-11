@@ -16,10 +16,11 @@ public:
     Mesh(VkPhysicalDevice physicalDevice, VkDevice device, std::vector<Vertex>* vertices);
     ~Mesh();
 
-    int getVertexCount();
+
     void destroyVertexBuffer();
 
     inline VkBuffer getVertexBuffer() {return vertexBuffer;}
+    inline int getVertexCount() {return vertexCount;}
 
 private:
     int vertexCount;

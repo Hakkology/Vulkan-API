@@ -670,6 +670,102 @@ src/Pipeline/vulkanSyncHandler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.s
 .PHONY : src/Pipeline/vulkanSyncHandler.cpp.s
 
+src/Renderer/vulkanGraphicsInitializer.o: src/Renderer/vulkanGraphicsInitializer.cpp.o
+.PHONY : src/Renderer/vulkanGraphicsInitializer.o
+
+# target to build an object file
+src/Renderer/vulkanGraphicsInitializer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.o
+.PHONY : src/Renderer/vulkanGraphicsInitializer.cpp.o
+
+src/Renderer/vulkanGraphicsInitializer.i: src/Renderer/vulkanGraphicsInitializer.cpp.i
+.PHONY : src/Renderer/vulkanGraphicsInitializer.i
+
+# target to preprocess a source file
+src/Renderer/vulkanGraphicsInitializer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.i
+.PHONY : src/Renderer/vulkanGraphicsInitializer.cpp.i
+
+src/Renderer/vulkanGraphicsInitializer.s: src/Renderer/vulkanGraphicsInitializer.cpp.s
+.PHONY : src/Renderer/vulkanGraphicsInitializer.s
+
+# target to generate assembly for a file
+src/Renderer/vulkanGraphicsInitializer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.s
+.PHONY : src/Renderer/vulkanGraphicsInitializer.cpp.s
+
+src/Renderer/vulkanMeshDrawer.o: src/Renderer/vulkanMeshDrawer.cpp.o
+.PHONY : src/Renderer/vulkanMeshDrawer.o
+
+# target to build an object file
+src/Renderer/vulkanMeshDrawer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshDrawer.cpp.o
+.PHONY : src/Renderer/vulkanMeshDrawer.cpp.o
+
+src/Renderer/vulkanMeshDrawer.i: src/Renderer/vulkanMeshDrawer.cpp.i
+.PHONY : src/Renderer/vulkanMeshDrawer.i
+
+# target to preprocess a source file
+src/Renderer/vulkanMeshDrawer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshDrawer.cpp.i
+.PHONY : src/Renderer/vulkanMeshDrawer.cpp.i
+
+src/Renderer/vulkanMeshDrawer.s: src/Renderer/vulkanMeshDrawer.cpp.s
+.PHONY : src/Renderer/vulkanMeshDrawer.s
+
+# target to generate assembly for a file
+src/Renderer/vulkanMeshDrawer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshDrawer.cpp.s
+.PHONY : src/Renderer/vulkanMeshDrawer.cpp.s
+
+src/Renderer/vulkanMeshHandler.o: src/Renderer/vulkanMeshHandler.cpp.o
+.PHONY : src/Renderer/vulkanMeshHandler.o
+
+# target to build an object file
+src/Renderer/vulkanMeshHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshHandler.cpp.o
+.PHONY : src/Renderer/vulkanMeshHandler.cpp.o
+
+src/Renderer/vulkanMeshHandler.i: src/Renderer/vulkanMeshHandler.cpp.i
+.PHONY : src/Renderer/vulkanMeshHandler.i
+
+# target to preprocess a source file
+src/Renderer/vulkanMeshHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshHandler.cpp.i
+.PHONY : src/Renderer/vulkanMeshHandler.cpp.i
+
+src/Renderer/vulkanMeshHandler.s: src/Renderer/vulkanMeshHandler.cpp.s
+.PHONY : src/Renderer/vulkanMeshHandler.s
+
+# target to generate assembly for a file
+src/Renderer/vulkanMeshHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshHandler.cpp.s
+.PHONY : src/Renderer/vulkanMeshHandler.cpp.s
+
+src/Renderer/vulkanMeshManager.o: src/Renderer/vulkanMeshManager.cpp.o
+.PHONY : src/Renderer/vulkanMeshManager.o
+
+# target to build an object file
+src/Renderer/vulkanMeshManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshManager.cpp.o
+.PHONY : src/Renderer/vulkanMeshManager.cpp.o
+
+src/Renderer/vulkanMeshManager.i: src/Renderer/vulkanMeshManager.cpp.i
+.PHONY : src/Renderer/vulkanMeshManager.i
+
+# target to preprocess a source file
+src/Renderer/vulkanMeshManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshManager.cpp.i
+.PHONY : src/Renderer/vulkanMeshManager.cpp.i
+
+src/Renderer/vulkanMeshManager.s: src/Renderer/vulkanMeshManager.cpp.s
+.PHONY : src/Renderer/vulkanMeshManager.s
+
+# target to generate assembly for a file
+src/Renderer/vulkanMeshManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshManager.cpp.s
+.PHONY : src/Renderer/vulkanMeshManager.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -794,6 +890,18 @@ help:
 	@echo "... src/Pipeline/vulkanSyncHandler.o"
 	@echo "... src/Pipeline/vulkanSyncHandler.i"
 	@echo "... src/Pipeline/vulkanSyncHandler.s"
+	@echo "... src/Renderer/vulkanGraphicsInitializer.o"
+	@echo "... src/Renderer/vulkanGraphicsInitializer.i"
+	@echo "... src/Renderer/vulkanGraphicsInitializer.s"
+	@echo "... src/Renderer/vulkanMeshDrawer.o"
+	@echo "... src/Renderer/vulkanMeshDrawer.i"
+	@echo "... src/Renderer/vulkanMeshDrawer.s"
+	@echo "... src/Renderer/vulkanMeshHandler.o"
+	@echo "... src/Renderer/vulkanMeshHandler.i"
+	@echo "... src/Renderer/vulkanMeshHandler.s"
+	@echo "... src/Renderer/vulkanMeshManager.o"
+	@echo "... src/Renderer/vulkanMeshManager.i"
+	@echo "... src/Renderer/vulkanMeshManager.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <vulkan/vulkan.h>
+#include <glm/glm.hpp>
 
 struct QueueFamilyIndices {
     int graphicsFamily = -1;  // Graphics Queue Family location.

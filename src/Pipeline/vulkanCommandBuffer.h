@@ -6,6 +6,8 @@
 #include <swapChainManager.h>
 
 #include "vulkanMeshHandler.h"
+#include "vulkanMeshManager.h"
+#include "vulkanMeshDrawer.h"
 
 class CommandManager {
 public:
@@ -14,7 +16,7 @@ public:
 
     void createCommandPool();
     void allocateCommandBuffers(std::vector<VkFramebuffer> frameBuffers);
-    void recordCommands(std::vector<VkFramebuffer> frameBuffers, VkRenderPass& renderpass, VkExtent2D chosenExtent);
+    void recordCommands(std::vector<VkFramebuffer> frameBuffers, VkRenderPass& renderPass, VkExtent2D chosenExtent, MeshDrawer* meshDrawer, MeshManager* meshManager);
     void cleanup();
 
     // Getters

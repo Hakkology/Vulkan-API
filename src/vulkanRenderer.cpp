@@ -56,14 +56,6 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
             return EXIT_FAILURE;
         }
 
-        std::cout << "Creating Mesh" << std::endl;
-        std::vector<Vertex> meshVertices = {
-            {{.0, -0.4, 0}},
-            {{.4, .4, 0}},
-            {{-.4, .4, 0}}
-        };
-        firstMesh = Mesh(deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice(), &meshVertices);
-
         std::cout << "Initializing queue manager..." << std::endl;
         if (!queueManager.init(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(), surfaceManager->getSurface())) {
             std::cerr << "ERROR: Failed to initialize queue manager!" << std::endl;
@@ -91,6 +83,17 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         graphicsPipeline =std::make_unique<GraphicsPipeline>(deviceManager.getLogicalDevice(), renderPass->getRenderPass(), swapChainManager->getChosenExtent());
         graphicsPipeline->createGraphicsPipeline();
 
+        std::cout << "Initializing Mesh Manager..." << std::endl;
+        auto meshManager = std::make_unique<MeshManager>(deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice());
+
+        // MeshDrawer initialization
+        std::cout << "Initializing Mesh Drawer..." << std::endl;
+        auto meshDrawer = std::make_unique<MeshDrawer>(deviceManager.getLogicalDevice(), renderPass->getRenderPass(), graphicsPipeline->getGraphicsPipeline());
+
+        std::cout << "Initializing graphics" << std::endl;
+        graphics = std::make_unique<GraphicsInitializer>(instance, deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
+        graphics->addInitialMeshes(*meshManager);
+
         std::cout << "Creating frame buffers..." << std::endl;
         frameBuffer = std::make_unique<FrameManager>(deviceManager.getLogicalDevice(), *swapChainManager, renderPass->getRenderPass());
         frameBuffer->createFrameBuffers();
@@ -99,13 +102,12 @@ int VulkanRenderer::init(GLFWwindow* newWindow) {
         commandBuffer = std::make_unique<CommandManager>(deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(), surfaceManager->getSurface(), graphicsPipeline->getGraphicsPipeline());
         commandBuffer->createCommandPool();
         commandBuffer->allocateCommandBuffers(frameBuffer->getSwapchainFramebuffers());
-        commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(), renderPass->getRenderPass(), swapChainManager->getChosenExtent());
+        commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(), renderPass->getRenderPass(), swapChainManager->getChosenExtent(), meshDrawer.get(), meshManager.get());
         
         std::cout << "Initializing synchronization functionality..." << std::endl;
         // Assuming `frameCount` is defined and represents the number of frames you are managing
         syncHandler = std::make_unique<SynchronizationHandler>(deviceManager.getLogicalDevice(), 2);
         syncHandler->createSynchronizationObjects();
-
         
     } catch (const std::runtime_error &e) {
         std::cerr << "ERROR during initialization: " << e.what() << std::endl;
@@ -128,7 +130,21 @@ void VulkanRenderer::terminate(){
         vkDeviceWaitIdle(deviceManager.getLogicalDevice());
     }
     
-    firstMesh.destroyVertexBuffer();
+    if (meshDrawer)
+    {
+        meshDrawer.reset();
+    }
+    
+    if (meshManager)
+    {
+        meshManager.reset();
+    }
+
+    if (graphics)
+    {
+        graphics.reset();
+    }
+    
 
     if (syncHandler)
     {

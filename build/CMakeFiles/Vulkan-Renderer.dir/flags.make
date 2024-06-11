@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/hakan/Desktop/Projects/C++/Vulkan/src -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Engine -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits -I/usr/lib
+CXX_INCLUDES = -I/home/hakan/Desktop/Projects/C++/Vulkan/src -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Engine -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Renderer -I/home/hakan/Desktop/Projects/C++/Vulkan/src/Pipeline/PipelineUnits -I/usr/lib
 
 CXX_FLAGS = -std=gnu++17
 

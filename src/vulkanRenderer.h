@@ -20,6 +20,9 @@
 #include "vulkanCommandBuffer.h"
 #include "vulkanSyncHandler.h"
 #include "vulkanMeshHandler.h"
+#include "vulkanMeshManager.h"
+#include "vulkanMeshDrawer.h"
+#include "vulkanGraphicsInitializer.h"
 
 class VulkanRenderer {
 public:
@@ -41,8 +44,6 @@ private:
 
     DeviceManager deviceManager;
     QueueManager queueManager;
-
-    Mesh firstMesh;
     
     std::unique_ptr<SurfaceManager> surfaceManager;
     std::unique_ptr<SwapChainManager> swapChainManager;
@@ -51,6 +52,10 @@ private:
     std::unique_ptr<FrameManager> frameBuffer;
     std::unique_ptr<CommandManager> commandBuffer;
     std::unique_ptr<SynchronizationHandler> syncHandler;
+
+    std::unique_ptr<MeshManager> meshManager;
+    std::unique_ptr<MeshDrawer> meshDrawer;
+    std::unique_ptr<GraphicsInitializer> graphics;
 
     VulkanValidation validation;
 
