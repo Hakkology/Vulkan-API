@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/surfaceManager.cpp.o"

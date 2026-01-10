@@ -8,13 +8,16 @@
 
 class MeshDrawer {
 public:
-    MeshDrawer(VkDevice device, VkRenderPass renderPass, VkPipeline graphicsPipeline);
-    ~MeshDrawer();
+  MeshDrawer(VkDevice device, VkRenderPass renderPass,
+             VkPipeline graphicsPipeline, VkPipelineLayout pipelineLayout);
+  ~MeshDrawer();
 
-    void drawMesh(VkCommandBuffer commandBuffer, Mesh* mesh);
+  void drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
+                const glm::mat4 &mvp);
 
 private:
-    VkDevice device;
-    VkRenderPass renderPass;
-    VkPipeline graphicsPipeline;
+  VkDevice device;
+  VkRenderPass renderPass;
+  VkPipeline graphicsPipeline;
+  VkPipelineLayout pipelineLayout;
 };

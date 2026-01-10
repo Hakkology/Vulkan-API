@@ -98,17 +98,22 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     meshManager = std::make_unique<MeshManager>(
         deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice());
 
+    std::cout << "Initializing Input Manager..." << std::endl;
+    inputManager = std::make_unique<InputManager>();
+    inputManager->init(window);
+
     // MeshDrawer initialization
     std::cout << "Initializing Mesh Drawer..." << std::endl;
     meshDrawer = std::make_unique<MeshDrawer>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
-        graphicsPipeline->getGraphicsPipeline());
+        graphicsPipeline->getGraphicsPipeline(),
+        graphicsPipeline->getPipelineLayout());
 
     std::cout << "Initializing graphics" << std::endl;
     graphics = std::make_unique<GraphicsInitializer>(
         instance, deviceManager.getLogicalDevice(),
         deviceManager.getPhysicalDevice());
-    graphics->addInitialMeshes(*meshManager);
+    graphics->addInitialMeshes(*meshManager, ShapeType::CUBE);
 
     std::cout << "Creating frame buffers..." << std::endl;
     frameBuffer = std::make_unique<FrameManager>(
@@ -123,10 +128,9 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     commandBuffer->createCommandPool();
     commandBuffer->allocateCommandBuffers(
         frameBuffer->getSwapchainFramebuffers());
-    commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(),
-                                  renderPass->getRenderPass(),
-                                  swapChainManager->getChosenExtent(),
-                                  meshDrawer.get(), meshManager.get());
+    // commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(),
+    // renderPass->getRenderPass(), swapChainManager->getChosenExtent(),
+    // meshDrawer.get(), meshManager.get());
 
     std::cout << "Initializing synchronization functionality..." << std::endl;
     // Assuming `frameCount` is defined and represents the number of frames you
@@ -214,41 +218,51 @@ void VulkanRenderer::terminate() {
 }
 
 void VulkanRenderer::draw() {
-  // 1. Get next available image to draw to and set something to signal when we
-  // are finished with the image.
+  // std::cout << "Draw frame start" << std::endl;
+  // Update Input
+  inputManager->update(0.016f);
+
+  // Calculate MVP
+  float aspectRatio =
+      (float)swapChainExtent.width / (float)swapChainExtent.height;
+  glm::mat4 view = inputManager->getViewMatrix();
+  glm::mat4 projection = inputManager->getProjectionMatrix(aspectRatio);
+  glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
+  glm::mat4 mvp = projection * view * model;
+
+  // std::cout << "Waiting for fences..." << std::endl;
+  // 1. Get next available image
   vkWaitForFences(deviceManager.getLogicalDevice(), 1,
                   &syncHandler->inFlightFences[currentFrame], VK_TRUE,
                   UINT64_MAX);
-  vkResetFences(deviceManager.getLogicalDevice(), 1,
-                &syncHandler->inFlightFences[currentFrame]);
 
+  // std::cout << "Acquiring next image..." << std::endl;
   uint32_t imageIndex;
   VkResult result = vkAcquireNextImageKHR(
       deviceManager.getLogicalDevice(), swapChainManager->getSwapchain(),
       UINT64_MAX, syncHandler->imageAvailableSemaphores[currentFrame],
-      syncHandler->inFlightFences[currentFrame], &imageIndex);
+      VK_NULL_HANDLE, &imageIndex);
 
   if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
-    // Handle swap chain recreation or handle as needed
     throw std::runtime_error("Swap chain is not adequate for presentation.");
   } else if (result != VK_SUCCESS) {
     throw std::runtime_error("Failed to acquire next image from swap chain!");
   }
 
-  // 2. Submit command buffer to queue for execution, making sure it waits for
-  // the image to be signalled as available before drawing and signal is
-  // received.
-
-  // Wait on the current fence before using the image
-  // Repeated just before command buffer submission to confirm that all previous
-  // operations associated with this frame (like image acquisition) have
-  // completed and the resources are truly ready for reuse.
-  vkWaitForFences(deviceManager.getLogicalDevice(), 1,
-                  &syncHandler->inFlightFences[currentFrame], VK_TRUE,
-                  UINT64_MAX);
+  // std::cout << "Resetting fences..." << std::endl;
+  // Reset fences only after we know we are submitting
   vkResetFences(deviceManager.getLogicalDevice(), 1,
                 &syncHandler->inFlightFences[currentFrame]);
 
+  // std::cout << "Recording command buffer..." << std::endl;
+  // 2. Record Command Buffer for this frame
+  commandBuffer->recordCommand(
+      imageIndex, frameBuffer->getSwapchainFramebuffers()[imageIndex],
+      renderPass->getRenderPass(), swapChainManager->getChosenExtent(),
+      meshDrawer.get(), meshManager.get(), mvp);
+
+  // std::cout << "Submitting queue..." << std::endl;
+  // 3. Submit
   VkCommandBuffer commandBuffers[] = {
       commandBuffer->getCommandBuffer(imageIndex)};
   VkPipelineStageFlags waitStages[] = {
@@ -259,18 +273,15 @@ void VulkanRenderer::draw() {
       syncHandler->renderFinishedSemaphores[currentFrame]};
   VkSwapchainKHR swapchainPtr[] = {swapChainManager->getSwapchain()};
 
-  // Queue submission information
-
   VkSubmitInfo submitInfo = {};
   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-  submitInfo.waitSemaphoreCount = 1; // number of semaphores to wait on
-  submitInfo.pWaitSemaphores = waitSemaphores; // list of semaphores to wait on.
-  submitInfo.pWaitDstStageMask = waitStages;   // stages to check semaphores at.
-  submitInfo.commandBufferCount = 1; // number of command buffers to submit.
-  submitInfo.pCommandBuffers = commandBuffers; // command buffer to submit.
-  submitInfo.signalSemaphoreCount = 1; // number of semaphores to signal.
-  submitInfo.pSignalSemaphores =
-      signalSemaphores; // semaphores to signal when command buffer finishes.
+  submitInfo.waitSemaphoreCount = 1;
+  submitInfo.pWaitSemaphores = waitSemaphores;
+  submitInfo.pWaitDstStageMask = waitStages;
+  submitInfo.commandBufferCount = 1;
+  submitInfo.pCommandBuffers = commandBuffers;
+  submitInfo.signalSemaphoreCount = 1;
+  submitInfo.pSignalSemaphores = signalSemaphores;
 
   result = vkQueueSubmit(queueManager.getGraphicsQueue(), 1, &submitInfo,
                          syncHandler->inFlightFences[currentFrame]);
@@ -278,26 +289,21 @@ void VulkanRenderer::draw() {
     throw std::runtime_error("Failed to submit command buffer to queue.");
   }
 
-  // 3. Present image to screen when it has signalled finished rendering.
-
+  // 4. Present
   VkPresentInfoKHR presentInfo = {};
   presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-  presentInfo.waitSemaphoreCount = 1; // number of semaphores to wait on.
-  presentInfo.pWaitSemaphores =
-      signalSemaphores;                   // list of semaphores to wait on.
-  presentInfo.swapchainCount = 1;         // amount of swapchains.
-  presentInfo.pSwapchains = swapchainPtr; // swapchain itself.
-  presentInfo.pImageIndices =
-      &imageIndex; // image index in swapchain to be presented.
+  presentInfo.waitSemaphoreCount = 1;
+  presentInfo.pWaitSemaphores = signalSemaphores;
+  presentInfo.swapchainCount = 1;
+  presentInfo.pSwapchains = swapchainPtr;
+  presentInfo.pImageIndices = &imageIndex;
   presentInfo.pResults = nullptr;
 
-  // Present Image
   result = vkQueuePresentKHR(queueManager.getPresentationQueue(), &presentInfo);
   if (result != VK_SUCCESS) {
     throw std::runtime_error("Failed to present image.");
   }
 
-  // Move to the next frame
   currentFrame = (currentFrame + 1) % syncHandler->frameCount;
 }
 

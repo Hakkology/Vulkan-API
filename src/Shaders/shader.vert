@@ -16,7 +16,11 @@ layout (location = 0) in vec3 pos; // Output colour for vertex (location is requ
 //     vec3(0.0, 0.0, 1.0)
 // );
 
+layout(push_constant) uniform PushConsts {
+    mat4 mvp;
+} pushConsts;
+
 void main(){
-    gl_Position = vec4(pos, 1);
+    gl_Position = pushConsts.mvp * vec4(pos, 1.0);
     //fragColour = colours[gl_VertexIndex];
 }

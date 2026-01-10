@@ -13,6 +13,7 @@ find_package(glm REQUIRED)
 add_executable(Vulkan-Renderer
     src/main.cpp
     src/Engine/vulkanUtils.cpp
+    src/Engine/inputManager.cpp
 
     src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp

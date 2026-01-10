@@ -166,6 +166,30 @@ src/Engine/deviceManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.s
 .PHONY : src/Engine/deviceManager.cpp.s
 
+src/Engine/inputManager.o: src/Engine/inputManager.cpp.o
+.PHONY : src/Engine/inputManager.o
+
+# target to build an object file
+src/Engine/inputManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o
+.PHONY : src/Engine/inputManager.cpp.o
+
+src/Engine/inputManager.i: src/Engine/inputManager.cpp.i
+.PHONY : src/Engine/inputManager.i
+
+# target to preprocess a source file
+src/Engine/inputManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.i
+.PHONY : src/Engine/inputManager.cpp.i
+
+src/Engine/inputManager.s: src/Engine/inputManager.cpp.s
+.PHONY : src/Engine/inputManager.s
+
+# target to generate assembly for a file
+src/Engine/inputManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.s
+.PHONY : src/Engine/inputManager.cpp.s
+
 src/Engine/queueManager.o: src/Engine/queueManager.cpp.o
 .PHONY : src/Engine/queueManager.o
 
@@ -827,6 +851,9 @@ help:
 	@echo "... src/Engine/deviceManager.o"
 	@echo "... src/Engine/deviceManager.i"
 	@echo "... src/Engine/deviceManager.s"
+	@echo "... src/Engine/inputManager.o"
+	@echo "... src/Engine/inputManager.i"
+	@echo "... src/Engine/inputManager.s"
 	@echo "... src/Engine/queueManager.o"
 	@echo "... src/Engine/queueManager.i"
 	@echo "... src/Engine/queueManager.s"
