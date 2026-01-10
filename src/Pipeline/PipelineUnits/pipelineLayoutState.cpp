@@ -15,9 +15,10 @@ PipelineLayout::~PipelineLayout() {
 
 void PipelineLayout::setupLayoutInfo() {
   // Defines push constant range for local variables in shaders.
-  pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+  pushConstantRange.stageFlags =
+      VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
   pushConstantRange.offset = 0;
-  pushConstantRange.size = sizeof(glm::mat4);
+  pushConstantRange.size = sizeof(PushConstants);
 
   layoutInfo = {};
   layoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;

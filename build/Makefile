@@ -190,6 +190,30 @@ src/Engine/inputManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.s
 .PHONY : src/Engine/inputManager.cpp.s
 
+src/Engine/lightManager.o: src/Engine/lightManager.cpp.o
+.PHONY : src/Engine/lightManager.o
+
+# target to build an object file
+src/Engine/lightManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.o
+.PHONY : src/Engine/lightManager.cpp.o
+
+src/Engine/lightManager.i: src/Engine/lightManager.cpp.i
+.PHONY : src/Engine/lightManager.i
+
+# target to preprocess a source file
+src/Engine/lightManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.i
+.PHONY : src/Engine/lightManager.cpp.i
+
+src/Engine/lightManager.s: src/Engine/lightManager.cpp.s
+.PHONY : src/Engine/lightManager.s
+
+# target to generate assembly for a file
+src/Engine/lightManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.s
+.PHONY : src/Engine/lightManager.cpp.s
+
 src/Engine/queueManager.o: src/Engine/queueManager.cpp.o
 .PHONY : src/Engine/queueManager.o
 
@@ -854,6 +878,9 @@ help:
 	@echo "... src/Engine/inputManager.o"
 	@echo "... src/Engine/inputManager.i"
 	@echo "... src/Engine/inputManager.s"
+	@echo "... src/Engine/lightManager.o"
+	@echo "... src/Engine/lightManager.i"
+	@echo "... src/Engine/lightManager.s"
 	@echo "... src/Engine/queueManager.o"
 	@echo "... src/Engine/queueManager.i"
 	@echo "... src/Engine/queueManager.s"

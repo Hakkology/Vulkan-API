@@ -45,7 +45,11 @@ void PipelineVertexInputState::createVertexInputState() {
   // go to vertex data, what is the offset of the vertex data ? Basically moves
   // next data by size of the first data.
 
-  // Color Attribute if available.
+  // Normal Attribute
+  attributeDescription[1].binding = 0;
+  attributeDescription[1].location = 1;
+  attributeDescription[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+  attributeDescription[1].offset = offsetof(Vertex, normal);
 
   vertexInputStateInfo = {};
   vertexInputStateInfo.sType =

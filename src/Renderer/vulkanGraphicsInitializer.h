@@ -6,6 +6,8 @@
 #include "vulkanMeshDrawer.h"
 #include "vulkanMeshManager.h"
 
+#include "lightManager.h"
+
 enum class ShapeType { TRIANGLE, CUBE };
 
 class GraphicsInitializer {
@@ -15,6 +17,7 @@ public:
   ~GraphicsInitializer();
   void addInitialMeshes(MeshManager &meshManager,
                         ShapeType shapeType = ShapeType::TRIANGLE);
+  void initLights(LightManager &lightManager);
 
 private:
   VkDevice device;

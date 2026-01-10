@@ -12,6 +12,7 @@
 
 #include "deviceManager.h"
 #include "inputManager.h"
+#include "lightManager.h"
 #include "queueManager.h"
 #include "surfaceManager.h"
 #include "vulkanCommandBuffer.h"
@@ -58,6 +59,7 @@ private:
   std::unique_ptr<MeshDrawer> meshDrawer;
   std::unique_ptr<GraphicsInitializer> graphics;
   std::unique_ptr<InputManager> inputManager;
+  std::unique_ptr<LightManager> lightManager;
 
   VulkanValidation validation;
 

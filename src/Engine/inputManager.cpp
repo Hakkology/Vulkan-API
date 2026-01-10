@@ -6,8 +6,8 @@ InputManager *InputManager::instance = nullptr;
 
 InputManager::InputManager()
     : window(nullptr), center(0.0f, 0.0f, 0.0f), up(0.0f, 1.0f, 0.0f),
-      radius(3.0f), theta(0.0f),
-      phi(glm::radians(90.0f)), // Start looking at the center
+      radius(5.0f), theta(0.0f), // Increased radius to flatten perspective
+      phi(glm::radians(60.0f)),  // Start looking at the center from above
       isRightMouseButtonPressed(false), lastMouseX(0.0), lastMouseY(0.0) {
   instance = this;
 }

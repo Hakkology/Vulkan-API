@@ -13,7 +13,7 @@ public:
   ~MeshDrawer();
 
   void drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
-                const glm::mat4 &mvp);
+                const PushConstants &pushConstants);
 
 private:
   VkDevice device;

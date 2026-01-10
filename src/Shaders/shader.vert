@@ -1,26 +1,20 @@
 #version 450 // GLSL version 4.5
 
-layout (location = 0) in vec3 pos; // Output colour for vertex (location is required)
+layout (location = 0) in vec3 pos;
+layout (location = 1) in vec3 inNormal;
 
-// // Triangle vertex positions (will put in to vertex buffer later)
-// vec3 positions[3] = vec3 [](
-//     vec3(0.0, -0.4, 0.0),
-//     vec3(0.4, 0.4, 0.0),
-//     vec3(-.4, .4, 0)
-// );
-
-// // Triangle vertex colours
-// vec3 colours[3] = vec3[](
-//     vec3(1.0, 0.0, 0.0),
-//     vec3(0.0, 1.0, 0.0),
-//     vec3(0.0, 0.0, 1.0)
-// );
+layout (location = 0) out vec3 fragNormal;
+layout (location = 1) out vec3 fragPos;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
+    vec4 lightDir;
+    vec4 lightColor;
 } pushConsts;
 
 void main(){
     gl_Position = pushConsts.mvp * vec4(pos, 1.0);
+    fragNormal = inNormal;
+    fragPos = pos;
     //fragColour = colours[gl_VertexIndex];
 }

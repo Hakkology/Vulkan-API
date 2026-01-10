@@ -18,7 +18,7 @@ private:
   VkPipelineVertexInputStateCreateInfo vertexInputStateInfo;
 
   VkVertexInputBindingDescription bindingDescription;
-  std::array<VkVertexInputAttributeDescription, 1> attributeDescription;
+  std::array<VkVertexInputAttributeDescription, 2> attributeDescription;
 
   void createVertexInputState();
 };

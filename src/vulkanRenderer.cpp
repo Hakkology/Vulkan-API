@@ -102,6 +102,9 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     inputManager = std::make_unique<InputManager>();
     inputManager->init(window);
 
+    std::cout << "Initializing Light Manager..." << std::endl;
+    lightManager = std::make_unique<LightManager>();
+
     // MeshDrawer initialization
     std::cout << "Initializing Mesh Drawer..." << std::endl;
     meshDrawer = std::make_unique<MeshDrawer>(
@@ -114,6 +117,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         instance, deviceManager.getLogicalDevice(),
         deviceManager.getPhysicalDevice());
     graphics->addInitialMeshes(*meshManager, ShapeType::CUBE);
+    graphics->initLights(*lightManager);
 
     std::cout << "Creating frame buffers..." << std::endl;
     frameBuffer = std::make_unique<FrameManager>(
@@ -165,6 +169,10 @@ void VulkanRenderer::terminate() {
 
   if (graphics) {
     graphics.reset();
+  }
+
+  if (lightManager) {
+    lightManager.reset();
   }
 
   if (syncHandler) {
@@ -230,6 +238,13 @@ void VulkanRenderer::draw() {
   glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
   glm::mat4 mvp = projection * view * model;
 
+  // Prepare PushConstants
+  PushConstants pushConstants = {};
+  pushConstants.mvp = mvp;
+  DirectionalLight dirLight = lightManager->getDirectionalLight();
+  pushConstants.lightDir = dirLight.direction;
+  pushConstants.lightColor = dirLight.color;
+
   // std::cout << "Waiting for fences..." << std::endl;
   // 1. Get next available image
   vkWaitForFences(deviceManager.getLogicalDevice(), 1,
@@ -259,7 +274,7 @@ void VulkanRenderer::draw() {
   commandBuffer->recordCommand(
       imageIndex, frameBuffer->getSwapchainFramebuffers()[imageIndex],
       renderPass->getRenderPass(), swapChainManager->getChosenExtent(),
-      meshDrawer.get(), meshManager.get(), mvp);
+      meshDrawer.get(), meshManager.get(), pushConstants);
 
   // std::cout << "Submitting queue..." << std::endl;
   // 3. Submit

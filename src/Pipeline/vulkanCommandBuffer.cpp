@@ -122,9 +122,11 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
     // all our render pass commands are primary pipeline.
     vkCmdBeginRenderPass(commandBuffers[i], &renderPassBeginInfo,
                          VK_SUBPASS_CONTENTS_INLINE);
+    PushConstants pushConstants = {};
+    pushConstants.mvp = glm::mat4(1.0f);
     for (auto &meshPair : meshManager->getAllMeshes()) {
       meshDrawer->drawMesh(commandBuffers[i], meshPair.second.get(),
-                           glm::mat4(1.0f));
+                           pushConstants);
     }
     vkCmdEndRenderPass(commandBuffers[i]); // end render pass
 
@@ -142,7 +144,7 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
 void CommandManager::recordCommand(
     uint32_t imageIndex, VkFramebuffer framebuffer, VkRenderPass &renderPass,
     VkExtent2D chosenExtent, MeshDrawer *meshDrawer, MeshManager *meshManager,
-    const glm::mat4 &mvp) {
+    const PushConstants &pushConstants) {
   // Check index validity
   if (imageIndex >= commandBuffers.size()) {
     throw std::runtime_error("Image index out of range in recordCommand.");
@@ -177,7 +179,7 @@ void CommandManager::recordCommand(
                        VK_SUBPASS_CONTENTS_INLINE);
 
   for (auto &meshPair : meshManager->getAllMeshes()) {
-    meshDrawer->drawMesh(commandBuffer, meshPair.second.get(), mvp);
+    meshDrawer->drawMesh(commandBuffer, meshPair.second.get(), pushConstants);
   }
 
   vkCmdEndRenderPass(commandBuffer);

@@ -23,7 +23,7 @@ public:
   void recordCommand(uint32_t imageIndex, VkFramebuffer framebuffer,
                      VkRenderPass &renderPass, VkExtent2D chosenExtent,
                      MeshDrawer *meshDrawer, MeshManager *meshManager,
-                     const glm::mat4 &mvp);
+                     const PushConstants &pushConstants);
   void cleanup();
 
   // Getters

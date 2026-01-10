@@ -13,7 +13,7 @@ MeshDrawer::~MeshDrawer() {
 }
 
 void MeshDrawer::drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
-                          const glm::mat4 &mvp) {
+                          const PushConstants &pushConstants) {
   if (!mesh || !commandBuffer)
     return;
 
@@ -33,8 +33,9 @@ void MeshDrawer::drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
   // here.
 
   // Push Constants
-  vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
-                     0, sizeof(glm::mat4), &mvp);
+  vkCmdPushConstants(commandBuffer, pipelineLayout,
+                     VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
+                     0, sizeof(PushConstants), &pushConstants);
 
   // Draw the mesh
   vkCmdDraw(commandBuffer, static_cast<uint32_t>(mesh->getVertexCount()), 1, 0,

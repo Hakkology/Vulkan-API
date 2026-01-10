@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/deviceManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/inputManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o.d"
+  "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/lightManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/queueManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/queueManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/surfaceManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/surfaceManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/surfaceManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/swapChainManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/swapChainManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/swapChainManager.cpp.o.d"
