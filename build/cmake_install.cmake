@@ -1,4 +1,4 @@
-# Install script for directory: /home/hakan/Desktop/Projects/C++/Vulkan
+# Install script for directory: /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/hakan/Desktop/Projects/C++/Vulkan/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
