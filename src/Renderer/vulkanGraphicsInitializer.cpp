@@ -76,7 +76,7 @@ void GraphicsInitializer::addInitialMeshes(MeshManager &meshManager,
 void GraphicsInitializer::initLights(LightManager &lightManager) {
   // Sahnede asimetrik bir directional light olsun (Yüzeyleri farklı aydınlatsın
   // diye)
-  glm::vec3 direction(5.0f, 10.0f, 2.0f);
+  glm::vec3 direction(1.0f, 2.0f, 3.0f);
   glm::vec3 color(1.0f, 1.0f, 1.0f);
   lightManager.setDirectionalLight(direction, color);
 }

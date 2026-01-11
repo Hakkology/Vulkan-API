@@ -103,10 +103,13 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
   renderPassBeginInfo.renderArea.extent =
       chosenExtent; // size of region to run render pass on (starting at offset)
 
-  VkClearValue clearValues[] = {{.6f, .65f, .4f, 1.0f}};
-  renderPassBeginInfo.pClearValues =
-      clearValues; // list of clear values (TODO: Depth attachment clear value)
-  renderPassBeginInfo.clearValueCount = 1;
+  std::array<VkClearValue, 2> clearValues;
+  clearValues[0] = {{0.6f, 0.65f, 0.4f, 1.0f}};
+  clearValues[1] = {{1.0f, 0}};
+
+  renderPassBeginInfo.pClearValues = clearValues.data();
+  renderPassBeginInfo.clearValueCount =
+      static_cast<uint32_t>(clearValues.size());
 
   for (size_t i = 0; i < commandBuffers.size(); i++) {
     std::cout << "Setting up framebuffer " << i << " for command recording."
@@ -162,9 +165,13 @@ void CommandManager::recordCommand(
   renderPassBeginInfo.renderPass = renderPass;
   renderPassBeginInfo.renderArea.offset = {0, 0};
   renderPassBeginInfo.renderArea.extent = chosenExtent;
-  VkClearValue clearValues[] = {{0.6f, 0.65f, 0.4f, 1.0f}};
-  renderPassBeginInfo.pClearValues = clearValues;
-  renderPassBeginInfo.clearValueCount = 1;
+  std::array<VkClearValue, 2> clearValues;
+  clearValues[0] = {{0.6f, 0.65f, 0.4f, 1.0f}};
+  clearValues[1] = {{1.0f, 0}};
+
+  renderPassBeginInfo.pClearValues = clearValues.data();
+  renderPassBeginInfo.clearValueCount =
+      static_cast<uint32_t>(clearValues.size());
 
   renderPassBeginInfo.framebuffer = framebuffer;
 

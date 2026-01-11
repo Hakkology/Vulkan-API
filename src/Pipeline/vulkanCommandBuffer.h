@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <swapChainManager.h>
 #include <vector>
 #include <vulkan/vulkan.h>

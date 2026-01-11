@@ -4,6 +4,8 @@ project(Vulkan-Renderer)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_compile_definitions(GLM_FORCE_DEPTH_ZERO_TO_ONE)
+
 # Find the Vulkan and glfw package.
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
@@ -15,6 +17,7 @@ add_executable(Vulkan-Renderer
     src/Engine/vulkanUtils.cpp
     src/Engine/inputManager.cpp
     src/Engine/lightManager.cpp
+    src/Engine/cameraManager.cpp
 
     src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp
@@ -44,6 +47,7 @@ add_executable(Vulkan-Renderer
     src/Renderer/vulkanMeshManager.cpp
     src/Renderer/vulkanMeshDrawer.cpp
     src/Renderer/vulkanGraphicsInitializer.cpp
+    src/Renderer/vulkanDepthManager.cpp
     src/vulkanRenderer.cpp
 )
 

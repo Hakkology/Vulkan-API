@@ -83,9 +83,16 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
       return EXIT_FAILURE;
     }
 
+    std::cout << "Initializing Depth Manager..." << std::endl;
+    depthManager = std::make_unique<DepthManager>(
+        deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice());
+    depthManager->createDepthResources(swapChainManager->getChosenExtent(),
+                                       swapChainManager.get());
+
     std::cout << "Creating render pass..." << std::endl;
     renderPass = std::make_unique<Renderpass>(deviceManager.getLogicalDevice(),
-                                              swapChainImageFormat);
+                                              swapChainImageFormat,
+                                              depthManager->getDepthFormat());
     renderPass->createRenderPass(); // Create the render pass
 
     std::cout << "Creating graphics pipeline..." << std::endl;
@@ -101,6 +108,10 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     std::cout << "Initializing Input Manager..." << std::endl;
     inputManager = std::make_unique<InputManager>();
     inputManager->init(window);
+
+    std::cout << "Initializing Camera Manager..." << std::endl;
+    cameraManager = std::make_unique<CameraManager>();
+    inputManager->setCameraManager(cameraManager.get());
 
     std::cout << "Initializing Light Manager..." << std::endl;
     lightManager = std::make_unique<LightManager>();
@@ -123,7 +134,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     frameBuffer = std::make_unique<FrameManager>(
         deviceManager.getLogicalDevice(), *swapChainManager,
         renderPass->getRenderPass());
-    frameBuffer->createFrameBuffers();
+    frameBuffer->createFrameBuffers(depthManager->getDepthImageViews());
 
     std::cout << "Creating command buffers..." << std::endl;
     commandBuffer = std::make_unique<CommandManager>(
@@ -159,16 +170,24 @@ void VulkanRenderer::terminate() {
     vkDeviceWaitIdle(deviceManager.getLogicalDevice());
   }
 
-  if (meshDrawer) {
-    meshDrawer.reset();
-  }
-
   if (meshManager) {
     meshManager.reset();
   }
 
+  if (meshDrawer) {
+    meshDrawer.reset();
+  }
+
   if (graphics) {
     graphics.reset();
+  }
+
+  if (inputManager) {
+    inputManager.reset();
+  }
+
+  if (cameraManager) {
+    cameraManager.reset();
   }
 
   if (lightManager) {
@@ -200,10 +219,14 @@ void VulkanRenderer::terminate() {
     renderPass.reset();
   }
 
+  if (depthManager) {
+    depthManager->cleanup();
+    depthManager.reset();
+  }
+
   if (swapChainManager) {
     swapChainManager->cleanupSwapChain(deviceManager.getLogicalDevice());
-    swapChainManager.reset(); // Reset the unique_ptr, effectively destroying
-                              // the SwapChainManager
+    swapChainManager.reset();
   }
 
   if (deviceManager.getLogicalDevice() != VK_NULL_HANDLE) {
@@ -231,10 +254,11 @@ void VulkanRenderer::draw() {
   inputManager->update(0.016f);
 
   // Calculate MVP
-  float aspectRatio =
-      (float)swapChainExtent.width / (float)swapChainExtent.height;
-  glm::mat4 view = inputManager->getViewMatrix();
-  glm::mat4 projection = inputManager->getProjectionMatrix(aspectRatio);
+  // Calculate MVP
+  cameraManager->updateAspectRatio((float)swapChainExtent.width /
+                                   (float)swapChainExtent.height);
+  glm::mat4 view = cameraManager->getViewMatrix();
+  glm::mat4 projection = cameraManager->getProjectionMatrix();
   glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
   glm::mat4 mvp = projection * view * model;
 

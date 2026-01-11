@@ -13,7 +13,7 @@ layout(push_constant) uniform PushConsts {
 
 void main(){
     // Ambient
-    float ambientStrength = 0.4;
+    float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * vec3(1.0, 1.0, 1.0); 
     
     // Diffuse

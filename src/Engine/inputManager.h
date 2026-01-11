@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "cameraManager.h"
+
 class InputManager {
 public:
   InputManager();
@@ -12,9 +14,7 @@ public:
 
   void init(GLFWwindow *window);
   void update(float deltaTime);
-
-  glm::mat4 getViewMatrix() const;
-  glm::mat4 getProjectionMatrix(float aspectRatio) const;
+  void setCameraManager(CameraManager *cameraManager);
 
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
                                   int mods);
@@ -27,13 +27,7 @@ private:
   void handleMouseInput(double xpos, double ypos);
 
   GLFWwindow *window;
-
-  // Camera parameters
-  glm::vec3 center;
-  glm::vec3 up;
-  float radius;
-  float theta; // Azimuthal angle
-  float phi;   // Polar angle
+  CameraManager *cameraManager;
 
   // Mouse state
   bool isRightMouseButtonPressed;

@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o"
@@ -47,6 +49,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanRenderpass.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o.d"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshDrawer.cpp.o"

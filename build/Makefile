@@ -142,6 +142,30 @@ Compile_Shaders/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Compile_Shaders.dir/build.make CMakeFiles/Compile_Shaders.dir/build
 .PHONY : Compile_Shaders/fast
 
+src/Engine/cameraManager.o: src/Engine/cameraManager.cpp.o
+.PHONY : src/Engine/cameraManager.o
+
+# target to build an object file
+src/Engine/cameraManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o
+.PHONY : src/Engine/cameraManager.cpp.o
+
+src/Engine/cameraManager.i: src/Engine/cameraManager.cpp.i
+.PHONY : src/Engine/cameraManager.i
+
+# target to preprocess a source file
+src/Engine/cameraManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.i
+.PHONY : src/Engine/cameraManager.cpp.i
+
+src/Engine/cameraManager.s: src/Engine/cameraManager.cpp.s
+.PHONY : src/Engine/cameraManager.s
+
+# target to generate assembly for a file
+src/Engine/cameraManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.s
+.PHONY : src/Engine/cameraManager.cpp.s
+
 src/Engine/deviceManager.o: src/Engine/deviceManager.cpp.o
 .PHONY : src/Engine/deviceManager.o
 
@@ -718,6 +742,30 @@ src/Pipeline/vulkanSyncHandler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.s
 .PHONY : src/Pipeline/vulkanSyncHandler.cpp.s
 
+src/Renderer/vulkanDepthManager.o: src/Renderer/vulkanDepthManager.cpp.o
+.PHONY : src/Renderer/vulkanDepthManager.o
+
+# target to build an object file
+src/Renderer/vulkanDepthManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.o
+.PHONY : src/Renderer/vulkanDepthManager.cpp.o
+
+src/Renderer/vulkanDepthManager.i: src/Renderer/vulkanDepthManager.cpp.i
+.PHONY : src/Renderer/vulkanDepthManager.i
+
+# target to preprocess a source file
+src/Renderer/vulkanDepthManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.i
+.PHONY : src/Renderer/vulkanDepthManager.cpp.i
+
+src/Renderer/vulkanDepthManager.s: src/Renderer/vulkanDepthManager.cpp.s
+.PHONY : src/Renderer/vulkanDepthManager.s
+
+# target to generate assembly for a file
+src/Renderer/vulkanDepthManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.s
+.PHONY : src/Renderer/vulkanDepthManager.cpp.s
+
 src/Renderer/vulkanGraphicsInitializer.o: src/Renderer/vulkanGraphicsInitializer.cpp.o
 .PHONY : src/Renderer/vulkanGraphicsInitializer.o
 
@@ -872,6 +920,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Compile_Shaders"
 	@echo "... Vulkan-Renderer"
+	@echo "... src/Engine/cameraManager.o"
+	@echo "... src/Engine/cameraManager.i"
+	@echo "... src/Engine/cameraManager.s"
 	@echo "... src/Engine/deviceManager.o"
 	@echo "... src/Engine/deviceManager.i"
 	@echo "... src/Engine/deviceManager.s"
@@ -944,6 +995,9 @@ help:
 	@echo "... src/Pipeline/vulkanSyncHandler.o"
 	@echo "... src/Pipeline/vulkanSyncHandler.i"
 	@echo "... src/Pipeline/vulkanSyncHandler.s"
+	@echo "... src/Renderer/vulkanDepthManager.o"
+	@echo "... src/Renderer/vulkanDepthManager.i"
+	@echo "... src/Renderer/vulkanDepthManager.s"
 	@echo "... src/Renderer/vulkanGraphicsInitializer.o"
 	@echo "... src/Renderer/vulkanGraphicsInitializer.i"
 	@echo "... src/Renderer/vulkanGraphicsInitializer.s"

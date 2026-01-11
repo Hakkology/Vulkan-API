@@ -223,15 +223,15 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/stl_multiset.h \
  /usr/include/c++/13/bits/erase_if.h /usr/include/string.h \
  /usr/include/strings.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/deviceManager.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/swapChainManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanDepthManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/../Engine/swapChainManager.h \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
  /usr/include/c++/13/bits/stl_heap.h \
  /usr/include/c++/13/bits/uniform_int_dist.h \
  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
- /usr/include/c++/13/limits /usr/include/c++/13/cstdint \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/vulkanUtils.h \
+ /usr/include/c++/13/cstdint /usr/include/c++/13/limits \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/../Engine/vulkanUtils.h \
  /usr/include/c++/13/fstream /usr/include/c++/13/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
@@ -381,8 +381,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/glm/detail/type_half.hpp \
  /usr/include/glm/detail/type_half.inl /usr/include/glm/integer.hpp \
  /usr/include/glm/detail/func_integer.inl \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/queueManager.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/inputManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/cameraManager.h \
  /usr/include/glm/gtc/matrix_transform.hpp \
  /usr/include/glm/ext/matrix_projection.hpp \
  /usr/include/glm/gtc/constants.hpp \
@@ -395,9 +394,13 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/glm/ext/matrix_transform.hpp \
  /usr/include/glm/ext/matrix_transform.inl \
  /usr/include/glm/gtc/matrix_transform.inl \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/deviceManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/queueManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/inputManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/lightManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/surfaceManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanCommandBuffer.h \
+ /usr/include/c++/13/array /usr/include/c++/13/compare \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshDrawer.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshHandler.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshManager.h \
@@ -408,7 +411,6 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/enable_special_members.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanFrameBuffer.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanRenderpass.h \
- /usr/include/c++/13/array /usr/include/c++/13/compare \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanGraphicsInitializer.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanGraphicsPipeline.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/PipelineUnits/pipelineColorBlendState.h \

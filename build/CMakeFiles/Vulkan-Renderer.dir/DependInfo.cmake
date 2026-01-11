@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/cameraManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/deviceManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/inputManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/lightManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.o.d"
@@ -32,6 +33,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanGraphicsPipeline.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanGraphicsPipeline.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanRenderpass.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanRenderpass.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanRenderpass.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanSyncHandler.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.o.d"
+  "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanDepthManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanGraphicsInitializer.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanGraphicsInitializer.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshDrawer.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshDrawer.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshDrawer.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshHandler.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshHandler.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanMeshHandler.cpp.o.d"

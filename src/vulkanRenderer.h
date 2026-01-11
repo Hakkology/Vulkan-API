@@ -10,6 +10,9 @@
 #include <string.h>
 #include <vector>
 
+#include "Renderer/vulkanDepthManager.h"
+
+#include "cameraManager.h"
 #include "deviceManager.h"
 #include "inputManager.h"
 #include "lightManager.h"
@@ -54,10 +57,12 @@ private:
   std::unique_ptr<FrameManager> frameBuffer;
   std::unique_ptr<CommandManager> commandBuffer;
   std::unique_ptr<SynchronizationHandler> syncHandler;
+  std::unique_ptr<DepthManager> depthManager;
 
   std::unique_ptr<MeshManager> meshManager;
   std::unique_ptr<MeshDrawer> meshDrawer;
   std::unique_ptr<GraphicsInitializer> graphics;
+  std::unique_ptr<CameraManager> cameraManager;
   std::unique_ptr<InputManager> inputManager;
   std::unique_ptr<LightManager> lightManager;
 
