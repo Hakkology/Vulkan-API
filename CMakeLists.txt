@@ -10,6 +10,7 @@ add_compile_definitions(GLM_FORCE_DEPTH_ZERO_TO_ONE)
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
+find_package(assimp REQUIRED)
 
 # Add the executable that will be built from the source files.
 add_executable(Vulkan-Renderer
@@ -18,6 +19,7 @@ add_executable(Vulkan-Renderer
     src/Engine/inputManager.cpp
     src/Engine/lightManager.cpp
     src/Engine/cameraManager.cpp
+    src/Engine/assetImportManager.cpp
 
     src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp
@@ -64,7 +66,7 @@ target_include_directories(Vulkan-Renderer PRIVATE
 )
 
 # Link the Vulkan and GLFW libraries with the executable.
-target_link_libraries(Vulkan-Renderer PRIVATE Vulkan::Vulkan glfw)
+target_link_libraries(Vulkan-Renderer PRIVATE Vulkan::Vulkan glfw assimp)
 
 # Enable AddressSanitizer
 # target_compile_options(Vulkan-Renderer PRIVATE -fsanitize=address -g)

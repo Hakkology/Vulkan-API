@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.o"
+  "CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o.d"
   "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o"

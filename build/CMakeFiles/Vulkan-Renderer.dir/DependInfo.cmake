@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/assetImportManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/cameraManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/cameraManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/deviceManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.o.d"
   "/home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/inputManager.cpp" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o" "gcc" "CMakeFiles/Vulkan-Renderer.dir/src/Engine/inputManager.cpp.o.d"

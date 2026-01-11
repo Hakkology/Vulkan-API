@@ -33,6 +33,7 @@ struct SwapchainImage {
 struct Vertex {
   glm::vec3 pos;    // vertex position (x, y, z)
   glm::vec3 normal; // vertex normal (x, y, z)
+  glm::vec2 tex;    // texture coordinates (u, v)
 };
 
 struct PushConstants {

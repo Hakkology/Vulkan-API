@@ -142,6 +142,30 @@ Compile_Shaders/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Compile_Shaders.dir/build.make CMakeFiles/Compile_Shaders.dir/build
 .PHONY : Compile_Shaders/fast
 
+src/Engine/assetImportManager.o: src/Engine/assetImportManager.cpp.o
+.PHONY : src/Engine/assetImportManager.o
+
+# target to build an object file
+src/Engine/assetImportManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.o
+.PHONY : src/Engine/assetImportManager.cpp.o
+
+src/Engine/assetImportManager.i: src/Engine/assetImportManager.cpp.i
+.PHONY : src/Engine/assetImportManager.i
+
+# target to preprocess a source file
+src/Engine/assetImportManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.i
+.PHONY : src/Engine/assetImportManager.cpp.i
+
+src/Engine/assetImportManager.s: src/Engine/assetImportManager.cpp.s
+.PHONY : src/Engine/assetImportManager.s
+
+# target to generate assembly for a file
+src/Engine/assetImportManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/assetImportManager.cpp.s
+.PHONY : src/Engine/assetImportManager.cpp.s
+
 src/Engine/cameraManager.o: src/Engine/cameraManager.cpp.o
 .PHONY : src/Engine/cameraManager.o
 
@@ -920,6 +944,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Compile_Shaders"
 	@echo "... Vulkan-Renderer"
+	@echo "... src/Engine/assetImportManager.o"
+	@echo "... src/Engine/assetImportManager.i"
+	@echo "... src/Engine/assetImportManager.s"
 	@echo "... src/Engine/cameraManager.o"
 	@echo "... src/Engine/cameraManager.i"
 	@echo "... src/Engine/cameraManager.s"

@@ -51,6 +51,12 @@ void PipelineVertexInputState::createVertexInputState() {
   attributeDescription[1].format = VK_FORMAT_R32G32B32_SFLOAT;
   attributeDescription[1].offset = offsetof(Vertex, normal);
 
+  // Texture Attribute
+  attributeDescription[2].binding = 0;
+  attributeDescription[2].location = 2;
+  attributeDescription[2].format = VK_FORMAT_R32G32_SFLOAT;
+  attributeDescription[2].offset = offsetof(Vertex, tex);
+
   vertexInputStateInfo = {};
   vertexInputStateInfo.sType =
       VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
