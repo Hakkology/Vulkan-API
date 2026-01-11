@@ -1,7 +1,4 @@
 #include "meshDrawer.h"
-#include <iostream>
-
-static int debugCount = 0;
 
 MeshDrawer::MeshDrawer(VkDevice device, VkRenderPass renderPass,
                        VkPipeline graphicsPipeline, VkPipeline texturedPipeline,
@@ -22,32 +19,11 @@ void MeshDrawer::drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
 
   vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 
-  // DEBUG: Print which pipeline is being used
-  if (debugCount < 20) {
-    bool hasMat = mesh->hasMaterial();
-    bool hasTex = mesh->hasTexture();
-    std::cout << "[MeshDrawer] hasMaterial=" << hasMat
-              << ", hasTexture=" << hasTex;
-    if (hasMat) {
-      auto mat = mesh->getMaterial();
-      std::cout << ", matType=" << (int)mat->getType()
-                << ", matHasTex=" << mat->hasTexture();
-    }
-    std::cout << std::endl;
-    debugCount++;
-  }
-
   // Bind appropriate pipeline based on texture availability
   if (mesh->hasTexture()) {
-    if (debugCount < 25) {
-      std::cout << "[MeshDrawer] -> TEXTURED pipeline" << std::endl;
-    }
     vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                       texturedPipeline);
   } else {
-    if (debugCount < 25) {
-      std::cout << "[MeshDrawer] -> COLORED pipeline" << std::endl;
-    }
     vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                       graphicsPipeline);
   }

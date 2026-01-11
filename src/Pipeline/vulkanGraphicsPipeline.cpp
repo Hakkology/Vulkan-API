@@ -5,19 +5,13 @@ GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass &renderPass,
                                    const std::string &vertShaderPath,
                                    const std::string &fragShaderPath)
     : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent),
-      vertexShaderPath(vertShaderPath), fragmentShaderPath(fragShaderPath) {
-  // Store shader paths for later use in createGraphicsPipeline
-}
+      vertexShaderPath(vertShaderPath), fragmentShaderPath(fragShaderPath) {}
 
 GraphicsPipeline::~GraphicsPipeline() { cleanup(); }
 
 void GraphicsPipeline::createGraphicsPipeline(
     const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts) {
   resetPipelineUnits();
-
-  // Use stored shader paths (passed to constructor)
-  std::cout << "Loading vertex shader: " << vertexShaderPath << std::endl;
-  std::cout << "Loading fragment shader: " << fragmentShaderPath << std::endl;
 
   vertexShaderModule = std::make_unique<PipelineShaderModule>(
       device, VK_SHADER_STAGE_VERTEX_BIT, vertexShaderPath);
