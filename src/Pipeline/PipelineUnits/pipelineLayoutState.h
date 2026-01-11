@@ -1,11 +1,13 @@
+#pragma once
 #include "vulkanUtils.h"
-#include <glm/glm.hpp>
 #include <iostream>
+#include <vector>
 #include <vulkan/vulkan.h>
 
 class PipelineLayout {
 public:
-  PipelineLayout(VkDevice device);
+  PipelineLayout(VkDevice device,
+                 const std::vector<VkDescriptorSetLayout> &layouts);
   ~PipelineLayout();
 
   const VkPipelineLayoutCreateInfo *getLayoutInfo() const;
@@ -18,5 +20,5 @@ private:
   VkPipelineLayoutCreateInfo layoutInfo;
   VkPushConstantRange pushConstantRange;
 
-  void setupLayoutInfo();
+  void setupLayoutInfo(const std::vector<VkDescriptorSetLayout> &layouts);
 };

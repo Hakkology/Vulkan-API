@@ -33,9 +33,15 @@ for SHADER in *.{frag,vert}; do
     fi
 done
 
-if [ "$found" = false ]; then
-    echo "No shaders found to compile."
-    exit 1
-fi
+# Compile specific colored and textured shaders
+echo "Compiling colored_shader.frag..."
+"$GLSLANG_VALIDATOR" -V colored_shader.frag -o "$OUTPUT_DIR/colored_shader.frag.spv"
+echo "Compiling colored_shader.vert..."
+"$GLSLANG_VALIDATOR" -V colored_shader.vert -o "$OUTPUT_DIR/colored_shader.vert.spv"
+
+echo "Compiling textured_shader.frag..."
+"$GLSLANG_VALIDATOR" -V textured_shader.frag -o "$OUTPUT_DIR/textured_shader.frag.spv"
+echo "Compiling textured_shader.vert..."
+"$GLSLANG_VALIDATOR" -V textured_shader.vert -o "$OUTPUT_DIR/textured_shader.vert.spv"
 
 echo "Shader compilation finished."

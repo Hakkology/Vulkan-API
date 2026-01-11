@@ -95,41 +95,165 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
                                               depthManager->getDepthFormat());
     renderPass->createRenderPass(); // Create the render pass
 
-    std::cout << "Creating graphics pipeline..." << std::endl;
+    std::cout << "Creating descriptor set layout for texture..." << std::endl;
+    // Binding 1: Combined image sampler for texture
+    VkDescriptorSetLayoutBinding samplerLayoutBinding{};
+    samplerLayoutBinding.binding = 1; // Must match shader binding
+    samplerLayoutBinding.descriptorCount = 1;
+    samplerLayoutBinding.descriptorType =
+        VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    samplerLayoutBinding.pImmutableSamplers = nullptr;
+    samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+
+    VkDescriptorSetLayoutCreateInfo layoutInfo{};
+    layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+    layoutInfo.bindingCount = 1;
+    layoutInfo.pBindings = &samplerLayoutBinding;
+
+    if (vkCreateDescriptorSetLayout(
+            deviceManager.getLogicalDevice(), &layoutInfo, nullptr,
+            &textureDescriptorSetLayout) != VK_SUCCESS) {
+      throw std::runtime_error(
+          "Failed to create texture descriptor set layout!");
+    }
+
+    std::cout << "Creating graphics pipeline..."
+              << std::endl; // Create graphics pipeline
+    // Assuming colored_shader is the default for now
     graphicsPipeline = std::make_unique<GraphicsPipeline>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
-        swapChainManager->getChosenExtent());
-    graphicsPipeline->createGraphicsPipeline();
+        swapChainManager->getChosenExtent(),
+        "../src/Shaders/spv/colored_shader.vert.spv",
+        "../src/Shaders/spv/colored_shader.frag.spv");
 
+    // Add the descriptor set layout to the pipeline
+    std::vector<VkDescriptorSetLayout> descriptorSetLayouts;
+    descriptorSetLayouts.push_back(textureDescriptorSetLayout);
+
+    graphicsPipeline->createGraphicsPipeline(descriptorSetLayouts);
+
+    std::cout << "Creating textured graphics pipeline..." << std::endl;
+    // Create textured pipeline
+    texturedGraphicsPipeline = std::make_unique<GraphicsPipeline>(
+        deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
+        swapChainManager->getChosenExtent(),
+        "../src/Shaders/spv/textured_shader.vert.spv",
+        "../src/Shaders/spv/textured_shader.frag.spv");
+    texturedGraphicsPipeline->createGraphicsPipeline(descriptorSetLayouts);
+
+    // Initialize Command Manager early for Command Pool
+    std::cout << "Creating command manager..." << std::endl;
+    commandBuffer = std::make_unique<CommandManager>(
+        deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(),
+        surfaceManager->getSurface(), graphicsPipeline->getGraphicsPipeline());
+    commandBuffer->createCommandPool();
+
+    // Initialize Mesh Manager
     std::cout << "Initializing Mesh Manager..." << std::endl;
     meshManager = std::make_unique<MeshManager>(
         deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice());
 
+    // Initialize Input Manager
     std::cout << "Initializing Input Manager..." << std::endl;
     inputManager = std::make_unique<InputManager>();
+    glfwSetWindowUserPointer(window, inputManager.get());
     inputManager->init(window);
 
+    // Initialize Camera Manager
     std::cout << "Initializing Camera Manager..." << std::endl;
     cameraManager = std::make_unique<CameraManager>();
     inputManager->setCameraManager(cameraManager.get());
 
+    // Initialize Light Manager
     std::cout << "Initializing Light Manager..." << std::endl;
     lightManager = std::make_unique<LightManager>();
 
-    // MeshDrawer initialization
+    // Initialize Texture Manager
+    std::cout << "Initializing Texture Manager..." << std::endl;
+    textureManager = std::make_unique<TextureManager>(
+        deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(),
+        commandBuffer->getCommandPool(), queueManager.getGraphicsQueue());
+
+    // Initialize Mesh Drawer
     std::cout << "Initializing Mesh Drawer..." << std::endl;
     meshDrawer = std::make_unique<MeshDrawer>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         graphicsPipeline->getGraphicsPipeline(),
+        texturedGraphicsPipeline->getGraphicsPipeline(),
         graphicsPipeline->getPipelineLayout());
 
+    // Initialize graphics (Scene)
     std::cout << "Initializing graphics" << std::endl;
-    graphics = std::make_unique<GraphicsInitializer>(
-        instance, deviceManager.getLogicalDevice(),
-        deviceManager.getPhysicalDevice());
-    graphics->addInitialMeshes(*meshManager, ShapeType::PLANE);
-    graphics->addInitialMeshes(*meshManager, ShapeType::CUBE);
-    graphics->initLights(*lightManager);
+    scene = std::make_unique<Scene>(instance, deviceManager.getLogicalDevice(),
+                                    deviceManager.getPhysicalDevice(),
+                                    *textureManager);
+
+    // Scene setup
+    scene->addInitialMeshes(*meshManager, ShapeType::PLANE);
+    scene->addInitialMeshes(*meshManager, ShapeType::CUBE);
+    scene->initLights(*lightManager);
+
+    // Initializing Descriptor Pool
+    VkDescriptorPoolSize poolSize{};
+    poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    poolSize.descriptorCount = 10; // Allocate enough
+
+    VkDescriptorPoolCreateInfo poolInfo{};
+    poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+    poolInfo.poolSizeCount = 1;
+    poolInfo.pPoolSizes = &poolSize;
+    poolInfo.maxSets = 10;
+
+    if (vkCreateDescriptorPool(deviceManager.getLogicalDevice(), &poolInfo,
+                               nullptr, &textureDescriptorPool) != VK_SUCCESS) {
+      throw std::runtime_error("Failed to create descriptor pool!");
+    }
+
+    // Allocate Descriptor Set for Plane (Mesh 0 in generic logic, but let's
+    // find it) Actually, Scene added it. We can iterate meshes. For now, let's
+    // assume we want to apply to ALL meshes that have texture.
+
+    // We need to update the descriptor set for the texture.
+    // The textureManager has loaded the texture by now (in
+    // Scene::addInitialMeshes).
+
+    const auto &meshes = meshManager->getAllMeshes();
+    for (const auto &[id, mesh] : meshes) {
+      if (mesh && mesh->hasTexture()) {
+        VkDescriptorSetAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfo.descriptorPool = textureDescriptorPool;
+        allocInfo.descriptorSetCount = 1;
+        allocInfo.pSetLayouts = &textureDescriptorSetLayout;
+
+        VkDescriptorSet descriptorSet;
+        if (vkAllocateDescriptorSets(deviceManager.getLogicalDevice(),
+                                     &allocInfo,
+                                     &descriptorSet) != VK_SUCCESS) {
+          throw std::runtime_error("Failed to allocate descriptor set!");
+        }
+
+        VkDescriptorImageInfo imageInfo{};
+        imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+        imageInfo.imageView = mesh->getTextureImageView();
+        imageInfo.sampler = mesh->getTextureSampler();
+
+        VkWriteDescriptorSet descriptorWrite{};
+        descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrite.dstSet = descriptorSet;
+        descriptorWrite.dstBinding = 1; // Binding 1
+        descriptorWrite.dstArrayElement = 0;
+        descriptorWrite.descriptorType =
+            VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+        descriptorWrite.descriptorCount = 1;
+        descriptorWrite.pImageInfo = &imageInfo;
+
+        vkUpdateDescriptorSets(deviceManager.getLogicalDevice(), 1,
+                               &descriptorWrite, 0, nullptr);
+
+        mesh->setTextureDescriptorSet(descriptorSet);
+      }
+    }
 
     std::cout << "Creating frame buffers..." << std::endl;
     frameBuffer = std::make_unique<FrameManager>(
@@ -137,11 +261,8 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         renderPass->getRenderPass());
     frameBuffer->createFrameBuffers(depthManager->getDepthImageViews());
 
-    std::cout << "Creating command buffers..." << std::endl;
-    commandBuffer = std::make_unique<CommandManager>(
-        deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(),
-        surfaceManager->getSurface(), graphicsPipeline->getGraphicsPipeline());
-    commandBuffer->createCommandPool();
+    std::cout << "Allocating command buffers..." << std::endl;
+    // Pool already created
     commandBuffer->allocateCommandBuffers(
         frameBuffer->getSwapchainFramebuffers());
     // commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(),
@@ -179,8 +300,8 @@ void VulkanRenderer::terminate() {
     meshDrawer.reset();
   }
 
-  if (graphics) {
-    graphics.reset();
+  if (scene) {
+    scene.reset();
   }
 
   if (inputManager) {
@@ -193,6 +314,10 @@ void VulkanRenderer::terminate() {
 
   if (lightManager) {
     lightManager.reset();
+  }
+
+  if (textureManager) {
+    textureManager.reset();
   }
 
   if (syncHandler) {
@@ -213,6 +338,11 @@ void VulkanRenderer::terminate() {
   if (graphicsPipeline) {
     graphicsPipeline->cleanup();
     graphicsPipeline.reset();
+  }
+
+  if (texturedGraphicsPipeline) {
+    texturedGraphicsPipeline->cleanup();
+    texturedGraphicsPipeline.reset();
   }
 
   if (renderPass) {

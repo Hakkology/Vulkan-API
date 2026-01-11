@@ -1,7 +1,9 @@
 #include "pipelineLayoutState.h"
 
-PipelineLayout::PipelineLayout(VkDevice device) : device(device) {
-  setupLayoutInfo();
+PipelineLayout::PipelineLayout(
+    VkDevice device, const std::vector<VkDescriptorSetLayout> &layouts)
+    : device(device) {
+  setupLayoutInfo(layouts);
   createPipelineLayout();
 }
 
@@ -13,7 +15,8 @@ PipelineLayout::~PipelineLayout() {
   }
 }
 
-void PipelineLayout::setupLayoutInfo() {
+void PipelineLayout::setupLayoutInfo(
+    const std::vector<VkDescriptorSetLayout> &layouts) {
   // Defines push constant range for local variables in shaders.
   pushConstantRange.stageFlags =
       VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
@@ -22,8 +25,8 @@ void PipelineLayout::setupLayoutInfo() {
 
   layoutInfo = {};
   layoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-  layoutInfo.setLayoutCount = 0;
-  layoutInfo.pSetLayouts = nullptr;
+  layoutInfo.setLayoutCount = static_cast<uint32_t>(layouts.size());
+  layoutInfo.pSetLayouts = layouts.data();
   layoutInfo.pushConstantRangeCount = 1;
   layoutInfo.pPushConstantRanges = &pushConstantRange;
 }

@@ -220,6 +220,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/stl_multiset.h \
  /usr/include/c++/13/bits/erase_if.h /usr/include/string.h \
  /usr/include/strings.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/textureManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/cameraManager.h \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
@@ -394,21 +395,21 @@ CMakeFiles/Vulkan-Renderer.dir/src/main.cpp.o: \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/queueManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/inputManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/lightManager.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/surfaceManager.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanCommandBuffer.h \
- /usr/include/c++/13/array /usr/include/c++/13/compare \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshDrawer.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshHandler.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanMeshManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/scene.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/vulkanMeshDrawer.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/vulkanMeshHandler.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/vulkanMeshManager.h \
  /usr/include/c++/13/unordered_map \
  /usr/include/c++/13/bits/unordered_map.h \
  /usr/include/c++/13/bits/hashtable.h \
  /usr/include/c++/13/bits/hashtable_policy.h \
  /usr/include/c++/13/bits/enable_special_members.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/surfaceManager.h \
+ /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanCommandBuffer.h \
+ /usr/include/c++/13/array /usr/include/c++/13/compare \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanDepthManager.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanFrameBuffer.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanRenderpass.h \
- /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Renderer/vulkanGraphicsInitializer.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/vulkanGraphicsPipeline.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/PipelineUnits/pipelineColorBlendState.h \
  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Pipeline/PipelineUnits/pipelineDepthStencilState.h \

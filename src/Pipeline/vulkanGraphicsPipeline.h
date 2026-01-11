@@ -20,10 +20,13 @@
 class GraphicsPipeline {
 public:
   GraphicsPipeline(VkDevice device, VkRenderPass &renderPass,
-                   VkExtent2D &swapChainExtent);
+                   VkExtent2D &swapChainExtent,
+                   const std::string &vertexShaderPath,
+                   const std::string &fragmentShaderPath);
   ~GraphicsPipeline();
 
-  void createGraphicsPipeline();
+  void createGraphicsPipeline(
+      const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts);
   void cleanup();
   void resetPipelineUnits();
 
@@ -31,6 +34,7 @@ public:
   VkPipelineLayout getPipelineLayout() const {
     return pipelineLayoutState->getPipelineLayout();
   }
+  PipelineLayout *getLayoutState() const { return pipelineLayoutState.get(); }
 
 private:
   VkPipeline graphicsPipeline;

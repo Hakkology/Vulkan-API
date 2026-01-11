@@ -20,6 +20,11 @@ add_executable(Vulkan-Renderer
     src/Engine/lightManager.cpp
     src/Engine/cameraManager.cpp
     src/Engine/assetImportManager.cpp
+    src/Engine/scene.cpp
+    src/Engine/textureManager.cpp
+    src/Engine/vulkanMeshHandler.cpp
+    src/Engine/vulkanMeshManager.cpp
+    src/Engine/vulkanMeshDrawer.cpp
 
     src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp
@@ -45,10 +50,6 @@ add_executable(Vulkan-Renderer
     src/Pipeline/PipelineUnits/pipelineLayoutState.cpp
     src/Pipeline/PipelineUnits/pipelineDynamicState.cpp
 
-    src/Renderer/vulkanMeshHandler.cpp
-    src/Renderer/vulkanMeshManager.cpp
-    src/Renderer/vulkanMeshDrawer.cpp
-    src/Renderer/vulkanGraphicsInitializer.cpp
     src/Renderer/vulkanDepthManager.cpp
     src/vulkanRenderer.cpp
 )

@@ -10,16 +10,18 @@
 #include <string.h>
 #include <vector>
 
+#include "Engine/textureManager.h"
 #include "cameraManager.h"
 #include "deviceManager.h"
 #include "inputManager.h"
 #include "lightManager.h"
 #include "queueManager.h"
+#include "scene.h"
 #include "surfaceManager.h"
+#include "textureManager.h"
 #include "vulkanCommandBuffer.h"
 #include "vulkanDepthManager.h"
 #include "vulkanFrameBuffer.h"
-#include "vulkanGraphicsInitializer.h"
 #include "vulkanGraphicsPipeline.h"
 #include "vulkanMeshDrawer.h"
 #include "vulkanMeshHandler.h"
@@ -52,6 +54,7 @@ private:
   std::unique_ptr<SurfaceManager> surfaceManager;
   std::unique_ptr<SwapChainManager> swapChainManager;
   std::unique_ptr<GraphicsPipeline> graphicsPipeline;
+  std::unique_ptr<GraphicsPipeline> texturedGraphicsPipeline;
   std::unique_ptr<Renderpass> renderPass;
   std::unique_ptr<FrameManager> frameBuffer;
   std::unique_ptr<CommandManager> commandBuffer;
@@ -60,12 +63,16 @@ private:
 
   std::unique_ptr<MeshManager> meshManager;
   std::unique_ptr<MeshDrawer> meshDrawer;
-  std::unique_ptr<GraphicsInitializer> graphics;
+  std::unique_ptr<Scene> scene;
   std::unique_ptr<CameraManager> cameraManager;
   std::unique_ptr<InputManager> inputManager;
   std::unique_ptr<LightManager> lightManager;
+  std::unique_ptr<TextureManager> textureManager;
 
   VulkanValidation validation;
+
+  VkDescriptorSetLayout textureDescriptorSetLayout;
+  VkDescriptorPool textureDescriptorPool;
 
   VkFormat swapChainImageFormat;
   VkExtent2D swapChainExtent;
