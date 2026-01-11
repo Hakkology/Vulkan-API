@@ -2,7 +2,7 @@
 
 CameraManager::CameraManager()
     : center(0.0f, 0.0f, 0.0f), up(0.0f, 1.0f, 0.0f), radius(3.0f), theta(0.0f),
-      phi(glm::radians(60.0f)), aspectRatio(800.0f / 600.0f), fov(20.0f),
+      phi(glm::radians(60.0f)), aspectRatio(800.0f / 600.0f), fov(45.0f),
       nearPlane(0.1f), farPlane(100.0f) {}
 
 CameraManager::~CameraManager() {}

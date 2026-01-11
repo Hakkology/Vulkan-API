@@ -398,16 +398,37 @@ void VulkanRenderer::draw() {
                                    (float)swapChainExtent.height);
   glm::mat4 view = cameraManager->getViewMatrix();
   glm::mat4 projection = cameraManager->getProjectionMatrix();
-  glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
+  glm::mat4 model = glm::mat4(1.0f); // Default model matrix
   glm::mat4 mvp = projection * view * model;
 
   // Prepare PushConstants
   PushConstants pushConstants = {};
   pushConstants.mvp = mvp;
+
   DirectionalLight dirLight = lightManager->getDirectionalLight();
   pushConstants.lightDir = dirLight.direction;
   pushConstants.lightColor = dirLight.color;
   pushConstants.ambientLight = lightManager->getAmbientLight();
+  pushConstants.objectColor =
+      glm::vec4(1.0f); // Temporary default if not set elsewhere
+
+  static bool printed = false;
+  if (!printed) {
+    std::cout << "--- PushConstants Debug ---" << std::endl;
+    std::cout << "Light Dir: " << pushConstants.lightDir.x << ", "
+              << pushConstants.lightDir.y << ", " << pushConstants.lightDir.z
+              << std::endl;
+    std::cout << "Light Color (RGB+W): " << pushConstants.lightColor.r << ", "
+              << pushConstants.lightColor.g << ", "
+              << pushConstants.lightColor.b
+              << " | Intensity: " << pushConstants.lightColor.w << std::endl;
+    std::cout << "Ambient (RGB+W): " << pushConstants.ambientLight.r << ", "
+              << pushConstants.ambientLight.g << ", "
+              << pushConstants.ambientLight.b
+              << " | Intensity: " << pushConstants.ambientLight.w << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    printed = true;
+  }
 
   // std::cout << "Waiting for fences..." << std::endl;
   // 1. Get next available image

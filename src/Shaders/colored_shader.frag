@@ -8,30 +8,35 @@ layout(location = 0) out vec4 outColour;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
-    vec4 lightDir;     // Direction (world space)
-    vec4 lightColor;   // rgb = color, w = intensity
-    vec4 ambientLight; // rgb = color, w = intensity
+    vec4 lightDir;     
+    vec4 lightColor;   
+    vec4 ambientLight; 
     vec4 objectColor;
 } pushConsts;
 
 void main(){
-    // Ambient
-    float ambientIntensity = pushConsts.ambientLight.w;
-    vec3 ambient = ambientIntensity * pushConsts.ambientLight.rgb; 
+    vec3 N = normalize(fragNormal);
+    vec3 L = normalize(-pushConsts.lightDir.xyz);
     
-    // Diffuse
-    vec3 norm = normalize(fragNormal);
-    // pushConsts.lightDir is the direction the light is pointing.
-    // We need the direction FROM the fragment TO the light source.
-    // For directional light, this is -lightDir.
-    vec3 lightDir = normalize(-pushConsts.lightDir.xyz);
+    // --- Wrapped Diffuse (Half-Lambert) ---
+    // Instead of max(dot, 0), we map [-1, 1] to [0, 1]
+    // bu sayede ışık almayan (arka) yüzeylerde bile bir gradyan oluşur.
+    float wrappedDiff = dot(N, L) * 0.5 + 0.5;
     
-    float diff = max(dot(norm, lightDir), 0.0);
-    float lightIntensity = pushConsts.lightColor.w;
-    vec3 diffuse = diff * pushConsts.lightColor.rgb * lightIntensity;
+    // Wrapped lighting'in karesini alarak kontrastı koruyalım (standard Half-Lambert)
+    float diff = wrappedDiff * wrappedDiff;
+    
+    vec3 diffuse = diff * pushConsts.lightColor.rgb * pushConsts.lightColor.w;
 
-    // Combine
-    vec3 resColor = (ambient + diffuse) * pushConsts.objectColor.rgb;
+    // --- Ambient ---
+    // Ambient'ı biraz daha düşük tutup diffuse'un arkaya sarkan kısmına güveneceğiz.
+    vec3 ambient = pushConsts.ambientLight.rgb * pushConsts.ambientLight.w;
 
-    outColour = vec4(resColor, 1.0);    
+    // Final
+    vec3 result = (ambient + diffuse) * pushConsts.objectColor.rgb;
+
+    // Gamma correction
+    result = pow(result, vec3(1.0/2.2));
+
+    outColour = vec4(result, 1.0);    
 }

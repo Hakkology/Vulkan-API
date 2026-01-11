@@ -1,4 +1,4 @@
-#version 450 // GLSL version 4.5
+#version 450
 
 layout (location = 0) in vec3 pos;
 layout (location = 1) in vec3 inNormal;
@@ -18,7 +18,10 @@ layout(push_constant) uniform PushConsts {
 
 void main(){
     gl_Position = pushConsts.mvp * vec4(pos, 1.0);
-    fragNormal = inNormal;
+    
+    // Normal is already in world space since vertex data includes position 
+    // but should be normalized just in case
+    fragNormal = normalize(inNormal);
     fragPos = pos;
     fragTexCoord = inTexCoord;
 }

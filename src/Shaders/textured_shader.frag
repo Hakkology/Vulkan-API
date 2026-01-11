@@ -8,33 +8,30 @@ layout(location = 0) out vec4 outColour;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
-    vec4 lightDir;     // Direction (world space)
-    vec4 lightColor;   // rgb = color, w = intensity
-    vec4 ambientLight; // rgb = color, w = intensity
+    vec4 lightDir;     
+    vec4 lightColor;   
+    vec4 ambientLight; 
     vec4 objectColor;
 } pushConsts;
 
 layout(binding = 1) uniform sampler2D texSampler;
 
 void main(){
-    // Ambient
-    float ambientIntensity = pushConsts.ambientLight.w;
-    vec3 ambient = ambientIntensity * pushConsts.ambientLight.rgb; 
+    vec3 N = normalize(fragNormal);
+    vec3 L = normalize(-pushConsts.lightDir.xyz);
     
-    // Diffuse
-    vec3 norm = normalize(fragNormal);
-    vec3 lightDir = normalize(-pushConsts.lightDir.xyz);
+    // Wrapped Diffuse
+    float wrappedDiff = dot(N, L) * 0.5 + 0.5;
+    float diff = wrappedDiff * wrappedDiff;
     
-    float diff = max(dot(norm, lightDir), 0.0);
-    float lightIntensity = pushConsts.lightColor.w;
-    vec3 diffuse = diff * pushConsts.lightColor.rgb * lightIntensity;
+    vec3 diffuse = diff * pushConsts.lightColor.rgb * pushConsts.lightColor.w;
+    vec3 ambient = pushConsts.ambientLight.rgb * pushConsts.ambientLight.w;
 
-    // Texture & Object Color
     vec4 texColor = texture(texSampler, fragTexCoord);
     vec3 baseColor = texColor.rgb * pushConsts.objectColor.rgb;
 
-    // Combine
     vec3 result = (ambient + diffuse) * baseColor;
+    result = pow(result, vec3(1.0/2.2));
 
     outColour = vec4(result, 1.0);    
 }

@@ -18,7 +18,7 @@ layout(push_constant) uniform PushConsts {
 
 void main(){
     gl_Position = pushConsts.mvp * vec4(pos, 1.0);
-    fragNormal = inNormal;
+    fragNormal = normalize(inNormal);
     fragPos = pos;
     fragTexCoord = inTexCoord;
 }

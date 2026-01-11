@@ -35,9 +35,10 @@ void DefaultScene::init() {
   drawManager.setMaterial(cube, cubeMaterial);
 
   // Setup lights
-  lightManager.setDirectionalLight(glm::vec3(-2.0f, -4.0f, -1.0f),
+  // Wrapped Diffuse (Half-Lambert) will handle visibility in shadows.
+  lightManager.setDirectionalLight(glm::vec3(-2.0f, -4.0f, -0.6f),
                                    glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
-  lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.2f);
+  lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.1f);
 
   initialized = true;
   std::cout << "Default Scene initialized." << std::endl;
