@@ -38,7 +38,8 @@ struct Vertex {
 
 struct PushConstants {
   glm::mat4 mvp;         // 64 bytes
-  glm::vec4 objectColor; // 16 bytes. Total = 80 bytes
+  glm::mat4 model;       // 64 bytes
+  glm::vec4 objectColor; // 16 bytes.
 };
 
 // Global properties

@@ -22,7 +22,10 @@ public:
   GraphicsPipeline(VkDevice device, VkRenderPass renderPass,
                    VkExtent2D swapChainExtent,
                    const std::string &vertexShaderPath,
-                   const std::string &fragmentShaderPath);
+                   const std::string &fragmentShaderPath,
+                   VkCullModeFlags cullMode = VK_CULL_MODE_NONE,
+                   VkFrontFace frontFace = VK_FRONT_FACE_CLOCKWISE,
+                   VkBool32 depthBiasEnable = VK_FALSE);
   ~GraphicsPipeline();
 
   void createGraphicsPipeline(
@@ -57,4 +60,9 @@ private:
 
   std::unique_ptr<PipelineShaderModule> vertexShaderModule;
   std::unique_ptr<PipelineShaderModule> fragmentShaderModule;
+
+  // Rasterizer options
+  VkCullModeFlags cullMode;
+  VkFrontFace frontFace;
+  VkBool32 depthBiasEnable;
 };

@@ -21,6 +21,8 @@ public:
   VkRenderPass getRenderPass() const { return shadowRenderPass; }
   VkFramebuffer getFramebuffer() const { return shadowFramebuffer; }
   VkExtent2D getExtent() const { return {shadowWidth, shadowHeight}; }
+  uint32_t getShadowWidth() const { return shadowWidth; }
+  uint32_t getShadowHeight() const { return shadowHeight; }
 
   glm::mat4 getLightSpaceMatrix(const glm::vec3 &lightDir);
 

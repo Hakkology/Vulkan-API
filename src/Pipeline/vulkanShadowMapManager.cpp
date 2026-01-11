@@ -146,6 +146,7 @@ glm::mat4
 VulkanShadowMapManager::getLightSpaceMatrix(const glm::vec3 &lightDir) {
   glm::mat4 lightProjection =
       glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 50.0f);
+  lightProjection[1][1] *= -1; // Y-flip for Vulkan coordinate system
   glm::vec3 lightPos = -glm::normalize(lightDir) * 20.0f;
   glm::mat4 lightView =
       glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));

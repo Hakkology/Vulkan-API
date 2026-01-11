@@ -1,6 +1,10 @@
 #include "pipelineRasterizerState.h"
 
-PipelineRasterizerState::PipelineRasterizerState() {
+PipelineRasterizerState::PipelineRasterizerState(VkCullModeFlags cullMode,
+                                                 VkFrontFace frontFace,
+                                                 VkBool32 depthBiasEnable)
+    : cullMode(cullMode), frontFace(frontFace),
+      depthBiasEnable(depthBiasEnable) {
   createRasterizationState();
 }
 
@@ -27,10 +31,12 @@ void PipelineRasterizerState::createRasterizationState() {
       VK_POLYGON_MODE_FILL; // How to handle filling points between vertices.
   // GPU features are needed for some.
   rasterizationState.lineWidth = 1.0f; // How thick lines should be when drawn.
-  rasterizationState.cullMode =
-      VK_CULL_MODE_NONE; // Culling disabled to debug visibility.
-  rasterizationState.frontFace =
-      VK_FRONT_FACE_CLOCKWISE; // Winding to determine which side is front.
-  rasterizationState.depthBiasEnable =
-      VK_FALSE; // Whether to add depth bias to fragments for shadow acne fix.
+  rasterizationState.cullMode = cullMode;
+  rasterizationState.frontFace = frontFace;
+  rasterizationState.depthBiasEnable = depthBiasEnable;
+  if (depthBiasEnable) {
+    rasterizationState.depthBiasConstantFactor = 1.25f;
+    rasterizationState.depthBiasSlopeFactor = 1.75f;
+    rasterizationState.depthBiasClamp = 0.0f;
+  }
 }

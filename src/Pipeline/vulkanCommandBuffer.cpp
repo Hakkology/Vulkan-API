@@ -174,6 +174,10 @@ void CommandManager::recordMainPass(
   for (auto &meshPair : meshManager->getAllMeshes()) {
     PushConstants meshPushConstants = pushConstants;
     meshPushConstants.objectColor = meshPair.second->getColor();
+    // Assuming pushConstants.mvp passed in is actually (Proj * View)
+    meshPushConstants.mvp =
+        pushConstants.mvp * meshPair.second->getModelMatrix();
+    meshPushConstants.model = meshPair.second->getModelMatrix();
     meshDrawer->drawMesh(commandBuffer, meshPair.second.get(),
                          meshPushConstants, globalDescriptorSet);
   }
@@ -210,15 +214,8 @@ void CommandManager::recordShadowPass(
     vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 
     PushConstants pushConstants{};
-    pushConstants.mvp =
-        lightSpaceMatrix; // In shadow pass, MVP is just lightSpaceMatrix
-                          // (assuming model is identity for simplicity in this
-                          // pass, or should be multiplied if model matrix
-                          // exists)
-    // Wait, if model exists:
-    // pushConstants.mvp = lightSpaceMatrix * mesh->getModelMatrix();
-    // Let's assume identity for now if meshes don't have separate model
-    // matrices yet.
+    pushConstants.mvp = lightSpaceMatrix * mesh->getModelMatrix();
+    pushConstants.model = mesh->getModelMatrix();
 
     vkCmdPushConstants(commandBuffer, pipelineLayout,
                        VK_SHADER_STAGE_VERTEX_BIT |

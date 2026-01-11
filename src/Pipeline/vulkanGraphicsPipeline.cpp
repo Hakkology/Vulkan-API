@@ -1,11 +1,13 @@
 #include "vulkanGraphicsPipeline.h"
 
-GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass renderPass,
-                                   VkExtent2D swapChainExtent,
-                                   const std::string &vertShaderPath,
-                                   const std::string &fragShaderPath)
+GraphicsPipeline::GraphicsPipeline(
+    VkDevice device, VkRenderPass renderPass, VkExtent2D swapChainExtent,
+    const std::string &vertShaderPath, const std::string &fragShaderPath,
+    VkCullModeFlags cullMode, VkFrontFace frontFace, VkBool32 depthBiasEnable)
     : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent),
-      vertexShaderPath(vertShaderPath), fragmentShaderPath(fragShaderPath) {}
+      vertexShaderPath(vertShaderPath), fragmentShaderPath(fragShaderPath),
+      cullMode(cullMode), frontFace(frontFace),
+      depthBiasEnable(depthBiasEnable) {}
 
 GraphicsPipeline::~GraphicsPipeline() { cleanup(); }
 
@@ -48,7 +50,8 @@ void GraphicsPipeline::createGraphicsPipeline(
       dynamicState->getDynamicStateInfo();
 
   std::cout << "Creating Rasterization State..." << std::endl;
-  rasterizationState = std::make_unique<PipelineRasterizerState>();
+  rasterizationState = std::make_unique<PipelineRasterizerState>(
+      cullMode, frontFace, depthBiasEnable);
   const VkPipelineRasterizationStateCreateInfo *rasterizationStateInfo =
       rasterizationState->getRasterizationStateInfo();
 

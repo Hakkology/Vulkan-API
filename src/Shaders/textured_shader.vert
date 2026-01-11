@@ -10,6 +10,7 @@ layout (location = 2) out vec2 fragTexCoord;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
+    mat4 model;
     vec4 objectColor;
 } pushConsts;
 
@@ -22,7 +23,7 @@ layout(set = 0, binding = 0) uniform GlobalUBO {
 
 void main(){
     gl_Position = pushConsts.mvp * vec4(pos, 1.0);
-    fragNormal = normalize(inNormal);
-    fragPos = pos;
+    fragNormal = normalize(mat3(pushConsts.model) * inNormal);
+    fragPos = vec3(pushConsts.model * vec4(pos, 1.0));
     fragTexCoord = inTexCoord;
 }

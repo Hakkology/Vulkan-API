@@ -10,6 +10,7 @@ layout (location = 2) out vec2 fragTexCoord;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
+    mat4 model;
     vec4 objectColor;
 } pushConsts;
 
@@ -25,7 +26,9 @@ void main(){
     
     // Normal is already in world space since vertex data includes position 
     // but should be normalized just in case
-    fragNormal = normalize(inNormal);
-    fragPos = pos;
+    // Normal should be transformed by Model Matrix (inverse transpose if non-uniform scale)
+    // For now assuming uniform scale
+    fragNormal = normalize(mat3(pushConsts.model) * inNormal);
+    fragPos = vec3(pushConsts.model * vec4(pos, 1.0));
     fragTexCoord = inTexCoord;
 }

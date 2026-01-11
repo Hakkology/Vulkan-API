@@ -8,6 +8,7 @@ layout(location = 0) out vec4 outColour;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
+    mat4 model;
     vec4 objectColor;
 } pushConsts;
 
@@ -30,6 +31,7 @@ float calculateShadow(vec4 fragPosLightSpace) {
     float currentDepth = projCoords.z;
 
     float bias = max(0.005 * (1.0 - dot(normalize(fragNormal), normalize(-ubo.lightDir.xyz))), 0.0005);
+    // float bias = 0.005; // fixed bias for testing
     
     float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
     return shadow;

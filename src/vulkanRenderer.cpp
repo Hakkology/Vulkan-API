@@ -204,10 +204,14 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     }
 
     std::cout << "Creating shadow graphics pipeline..." << std::endl;
+    // Cull FRONT faces for shadow pass (render back faces) to fix acne
     shadowPipeline = std::make_unique<GraphicsPipeline>(
         deviceManager.getLogicalDevice(), shadowMapManager->getRenderPass(),
-        shadowMapManager->getExtent(), "../src/Shaders/spv/shadow.vert.spv",
-        "../src/Shaders/spv/shadow.frag.spv");
+        VkExtent2D{shadowMapManager->getShadowWidth(),
+                   shadowMapManager->getShadowHeight()},
+        "../src/Shaders/spv/shadow.vert.spv",
+        "../src/Shaders/spv/shadow.frag.spv", VK_CULL_MODE_BACK_BIT,
+        VK_FRONT_FACE_COUNTER_CLOCKWISE, VK_TRUE);
     shadowPipeline->createGraphicsPipeline(
         {}); // Empty layouts for shadow pass (only push constants)
 
@@ -216,14 +220,16 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         swapChainManager->getChosenExtent(),
         "../src/Shaders/spv/colored_shader.vert.spv",
-        "../src/Shaders/spv/colored_shader.frag.spv");
+        "../src/Shaders/spv/colored_shader.frag.spv", VK_CULL_MODE_BACK_BIT,
+        VK_FRONT_FACE_COUNTER_CLOCKWISE);
     graphicsPipeline->createGraphicsPipeline({globalDescriptorSetLayout});
 
     texturedGraphicsPipeline = std::make_unique<GraphicsPipeline>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         swapChainManager->getChosenExtent(),
         "../src/Shaders/spv/textured_shader.vert.spv",
-        "../src/Shaders/spv/textured_shader.frag.spv");
+        "../src/Shaders/spv/textured_shader.frag.spv", VK_CULL_MODE_BACK_BIT,
+        VK_FRONT_FACE_COUNTER_CLOCKWISE);
     texturedGraphicsPipeline->createGraphicsPipeline(
         {globalDescriptorSetLayout, textureDescriptorSetLayout});
 
@@ -491,11 +497,6 @@ void VulkanRenderer::terminate() {
   if (texturedGraphicsPipeline) {
     texturedGraphicsPipeline->cleanup();
     texturedGraphicsPipeline.reset();
-  }
-
-  if (globalUboBuffer != VK_NULL_HANDLE) {
-    vkDestroyBuffer(deviceManager.getLogicalDevice(), globalUboBuffer, nullptr);
-    vkFreeMemory(deviceManager.getLogicalDevice(), globalUboMemory, nullptr);
   }
 
   if (globalDescriptorSetLayout != VK_NULL_HANDLE) {

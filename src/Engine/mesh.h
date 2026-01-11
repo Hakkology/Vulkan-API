@@ -37,7 +37,11 @@ public:
     return material ? material->getDescriptorSet() : VK_NULL_HANDLE;
   }
 
+  void setModelMatrix(const glm::mat4 &matrix) { modelMatrix = matrix; }
+  glm::mat4 getModelMatrix() const { return modelMatrix; }
+
 private:
+  glm::mat4 modelMatrix{1.0f};
   int vertexCount;
 
   VkPhysicalDevice physicalDevice;

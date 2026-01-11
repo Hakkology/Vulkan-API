@@ -8,6 +8,7 @@ layout(location = 0) out vec4 outColour;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
+    mat4 model;
     vec4 objectColor;
 } pushConsts;
 
