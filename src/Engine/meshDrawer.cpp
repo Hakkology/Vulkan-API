@@ -2,9 +2,11 @@
 
 MeshDrawer::MeshDrawer(VkDevice device, VkRenderPass renderPass,
                        VkPipeline graphicsPipeline, VkPipeline texturedPipeline,
+                       VkPipeline coloredMovingPipeline,
                        VkPipelineLayout pipelineLayout)
     : device(device), renderPass(renderPass),
       graphicsPipeline(graphicsPipeline), texturedPipeline(texturedPipeline),
+      coloredMovingPipeline(coloredMovingPipeline),
       pipelineLayout(pipelineLayout) {}
 
 MeshDrawer::~MeshDrawer() {}
@@ -21,13 +23,20 @@ void MeshDrawer::drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
   vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 
   // Bind appropriate pipeline based on texture availability
-  if (mesh->hasTexture()) {
-    vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
-                      texturedPipeline);
-  } else {
-    vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
-                      graphicsPipeline);
+  // Bind appropriate pipeline based on material type
+  VkPipeline pipelineToBind = graphicsPipeline; // Default
+
+  if (mesh->hasMaterial()) {
+    MaterialType type = mesh->getMaterial()->getType();
+    if (type == MaterialType::COLORED_MOVING) {
+      pipelineToBind = coloredMovingPipeline;
+    } else if (type == MaterialType::TEXTURED) {
+      pipelineToBind = texturedPipeline;
+    }
   }
+
+  vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    pipelineToBind);
 
   // Bind Global Descriptor Set (Set 0)
   if (globalDescriptorSet != VK_NULL_HANDLE) {

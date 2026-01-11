@@ -47,7 +47,9 @@ struct GlobalUBO {
   glm::mat4 lightSpaceMatrix; // 64 bytes
   glm::vec4 lightDir;         // 16 bytes
   glm::vec4 lightColor;       // 16 bytes
-  glm::vec4 ambientLight;     // 16 bytes. Total = 112 bytes
+  glm::vec4 ambientLight;     // 16 bytes.
+  float time;                 // 4 bytes
+  float padding[3];           // 12 bytes. Total = 128 bytes
 };
 
 namespace VulkanUtils {

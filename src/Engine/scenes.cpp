@@ -1,4 +1,5 @@
 #include "scenes.h"
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 // ============ Default Scene ============
@@ -82,6 +83,44 @@ void DefaultScene::init() {
   Mesh *rightArm = drawManager.drawCapsule(glm::vec3(0.55f, armY, 0.0f),
                                            armRadius, armCylHeight);
   drawManager.setMaterial(rightArm, skinMaterial);
+
+  // 5. Cape (Plane with Moving Shader)
+  auto capeMaterial = std::make_shared<Material>(MaterialType::COLORED_MOVING);
+  capeMaterial->setColor(glm::vec4(0.8f, 0.2f, 0.2f, 1.0f)); // Red cape
+
+  // Plane size 0.4 -> Width 0.8, Height 0.8 (initially depth).
+  // We want it longer? Let's scale it.
+  Mesh *cape = drawManager.drawPlane(glm::vec3(0.0f, 0.0f, 0.0f), 0.4f);
+
+  // Transform: Position behind neck/shoulders, Rotate vertical, Scale length?
+  glm::mat4 capeModel = glm::mat4(1.0f);
+  // Position: centered X, Y roughly shoulders (1.6) down to knees?
+  // Only translation is handled here if we use drawPlane(0,0,0).
+  // But drawPlane sets position in vertices? No, it takes position arg.
+  // Let's create at Origin and move via Model Matrix to handle rotation
+  // properly. Position arguments in drawPlane displace vertices. Model Matrix
+  // transforms them. It is safer to use Model Matrix for complex transforms
+  // (Rotation). Initial Plane is XZ. Normal (0,1,0). Rotate 90 deg X -> XY
+  // Plane. Normal (0,0,1). Facing +Z. We want it behind character (at -Z),
+  // facing backward? or double sided culling? Culling is back bit. Plane
+  // usually has one side. If we rotate +90, Normal points +Z? or -Z? (0,1,0) x
+  // RotX(90) -> (0,0,1). Character is at Z=0. Back is -Z. So Normal (0,0,1)
+  // points towards character. This is "Back Face" if viewing from behind? If I
+  // look from +Z (front), I see front of char. Cape is behind. If I rotate
+  // camera to back (-Z), I see cape. So cape normal should point -Z (away from
+  // character). Rotate -90 deg X? (0,1,0) -> (0,0,-1).
+
+  capeModel = glm::translate(
+      capeModel,
+      glm::vec3(0.0f, 0.37f, -0.63f)); // Adjusted for angle and length
+  capeModel =
+      glm::rotate(capeModel, glm::radians(110.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+  capeModel = glm::scale(
+      capeModel, glm::vec3(1.0f, 1.0f, 3.0f)); // Make it even longer
+                                               // space becomes Height in world)
+
+  cape->setModelMatrix(capeModel);
+  drawManager.setMaterial(cape, capeMaterial);
 
   // Setup lights
   // Wrapped Diffuse (Half-Lambert) will handle visibility in shadows.

@@ -275,11 +275,22 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         commandBuffer->getCommandPool(), queueManager.getGraphicsQueue());
 
     // Initialize Mesh Drawer
+    std::cout << "Creating colored moving graphics pipeline..." << std::endl;
+    coloredMovingGraphicsPipeline = std::make_unique<GraphicsPipeline>(
+        deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
+        swapChainExtent, "../src/Shaders/spv/colored_moving_shader.vert.spv",
+        "../src/Shaders/spv/colored_moving_shader.frag.spv",
+        VK_CULL_MODE_BACK_BIT, // Regular culling for this
+        VK_FRONT_FACE_CLOCKWISE);
+    coloredMovingGraphicsPipeline->createGraphicsPipeline(
+        {globalDescriptorSetLayout});
+
     std::cout << "Initializing Mesh Drawer..." << std::endl;
     meshDrawer = std::make_unique<MeshDrawer>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         graphicsPipeline->getGraphicsPipeline(),
         texturedGraphicsPipeline->getGraphicsPipeline(),
+        coloredMovingGraphicsPipeline->getGraphicsPipeline(),
         graphicsPipeline->getPipelineLayout());
 
     // Initialize SceneManager
@@ -573,13 +584,15 @@ void VulkanRenderer::draw() {
   GlobalUBO ubo{};
   ubo.lightSpaceMatrix = lightSpaceMatrix;
   ubo.lightDir = dirLight.direction;
-  ubo.lightColor = dirLight.color;
+  ubo.lightColor = lightManager->getDirectionalLight().color;
   ubo.ambientLight = lightManager->getAmbientLight();
 
-  void *uboData;
-  vkMapMemory(deviceManager.getLogicalDevice(), globalUboMemory, 0,
-              sizeof(GlobalUBO), 0, &uboData);
-  memcpy(uboData, &ubo, sizeof(GlobalUBO));
+  ubo.time = (float)glfwGetTime();
+
+  void *data;
+  vkMapMemory(deviceManager.getLogicalDevice(), globalUboMemory, 0, sizeof(ubo),
+              0, &data);
+  memcpy(data, &ubo, sizeof(ubo));
   vkUnmapMemory(deviceManager.getLogicalDevice(), globalUboMemory);
 
   // Prepare PushConstants

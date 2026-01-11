@@ -10,7 +10,7 @@ class MeshDrawer {
 public:
   MeshDrawer(VkDevice device, VkRenderPass renderPass,
              VkPipeline graphicsPipeline, VkPipeline texturedPipeline,
-             VkPipelineLayout pipelineLayout);
+             VkPipeline coloredMovingPipeline, VkPipelineLayout pipelineLayout);
   ~MeshDrawer();
 
   void drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
@@ -22,5 +22,6 @@ private:
   VkRenderPass renderPass;
   VkPipeline graphicsPipeline;
   VkPipeline texturedPipeline;
+  VkPipeline coloredMovingPipeline;
   VkPipelineLayout pipelineLayout;
 };

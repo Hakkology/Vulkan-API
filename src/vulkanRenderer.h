@@ -57,6 +57,7 @@ private:
   std::unique_ptr<SwapChainManager> swapChainManager;
   std::unique_ptr<GraphicsPipeline> graphicsPipeline;
   std::unique_ptr<GraphicsPipeline> texturedGraphicsPipeline;
+  std::unique_ptr<GraphicsPipeline> coloredMovingGraphicsPipeline;
   std::unique_ptr<Renderpass> renderPass;
   std::unique_ptr<FrameManager> frameBuffer;
   std::unique_ptr<CommandManager> commandBuffer;

@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-enum class MaterialType { COLORED, TEXTURED };
+enum class MaterialType { COLORED, TEXTURED, COLORED_MOVING };
 
 class Material {
 public:
