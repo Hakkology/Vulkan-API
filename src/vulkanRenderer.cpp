@@ -786,11 +786,6 @@ bool VulkanRenderer::checkInstanceExtensionSupport(
   vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount,
                                          extensions.data());
 
-  std::cout << "Supported Extensions (" << extensionCount << "):" << std::endl;
-  for (const auto &extension : extensions) {
-    std::cout << "\t" << extension.extensionName << std::endl;
-  }
-
   // Check if given extensions are in list of available extensions
   for (const auto &checkExtension : *checkExtensions) {
     bool hasExtension = false;
