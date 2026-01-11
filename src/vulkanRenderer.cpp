@@ -280,7 +280,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         swapChainExtent, "../src/Shaders/spv/colored_moving_shader.vert.spv",
         "../src/Shaders/spv/colored_moving_shader.frag.spv",
-        VK_CULL_MODE_BACK_BIT, // Regular culling for this
+        VK_CULL_MODE_NONE, // Render both sides
         VK_FRONT_FACE_CLOCKWISE);
     coloredMovingGraphicsPipeline->createGraphicsPipeline(
         {globalDescriptorSetLayout});

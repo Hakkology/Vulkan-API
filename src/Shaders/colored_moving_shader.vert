@@ -42,8 +42,9 @@ void main(){
     
     float amplitudeFactor = clamp((pos.z + 0.4) / 0.8, 0.0, 1.0);
     // Square it for smoother falloff? or just linear. Linear is fine.
-    
-    animatedPos.y += sin(pos.z * 10.0 + ubo.time * 8.0) * 0.1 * amplitudeFactor;
+
+    // Adding pos.x * 5.0 to create ripple across width as well.
+    animatedPos.y += sin(pos.z * 10.0 + pos.x * 5.0 + ubo.time * 8.0) * 0.1 * amplitudeFactor;
 
     gl_Position = pushConsts.mvp * vec4(animatedPos, 1.0);
     
