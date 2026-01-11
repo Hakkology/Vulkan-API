@@ -127,6 +127,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     graphics = std::make_unique<GraphicsInitializer>(
         instance, deviceManager.getLogicalDevice(),
         deviceManager.getPhysicalDevice());
+    graphics->addInitialMeshes(*meshManager, ShapeType::PLANE);
     graphics->addInitialMeshes(*meshManager, ShapeType::CUBE);
     graphics->initLights(*lightManager);
 
@@ -268,6 +269,7 @@ void VulkanRenderer::draw() {
   DirectionalLight dirLight = lightManager->getDirectionalLight();
   pushConstants.lightDir = dirLight.direction;
   pushConstants.lightColor = dirLight.color;
+  pushConstants.ambientLight = lightManager->getAmbientLight();
 
   // std::cout << "Waiting for fences..." << std::endl;
   // 1. Get next available image

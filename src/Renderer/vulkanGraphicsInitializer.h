@@ -8,7 +8,7 @@
 
 #include "lightManager.h"
 
-enum class ShapeType { TRIANGLE, CUBE };
+enum class ShapeType { TRIANGLE, CUBE, PLANE };
 
 class GraphicsInitializer {
 public:

@@ -39,6 +39,8 @@ struct PushConstants {
   glm::mat4 mvp;
   glm::vec4 lightDir;
   glm::vec4 lightColor;
+  glm::vec4 ambientLight;
+  glm::vec4 objectColor;
 };
 
 namespace VulkanUtils {

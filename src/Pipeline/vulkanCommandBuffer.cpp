@@ -128,6 +128,7 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
     PushConstants pushConstants = {};
     pushConstants.mvp = glm::mat4(1.0f);
     for (auto &meshPair : meshManager->getAllMeshes()) {
+      pushConstants.objectColor = meshPair.second->getColor();
       meshDrawer->drawMesh(commandBuffers[i], meshPair.second.get(),
                            pushConstants);
     }
@@ -186,7 +187,10 @@ void CommandManager::recordCommand(
                        VK_SUBPASS_CONTENTS_INLINE);
 
   for (auto &meshPair : meshManager->getAllMeshes()) {
-    meshDrawer->drawMesh(commandBuffer, meshPair.second.get(), pushConstants);
+    PushConstants meshPushConstants = pushConstants;
+    meshPushConstants.objectColor = meshPair.second->getColor();
+    meshDrawer->drawMesh(commandBuffer, meshPair.second.get(),
+                         meshPushConstants);
   }
 
   vkCmdEndRenderPass(commandBuffer);

@@ -10,8 +10,6 @@
 #include <string.h>
 #include <vector>
 
-#include "Renderer/vulkanDepthManager.h"
-
 #include "cameraManager.h"
 #include "deviceManager.h"
 #include "inputManager.h"
@@ -19,6 +17,7 @@
 #include "queueManager.h"
 #include "surfaceManager.h"
 #include "vulkanCommandBuffer.h"
+#include "vulkanDepthManager.h"
 #include "vulkanFrameBuffer.h"
 #include "vulkanGraphicsInitializer.h"
 #include "vulkanGraphicsPipeline.h"

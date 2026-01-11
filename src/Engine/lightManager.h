@@ -37,6 +37,10 @@ public:
                            float intensity = 1.0f);
   DirectionalLight getDirectionalLight() const;
 
+  void setAmbientLight(const glm::vec3 &color, float intensity);
+  glm::vec4 getAmbientLight() const;
+
 private:
   DirectionalLight directionalLight;
+  glm::vec4 ambientLight; // r,g,b = color, w = intensity
 };
