@@ -1,4 +1,5 @@
 #include "scenes.h"
+#include "assetImportManager.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
@@ -127,6 +128,68 @@ void DefaultScene::init() {
   lightManager.setDirectionalLight(glm::vec3(-2.0f, -4.0f, -0.6f),
                                    glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
   lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.1f);
+
+  // --- Sword Loading ---
+  // Import Blender model for the sword
+  AssetImportManager assetImporter;
+  void *loadedAsset = assetImporter.importAsset(
+      "../src/Assets/Models/sword/dwarvensword.blend.blend",
+      AssetType::Blender);
+
+  if (loadedAsset) {
+    std::vector<Vertex> *swordVertices =
+        static_cast<std::vector<Vertex> *>(loadedAsset);
+
+    if (!swordVertices->empty()) {
+      Mesh *swordMesh = meshManager.createMesh(*swordVertices);
+
+      // Create a textured material
+      auto swordMaterial = std::make_shared<Material>(MaterialType::TEXTURED);
+      swordMaterial->setColor(glm::vec4(1.0f)); // White tint
+
+      try {
+        textureManager.loadTexture(
+            "../src/Assets/Models/sword/Dwarvensword.png");
+        swordMaterial->setTexture(textureManager.getTextureImageView(),
+                                  textureManager.getTextureSampler());
+      } catch (const std::exception &e) {
+        std::cerr << "Failed to load sword texture: " << e.what() << std::endl;
+        // Fallback color if texture fails (though unlikely if file exists)
+        swordMaterial = std::make_shared<Material>(MaterialType::COLORED);
+        swordMaterial->setColor(glm::vec4(0.8f, 0.8f, 0.9f, 1.0f));
+      }
+
+      // Transform sword to hand
+      // Hand is at (0.55f, armY - length/2, 0.0f) approx.
+      // Right Arm: (0.55f, 1.0f, 0.0f), Length 0.9f (+ caps).
+      // Bottom of arm cylinder is at 1.0f - 0.45f = 0.55f.
+      // Sword handle should be around there.
+      // Sword model might need scaling/rotation.
+
+      glm::mat4 swordModel = glm::mat4(1.0f);
+      swordModel = glm::translate(swordModel, glm::vec3(0.55f, 0.45f, 0.65f));
+
+      // Transformations to align with hand
+      swordModel = glm::rotate(swordModel, glm::radians(90.0f),
+                               glm::vec3(1.0f, 0.0f, 0.0f)); // Point forward
+
+      // User requested rotation to fix grip. Previous Z-rotation caused
+      // sideways pointing. Rotating on Y (Local Handle Axis) before X-Tilt will
+      // roll the sword.
+      swordModel = glm::rotate(swordModel, glm::radians(90.0f),
+                               glm::vec3(0.0f, 1.0f, 0.0f));
+
+      swordModel = glm::scale(swordModel, glm::vec3(0.1f));
+
+      swordMesh->setModelMatrix(swordModel);
+      drawManager.setMaterial(swordMesh, swordMaterial);
+    }
+
+    // Cleanup imported raw data
+    delete swordVertices;
+  } else {
+    std::cerr << "Failed to load sword model!" << std::endl;
+  }
 
   initialized = true;
   std::cout << "Default Scene initialized." << std::endl;

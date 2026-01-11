@@ -9,17 +9,21 @@
 
 #include "vulkanUtils.h"
 
+enum class AssetType { Texture, Blender };
+
 class AssetImportManager {
 public:
   AssetImportManager();
   ~AssetImportManager();
 
-  // Loads a model from file and returns a vector of vertices.
-  // In the future, this can return a more complex structure (e.g., Model object
-  // with multiple meshes and materials).
-  std::vector<Vertex> loadModel(const std::string &path);
+  // Loads an asset from file based on type.
+  // Returns void* which could be std::vector<Vertex>* or other types.
+  // The caller must cast appropriately.
+  void *importAsset(const std::string &path, AssetType type);
 
 private:
+  std::vector<Vertex> importModel(const std::string &path);
+  void importTexture(const std::string &path); // Placeholder for now
   void processNode(aiNode *node, const aiScene *scene,
                    std::vector<Vertex> &vertices);
   void processMesh(aiMesh *mesh, const aiScene *scene,

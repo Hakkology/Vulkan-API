@@ -226,10 +226,9 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
 
     texturedGraphicsPipeline = std::make_unique<GraphicsPipeline>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
-        swapChainManager->getChosenExtent(),
-        "../src/Shaders/spv/textured_shader.vert.spv",
-        "../src/Shaders/spv/textured_shader.frag.spv", VK_CULL_MODE_BACK_BIT,
-        VK_FRONT_FACE_COUNTER_CLOCKWISE);
+        swapChainExtent, "../src/Shaders/spv/textured_shader.vert.spv",
+        "../src/Shaders/spv/textured_shader.frag.spv", VK_CULL_MODE_NONE,
+        VK_FRONT_FACE_CLOCKWISE);
     texturedGraphicsPipeline->createGraphicsPipeline(
         {globalDescriptorSetLayout, textureDescriptorSetLayout});
 

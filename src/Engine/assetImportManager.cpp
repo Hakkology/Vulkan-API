@@ -5,7 +5,29 @@ AssetImportManager::AssetImportManager() {}
 
 AssetImportManager::~AssetImportManager() {}
 
-std::vector<Vertex> AssetImportManager::loadModel(const std::string &path) {
+void *AssetImportManager::importAsset(const std::string &path, AssetType type) {
+  if (type == AssetType::Blender) {
+    std::vector<Vertex> *vertices = new std::vector<Vertex>();
+    *vertices = importModel(path);
+    if (vertices->empty()) {
+      delete vertices;
+      return nullptr;
+    }
+    return vertices;
+  } else if (type == AssetType::Texture) {
+    importTexture(path);
+    return nullptr;
+  }
+  return nullptr;
+}
+
+void AssetImportManager::importTexture(const std::string &path) {
+  std::cout << "AssetImportManager: Texture import requested for " << path
+            << ". (Placeholder - Logic currently in TextureManager)"
+            << std::endl;
+}
+
+std::vector<Vertex> AssetImportManager::importModel(const std::string &path) {
   Assimp::Importer importer;
   // aiProcess_Triangulate: Triangulates all faces
   // aiProcess_FlipUVs: Flips texture coordinates along y-axis
@@ -39,31 +61,39 @@ void AssetImportManager::processNode(aiNode *node, const aiScene *scene,
 
 void AssetImportManager::processMesh(aiMesh *mesh, const aiScene *scene,
                                      std::vector<Vertex> &vertices) {
-  for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-    Vertex vertex;
+  // Iterate over faces instead of just vertices to handle indexed geometry.
+  // We expand the mesh into a triangle list (vertex soup) compatible with
+  // non-indexed drawing.
+  for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+    aiFace face = mesh->mFaces[i];
+    for (unsigned int j = 0; j < face.mNumIndices; j++) {
+      unsigned int index = face.mIndices[j];
 
-    // Positions
-    vertex.pos.x = mesh->mVertices[i].x;
-    vertex.pos.y = mesh->mVertices[i].y;
-    vertex.pos.z = mesh->mVertices[i].z;
+      Vertex vertex;
 
-    // Normals
-    if (mesh->HasNormals()) {
-      vertex.normal.x = mesh->mNormals[i].x;
-      vertex.normal.y = mesh->mNormals[i].y;
-      vertex.normal.z = mesh->mNormals[i].z;
-    } else {
-      vertex.normal = glm::vec3(0.0f);
+      // Positions
+      vertex.pos.x = mesh->mVertices[index].x;
+      vertex.pos.y = mesh->mVertices[index].y;
+      vertex.pos.z = mesh->mVertices[index].z;
+
+      // Normals
+      if (mesh->HasNormals()) {
+        vertex.normal.x = mesh->mNormals[index].x;
+        vertex.normal.y = mesh->mNormals[index].y;
+        vertex.normal.z = mesh->mNormals[index].z;
+      } else {
+        vertex.normal = glm::vec3(0.0f);
+      }
+
+      // Texture Coordinates
+      if (mesh->mTextureCoords[0]) {
+        vertex.tex.x = mesh->mTextureCoords[0][index].x;
+        vertex.tex.y = mesh->mTextureCoords[0][index].y;
+      } else {
+        vertex.tex = glm::vec2(0.0f, 0.0f);
+      }
+
+      vertices.push_back(vertex);
     }
-
-    // Texture Coordinates
-    if (mesh->mTextureCoords[0]) { // does the mesh contain texture coordinates?
-      vertex.tex.x = mesh->mTextureCoords[0][i].x;
-      vertex.tex.y = mesh->mTextureCoords[0][i].y;
-    } else {
-      vertex.tex = glm::vec2(0.0f, 0.0f);
-    }
-
-    vertices.push_back(vertex);
   }
 }

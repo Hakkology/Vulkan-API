@@ -4540,6 +4540,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Engine/scene.cpp.o: /home/hakko/Desktop/Hakan
   /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 
 CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.o: /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/scenes.cpp \
+  /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/assetImportManager.h \
   /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/drawManager.h \
   /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/lightManager.h \
   /home/hakko/Desktop/Hakan/Projects/C++/Vulkan-Renderer/Vulkan-API/src/Engine/material.h \
@@ -4557,6 +4558,37 @@ CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.o: /home/hakko/Desktop/Haka
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/assert.h \
+  /usr/include/assimp/Compiler/poppack1.h \
+  /usr/include/assimp/Compiler/pushpack1.h \
+  /usr/include/assimp/Importer.hpp \
+  /usr/include/assimp/MathFunctions.h \
+  /usr/include/assimp/aabb.h \
+  /usr/include/assimp/anim.h \
+  /usr/include/assimp/camera.h \
+  /usr/include/assimp/color4.h \
+  /usr/include/assimp/color4.inl \
+  /usr/include/assimp/config.h \
+  /usr/include/assimp/defs.h \
+  /usr/include/assimp/light.h \
+  /usr/include/assimp/material.h \
+  /usr/include/assimp/material.inl \
+  /usr/include/assimp/matrix3x3.h \
+  /usr/include/assimp/matrix3x3.inl \
+  /usr/include/assimp/matrix4x4.h \
+  /usr/include/assimp/matrix4x4.inl \
+  /usr/include/assimp/mesh.h \
+  /usr/include/assimp/metadata.h \
+  /usr/include/assimp/postprocess.h \
+  /usr/include/assimp/quaternion.h \
+  /usr/include/assimp/quaternion.inl \
+  /usr/include/assimp/scene.h \
+  /usr/include/assimp/texture.h \
+  /usr/include/assimp/types.h \
+  /usr/include/assimp/vector2.h \
+  /usr/include/assimp/vector2.inl \
+  /usr/include/assimp/vector3.h \
+  /usr/include/assimp/vector3.inl \
+  /usr/include/c++/13/algorithm \
   /usr/include/c++/13/array \
   /usr/include/c++/13/backward/auto_ptr.h \
   /usr/include/c++/13/backward/binders.h \
@@ -4655,6 +4687,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.o: /home/hakko/Desktop/Haka
   /usr/include/c++/13/cstdint \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
+  /usr/include/c++/13/cstring \
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
@@ -4679,6 +4712,7 @@ CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.o: /home/hakko/Desktop/Haka
   /usr/include/c++/13/new \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/execution_defs.h \
+  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
   /usr/include/c++/13/pstl/glue_memory_defs.h \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/stdexcept \

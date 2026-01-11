@@ -5,8 +5,8 @@
 
 Scene::Scene(const std::string &name, TextureManager &textureManager,
              MeshManager &meshManager, LightManager &lightManager)
-    : name(name), textureManager(textureManager), lightManager(lightManager),
-      drawManager(meshManager) {}
+    : name(name), textureManager(textureManager), meshManager(meshManager),
+      lightManager(lightManager), drawManager(meshManager) {}
 
 Scene::~Scene() { cleanup(); }
 

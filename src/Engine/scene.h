@@ -31,6 +31,7 @@ public:
 protected:
   std::string name;
   TextureManager &textureManager;
+  MeshManager &meshManager;
   LightManager &lightManager;
   DrawManager drawManager;
   bool initialized = false;
