@@ -152,17 +152,10 @@ DrawManager::generateSphereVertices(const glm::vec3 &position, float radius,
       sectorAngle = j * sectorStep; // starting from 0 to 2pi
 
       // vertex position (x, y, z)
-      x = xy * cosf(sectorAngle); // r * cos(u) * cos(v)
-      y = xy * sinf(sectorAngle); // r * cos(u) * sin(v)
-      // Note: This generates Z-up sphere (poles at Z). Our world is Y-up?
-      // Standard mathematical sphere: x = r cos(theta) sin(phi), y = r
-      // sin(theta) sin(phi), z = r cos(phi) Let's adjust to Y-up. x = xy *
-      // cos(sectorAngle) z = xy * sin(sectorAngle) y = z (from loop) -> but
-      // calculate actual Y Let's rewrite for Y-up: stackAngle from PI/2 (top)
-      // to -PI/2 (bottom) along Y axis. y = radius * sin(stackAngle) xz =
-      // radius * cos(stackAngle) x = xz * cos(sectorAngle) z = xz *
-      // sin(sectorAngle)
+      x = xy * cosf(sectorAngle);
+      y = xy * sinf(sectorAngle);
 
+      // Calculate Y-up spherical coordinates
       float py = radius * sinf(stackAngle);
       float pxz = radius * cosf(stackAngle);
       float px = pxz * cosf(sectorAngle);
@@ -179,18 +172,7 @@ DrawManager::generateSphereVertices(const glm::vec3 &position, float radius,
     }
   }
 
-  // Indices (triangle strip logic -> triangles)
-  std::vector<uint32_t> indices;
-  // TODO: DrawManager returns vector<Vertex> but Mesh::createMesh takes
-  // vector<Vertex>. Mesh class handles non-indexed drawing or simple vertex
-  // array. Our generateCube generates triangles directly (36 verts). For
-  // sphere, we should generate separate triangles if we aren't using index
-  // buffer support in Mesh class yet? Checking Mesh::createMesh... it takes
-  // vector<Vertex>. Mesh::Mesh(..., vertices) -> creates vertex buffer.
-  // vkCmdDraw uses vertices.size().
-  // So we must duplicate vertices for rendering triangles.
-  // This is expensive but consistent with current DrawManager design.
-
+  // Triangulate sphere by duplicating vertices (non-indexed drawing)
   std::vector<Vertex> triangleVertices;
   int k1, k2;
   for (int i = 0; i < stacks; ++i) {

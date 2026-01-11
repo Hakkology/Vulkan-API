@@ -93,45 +93,13 @@ void DefaultScene::init() {
   // We want it longer? Let's scale it.
   Mesh *cape = drawManager.drawPlane(glm::vec3(0.0f, 0.0f, 0.0f), 0.4f);
 
-  // Transform: Position behind neck/shoulders, Rotate vertical, Scale length?
+  // Transform: Rotate to XY plane and position behind character.
   glm::mat4 capeModel = glm::mat4(1.0f);
-  // Position: centered X, Y roughly shoulders (1.6) down to knees?
-  // Only translation is handled here if we use drawPlane(0,0,0).
-  // But drawPlane sets position in vertices? No, it takes position arg.
-  // Let's create at Origin and move via Model Matrix to handle rotation
-  // properly. Position arguments in drawPlane displace vertices. Model Matrix
-  // transforms them. It is safer to use Model Matrix for complex transforms
-  // (Rotation). Initial Plane is XZ. Normal (0,1,0). Rotate 90 deg X -> XY
-  // Plane. Normal (0,0,1). Facing +Z. We want it behind character (at -Z),
-  // facing backward? or double sided culling? Culling is back bit. Plane
-  // usually has one side. If we rotate +90, Normal points +Z? or -Z? (0,1,0) x
-  // RotX(90) -> (0,0,1). Character is at Z=0. Back is -Z. So Normal (0,0,1)
-  // points towards character. This is "Back Face" if viewing from behind? If I
-  // look from +Z (front), I see front of char. Cape is behind. If I rotate
-  // camera to back (-Z), I see cape. So cape normal should point -Z (away from
-  // character). Rotate -90 deg X? (0,1,0) -> (0,0,-1).
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
 
-  capeModel = glm::translate(
-      capeModel,
-      glm::vec3(0.0f, 0.37f, -0.63f)); // Adjusted for angle and length
+  capeModel = glm::translate(capeModel, glm::vec3(0.0f, 0.37f, -0.63f));
   capeModel =
       glm::rotate(capeModel, glm::radians(110.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  capeModel = glm::scale(
-      capeModel, glm::vec3(1.0f, 1.0f, 3.0f)); // Make it even longer
-                                               // space becomes Height in world)
+  capeModel = glm::scale(capeModel, glm::vec3(1.0f, 1.0f, 3.0f));
 
   cape->setModelMatrix(capeModel);
   drawManager.setMaterial(cape, capeMaterial);
@@ -185,16 +153,11 @@ void DefaultScene::init() {
       swordModel = glm::rotate(swordModel, glm::radians(90.0f),
                                glm::vec3(1.0f, 0.0f, 0.0f)); // Point forward
 
-      // User requested rotation to fix grip. Previous Z-rotation caused
-      // sideways pointing. Rotating on Y (Local Handle Axis) before X-Tilt will
-      // roll the sword.
+      // Adjust grip rotation and scale to 5.0f.
       swordModel = glm::rotate(swordModel, glm::radians(90.0f),
                                glm::vec3(0.0f, 1.0f, 0.0f));
 
-      swordModel = glm::scale(
-          swordModel,
-          glm::vec3(
-              5.0f)); // User requested 10x (assuming 10x scaling or 5.0 size)
+      swordModel = glm::scale(swordModel, glm::vec3(5.0f));
 
       swordMesh->setModelMatrix(swordModel);
       drawManager.setMaterial(swordMesh, swordMaterial);
@@ -277,9 +240,7 @@ void DefaultScene::init() {
       }
 
       glm::mat4 skyboxModel = glm::mat4(1.0f);
-      // Move skybox down so the center is roughly at (0,0,0).
-      // Since AssetImporter normalizes to [0, 1] on Y and sets pivot to bottom,
-      // and we scale by 50, the height is 0 to 50. -25 centers it.
+      // Center the normalized [0, 1] asset by translating -0.5 units (scaled).
       skyboxModel = glm::translate(skyboxModel, glm::vec3(0.0f, -25.0f, 0.0f));
       // Scale large enough to be a skybox
       skyboxModel = glm::scale(skyboxModel, glm::vec3(50.0f));

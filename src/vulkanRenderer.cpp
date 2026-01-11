@@ -181,7 +181,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     }
 
     std::cout << "Creating descriptor set layout for texture..." << std::endl;
-    // Binding 0: Combined image sampler for texture (NOW IN SET 1)
+    // Binding 0: Texture sampler (Set 1)
     VkDescriptorSetLayoutBinding samplerLayoutBinding{};
     samplerLayoutBinding.binding = 0;
     samplerLayoutBinding.descriptorCount = 1;
@@ -213,7 +213,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         "../src/Shaders/spv/shadow.frag.spv", VK_CULL_MODE_BACK_BIT,
         VK_FRONT_FACE_COUNTER_CLOCKWISE, VK_TRUE);
     shadowPipeline->createGraphicsPipeline(
-        {}); // Empty layouts for shadow pass (only push constants)
+        {}); // Shadows use push constants only.
 
     std::cout << "Creating main graphics pipelines..." << std::endl;
     graphicsPipeline = std::make_unique<GraphicsPipeline>(
@@ -237,11 +237,8 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         swapChainExtent, "../src/Shaders/spv/skybox.vert.spv",
         "../src/Shaders/spv/skybox.frag.spv",
-        VK_CULL_MODE_NONE,      // Render all faces
-        VK_FRONT_FACE_CLOCKWISE // Standard winding
-    ); // Can add depth test disabling here if needed, but managing via render
-       // order/depth func is also possible.
-    // For now we assume standard depth test Less/Equal.
+        VK_CULL_MODE_NONE,        // Render all faces
+        VK_FRONT_FACE_CLOCKWISE); // Standard depth/culling for skybox.
 
     skyboxGraphicsPipeline->createGraphicsPipeline(
         {globalDescriptorSetLayout, textureDescriptorSetLayout});
@@ -439,13 +436,8 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     // Pool already created
     commandBuffer->allocateCommandBuffers(
         frameBuffer->getSwapchainFramebuffers());
-    // commandBuffer->recordCommands(frameBuffer->getSwapchainFramebuffers(),
-    // renderPass->getRenderPass(), swapChainManager->getChosenExtent(),
-    // meshDrawer.get(), meshManager.get());
 
-    std::cout << "Initializing synchronization functionality..." << std::endl;
-    // Assuming `frameCount` is defined and represents the number of frames you
-    // are managing
+    // Initialize synchronization
     syncHandler = std::make_unique<SynchronizationHandler>(
         deviceManager.getLogicalDevice(), 2);
     syncHandler->createSynchronizationObjects();
