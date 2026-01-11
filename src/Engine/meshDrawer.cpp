@@ -1,4 +1,4 @@
-#include "vulkanMeshDrawer.h"
+#include "meshDrawer.h"
 
 MeshDrawer::MeshDrawer(VkDevice device, VkRenderPass renderPass,
                        VkPipeline graphicsPipeline, VkPipeline texturedPipeline,

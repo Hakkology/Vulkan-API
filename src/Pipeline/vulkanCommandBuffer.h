@@ -6,9 +6,9 @@
 #include <vulkan/vulkan.h>
 #include <vulkanUtils.h>
 
-#include "vulkanMeshDrawer.h"
-#include "vulkanMeshHandler.h"
-#include "vulkanMeshManager.h"
+#include "mesh.h"
+#include "meshDrawer.h"
+#include "meshManager.h"
 
 class CommandManager {
 public:

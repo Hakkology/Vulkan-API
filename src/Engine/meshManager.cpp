@@ -1,4 +1,4 @@
-#include "vulkanMeshManager.h"
+#include "meshManager.h"
 
 MeshManager::MeshManager(VkPhysicalDevice physicalDevice, VkDevice device)
     : physicalDevice(physicalDevice), device(device) {}

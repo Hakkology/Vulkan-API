@@ -182,16 +182,21 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         texturedGraphicsPipeline->getGraphicsPipeline(),
         graphicsPipeline->getPipelineLayout());
 
-    // Initialize graphics (Scene)
-    std::cout << "Initializing graphics" << std::endl;
-    scene = std::make_unique<Scene>(instance, deviceManager.getLogicalDevice(),
-                                    deviceManager.getPhysicalDevice(),
-                                    *textureManager);
+    // Initialize SceneManager
+    std::cout << "Initializing Scene Manager" << std::endl;
+    sceneManager = std::make_unique<SceneManager>(*textureManager, *meshManager,
+                                                  *lightManager);
 
-    // Scene setup
-    scene->addInitialMeshes(*meshManager, ShapeType::PLANE);
-    scene->addInitialMeshes(*meshManager, ShapeType::CUBE);
-    scene->initLights(*lightManager);
+    // Register scenes
+    sceneManager->registerScene(
+        "default", std::make_unique<DefaultScene>(*textureManager, *meshManager,
+                                                  *lightManager));
+    sceneManager->registerScene(
+        "demo", std::make_unique<DemoScene>(*textureManager, *meshManager,
+                                            *lightManager));
+
+    // Load default scene
+    sceneManager->loadScene("default");
 
     // Initializing Descriptor Pool
     VkDescriptorPoolSize poolSize{};
@@ -219,7 +224,9 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
 
     const auto &meshes = meshManager->getAllMeshes();
     for (const auto &[id, mesh] : meshes) {
-      if (mesh && mesh->hasTexture()) {
+      if (mesh && mesh->hasMaterial() && mesh->getMaterial()->hasTexture()) {
+        auto material = mesh->getMaterial();
+
         VkDescriptorSetAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
         allocInfo.descriptorPool = textureDescriptorPool;
@@ -235,8 +242,8 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
 
         VkDescriptorImageInfo imageInfo{};
         imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-        imageInfo.imageView = mesh->getTextureImageView();
-        imageInfo.sampler = mesh->getTextureSampler();
+        imageInfo.imageView = material->getTextureImageView();
+        imageInfo.sampler = material->getTextureSampler();
 
         VkWriteDescriptorSet descriptorWrite{};
         descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
@@ -251,7 +258,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         vkUpdateDescriptorSets(deviceManager.getLogicalDevice(), 1,
                                &descriptorWrite, 0, nullptr);
 
-        mesh->setTextureDescriptorSet(descriptorSet);
+        material->setDescriptorSet(descriptorSet);
       }
     }
 
@@ -300,8 +307,8 @@ void VulkanRenderer::terminate() {
     meshDrawer.reset();
   }
 
-  if (scene) {
-    scene.reset();
+  if (sceneManager) {
+    sceneManager.reset();
   }
 
   if (inputManager) {

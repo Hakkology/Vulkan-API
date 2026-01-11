@@ -214,6 +214,30 @@ src/Engine/deviceManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/deviceManager.cpp.s
 .PHONY : src/Engine/deviceManager.cpp.s
 
+src/Engine/drawManager.o: src/Engine/drawManager.cpp.o
+.PHONY : src/Engine/drawManager.o
+
+# target to build an object file
+src/Engine/drawManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/drawManager.cpp.o
+.PHONY : src/Engine/drawManager.cpp.o
+
+src/Engine/drawManager.i: src/Engine/drawManager.cpp.i
+.PHONY : src/Engine/drawManager.i
+
+# target to preprocess a source file
+src/Engine/drawManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/drawManager.cpp.i
+.PHONY : src/Engine/drawManager.cpp.i
+
+src/Engine/drawManager.s: src/Engine/drawManager.cpp.s
+.PHONY : src/Engine/drawManager.s
+
+# target to generate assembly for a file
+src/Engine/drawManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/drawManager.cpp.s
+.PHONY : src/Engine/drawManager.cpp.s
+
 src/Engine/inputManager.o: src/Engine/inputManager.cpp.o
 .PHONY : src/Engine/inputManager.o
 
@@ -262,6 +286,102 @@ src/Engine/lightManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/lightManager.cpp.s
 .PHONY : src/Engine/lightManager.cpp.s
 
+src/Engine/material.o: src/Engine/material.cpp.o
+.PHONY : src/Engine/material.o
+
+# target to build an object file
+src/Engine/material.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/material.cpp.o
+.PHONY : src/Engine/material.cpp.o
+
+src/Engine/material.i: src/Engine/material.cpp.i
+.PHONY : src/Engine/material.i
+
+# target to preprocess a source file
+src/Engine/material.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/material.cpp.i
+.PHONY : src/Engine/material.cpp.i
+
+src/Engine/material.s: src/Engine/material.cpp.s
+.PHONY : src/Engine/material.s
+
+# target to generate assembly for a file
+src/Engine/material.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/material.cpp.s
+.PHONY : src/Engine/material.cpp.s
+
+src/Engine/mesh.o: src/Engine/mesh.cpp.o
+.PHONY : src/Engine/mesh.o
+
+# target to build an object file
+src/Engine/mesh.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/mesh.cpp.o
+.PHONY : src/Engine/mesh.cpp.o
+
+src/Engine/mesh.i: src/Engine/mesh.cpp.i
+.PHONY : src/Engine/mesh.i
+
+# target to preprocess a source file
+src/Engine/mesh.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/mesh.cpp.i
+.PHONY : src/Engine/mesh.cpp.i
+
+src/Engine/mesh.s: src/Engine/mesh.cpp.s
+.PHONY : src/Engine/mesh.s
+
+# target to generate assembly for a file
+src/Engine/mesh.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/mesh.cpp.s
+.PHONY : src/Engine/mesh.cpp.s
+
+src/Engine/meshDrawer.o: src/Engine/meshDrawer.cpp.o
+.PHONY : src/Engine/meshDrawer.o
+
+# target to build an object file
+src/Engine/meshDrawer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/meshDrawer.cpp.o
+.PHONY : src/Engine/meshDrawer.cpp.o
+
+src/Engine/meshDrawer.i: src/Engine/meshDrawer.cpp.i
+.PHONY : src/Engine/meshDrawer.i
+
+# target to preprocess a source file
+src/Engine/meshDrawer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/meshDrawer.cpp.i
+.PHONY : src/Engine/meshDrawer.cpp.i
+
+src/Engine/meshDrawer.s: src/Engine/meshDrawer.cpp.s
+.PHONY : src/Engine/meshDrawer.s
+
+# target to generate assembly for a file
+src/Engine/meshDrawer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/meshDrawer.cpp.s
+.PHONY : src/Engine/meshDrawer.cpp.s
+
+src/Engine/meshManager.o: src/Engine/meshManager.cpp.o
+.PHONY : src/Engine/meshManager.o
+
+# target to build an object file
+src/Engine/meshManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/meshManager.cpp.o
+.PHONY : src/Engine/meshManager.cpp.o
+
+src/Engine/meshManager.i: src/Engine/meshManager.cpp.i
+.PHONY : src/Engine/meshManager.i
+
+# target to preprocess a source file
+src/Engine/meshManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/meshManager.cpp.i
+.PHONY : src/Engine/meshManager.cpp.i
+
+src/Engine/meshManager.s: src/Engine/meshManager.cpp.s
+.PHONY : src/Engine/meshManager.s
+
+# target to generate assembly for a file
+src/Engine/meshManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/meshManager.cpp.s
+.PHONY : src/Engine/meshManager.cpp.s
+
 src/Engine/queueManager.o: src/Engine/queueManager.cpp.o
 .PHONY : src/Engine/queueManager.o
 
@@ -309,6 +429,30 @@ src/Engine/scene.s: src/Engine/scene.cpp.s
 src/Engine/scene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/scene.cpp.s
 .PHONY : src/Engine/scene.cpp.s
+
+src/Engine/scenes.o: src/Engine/scenes.cpp.o
+.PHONY : src/Engine/scenes.o
+
+# target to build an object file
+src/Engine/scenes.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.o
+.PHONY : src/Engine/scenes.cpp.o
+
+src/Engine/scenes.i: src/Engine/scenes.cpp.i
+.PHONY : src/Engine/scenes.i
+
+# target to preprocess a source file
+src/Engine/scenes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.i
+.PHONY : src/Engine/scenes.cpp.i
+
+src/Engine/scenes.s: src/Engine/scenes.cpp.s
+.PHONY : src/Engine/scenes.s
+
+# target to generate assembly for a file
+src/Engine/scenes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/scenes.cpp.s
+.PHONY : src/Engine/scenes.cpp.s
 
 src/Engine/surfaceManager.o: src/Engine/surfaceManager.cpp.o
 .PHONY : src/Engine/surfaceManager.o
@@ -381,78 +525,6 @@ src/Engine/textureManager.s: src/Engine/textureManager.cpp.s
 src/Engine/textureManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/textureManager.cpp.s
 .PHONY : src/Engine/textureManager.cpp.s
-
-src/Engine/vulkanMeshDrawer.o: src/Engine/vulkanMeshDrawer.cpp.o
-.PHONY : src/Engine/vulkanMeshDrawer.o
-
-# target to build an object file
-src/Engine/vulkanMeshDrawer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshDrawer.cpp.o
-.PHONY : src/Engine/vulkanMeshDrawer.cpp.o
-
-src/Engine/vulkanMeshDrawer.i: src/Engine/vulkanMeshDrawer.cpp.i
-.PHONY : src/Engine/vulkanMeshDrawer.i
-
-# target to preprocess a source file
-src/Engine/vulkanMeshDrawer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshDrawer.cpp.i
-.PHONY : src/Engine/vulkanMeshDrawer.cpp.i
-
-src/Engine/vulkanMeshDrawer.s: src/Engine/vulkanMeshDrawer.cpp.s
-.PHONY : src/Engine/vulkanMeshDrawer.s
-
-# target to generate assembly for a file
-src/Engine/vulkanMeshDrawer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshDrawer.cpp.s
-.PHONY : src/Engine/vulkanMeshDrawer.cpp.s
-
-src/Engine/vulkanMeshHandler.o: src/Engine/vulkanMeshHandler.cpp.o
-.PHONY : src/Engine/vulkanMeshHandler.o
-
-# target to build an object file
-src/Engine/vulkanMeshHandler.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshHandler.cpp.o
-.PHONY : src/Engine/vulkanMeshHandler.cpp.o
-
-src/Engine/vulkanMeshHandler.i: src/Engine/vulkanMeshHandler.cpp.i
-.PHONY : src/Engine/vulkanMeshHandler.i
-
-# target to preprocess a source file
-src/Engine/vulkanMeshHandler.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshHandler.cpp.i
-.PHONY : src/Engine/vulkanMeshHandler.cpp.i
-
-src/Engine/vulkanMeshHandler.s: src/Engine/vulkanMeshHandler.cpp.s
-.PHONY : src/Engine/vulkanMeshHandler.s
-
-# target to generate assembly for a file
-src/Engine/vulkanMeshHandler.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshHandler.cpp.s
-.PHONY : src/Engine/vulkanMeshHandler.cpp.s
-
-src/Engine/vulkanMeshManager.o: src/Engine/vulkanMeshManager.cpp.o
-.PHONY : src/Engine/vulkanMeshManager.o
-
-# target to build an object file
-src/Engine/vulkanMeshManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshManager.cpp.o
-.PHONY : src/Engine/vulkanMeshManager.cpp.o
-
-src/Engine/vulkanMeshManager.i: src/Engine/vulkanMeshManager.cpp.i
-.PHONY : src/Engine/vulkanMeshManager.i
-
-# target to preprocess a source file
-src/Engine/vulkanMeshManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshManager.cpp.i
-.PHONY : src/Engine/vulkanMeshManager.cpp.i
-
-src/Engine/vulkanMeshManager.s: src/Engine/vulkanMeshManager.cpp.s
-.PHONY : src/Engine/vulkanMeshManager.s
-
-# target to generate assembly for a file
-src/Engine/vulkanMeshManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Engine/vulkanMeshManager.cpp.s
-.PHONY : src/Engine/vulkanMeshManager.cpp.s
 
 src/Engine/vulkanUtils.o: src/Engine/vulkanUtils.cpp.o
 .PHONY : src/Engine/vulkanUtils.o
@@ -977,18 +1049,36 @@ help:
 	@echo "... src/Engine/deviceManager.o"
 	@echo "... src/Engine/deviceManager.i"
 	@echo "... src/Engine/deviceManager.s"
+	@echo "... src/Engine/drawManager.o"
+	@echo "... src/Engine/drawManager.i"
+	@echo "... src/Engine/drawManager.s"
 	@echo "... src/Engine/inputManager.o"
 	@echo "... src/Engine/inputManager.i"
 	@echo "... src/Engine/inputManager.s"
 	@echo "... src/Engine/lightManager.o"
 	@echo "... src/Engine/lightManager.i"
 	@echo "... src/Engine/lightManager.s"
+	@echo "... src/Engine/material.o"
+	@echo "... src/Engine/material.i"
+	@echo "... src/Engine/material.s"
+	@echo "... src/Engine/mesh.o"
+	@echo "... src/Engine/mesh.i"
+	@echo "... src/Engine/mesh.s"
+	@echo "... src/Engine/meshDrawer.o"
+	@echo "... src/Engine/meshDrawer.i"
+	@echo "... src/Engine/meshDrawer.s"
+	@echo "... src/Engine/meshManager.o"
+	@echo "... src/Engine/meshManager.i"
+	@echo "... src/Engine/meshManager.s"
 	@echo "... src/Engine/queueManager.o"
 	@echo "... src/Engine/queueManager.i"
 	@echo "... src/Engine/queueManager.s"
 	@echo "... src/Engine/scene.o"
 	@echo "... src/Engine/scene.i"
 	@echo "... src/Engine/scene.s"
+	@echo "... src/Engine/scenes.o"
+	@echo "... src/Engine/scenes.i"
+	@echo "... src/Engine/scenes.s"
 	@echo "... src/Engine/surfaceManager.o"
 	@echo "... src/Engine/surfaceManager.i"
 	@echo "... src/Engine/surfaceManager.s"
@@ -998,15 +1088,6 @@ help:
 	@echo "... src/Engine/textureManager.o"
 	@echo "... src/Engine/textureManager.i"
 	@echo "... src/Engine/textureManager.s"
-	@echo "... src/Engine/vulkanMeshDrawer.o"
-	@echo "... src/Engine/vulkanMeshDrawer.i"
-	@echo "... src/Engine/vulkanMeshDrawer.s"
-	@echo "... src/Engine/vulkanMeshHandler.o"
-	@echo "... src/Engine/vulkanMeshHandler.i"
-	@echo "... src/Engine/vulkanMeshHandler.s"
-	@echo "... src/Engine/vulkanMeshManager.o"
-	@echo "... src/Engine/vulkanMeshManager.i"
-	@echo "... src/Engine/vulkanMeshManager.s"
 	@echo "... src/Engine/vulkanUtils.o"
 	@echo "... src/Engine/vulkanUtils.i"
 	@echo "... src/Engine/vulkanUtils.s"

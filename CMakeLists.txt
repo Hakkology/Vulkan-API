@@ -21,10 +21,13 @@ add_executable(Vulkan-Renderer
     src/Engine/cameraManager.cpp
     src/Engine/assetImportManager.cpp
     src/Engine/scene.cpp
+    src/Engine/scenes.cpp
     src/Engine/textureManager.cpp
-    src/Engine/vulkanMeshHandler.cpp
-    src/Engine/vulkanMeshManager.cpp
-    src/Engine/vulkanMeshDrawer.cpp
+    src/Engine/mesh.cpp
+    src/Engine/meshManager.cpp
+    src/Engine/meshDrawer.cpp
+    src/Engine/material.cpp
+    src/Engine/drawManager.cpp
 
     src/Engine/vulkanValidation.cpp
     src/Engine/deviceManager.cpp

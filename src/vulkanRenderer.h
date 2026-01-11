@@ -10,6 +10,10 @@
 #include <string.h>
 #include <vector>
 
+#include "Engine/mesh.h"
+#include "Engine/meshDrawer.h"
+#include "Engine/meshManager.h"
+#include "Engine/scenes.h"
 #include "Engine/textureManager.h"
 #include "cameraManager.h"
 #include "deviceManager.h"
@@ -23,9 +27,6 @@
 #include "vulkanDepthManager.h"
 #include "vulkanFrameBuffer.h"
 #include "vulkanGraphicsPipeline.h"
-#include "vulkanMeshDrawer.h"
-#include "vulkanMeshHandler.h"
-#include "vulkanMeshManager.h"
 #include "vulkanRenderpass.h"
 #include "vulkanSyncHandler.h"
 #include "vulkanValidation.h"
@@ -63,7 +64,7 @@ private:
 
   std::unique_ptr<MeshManager> meshManager;
   std::unique_ptr<MeshDrawer> meshDrawer;
-  std::unique_ptr<Scene> scene;
+  std::unique_ptr<SceneManager> sceneManager;
   std::unique_ptr<CameraManager> cameraManager;
   std::unique_ptr<InputManager> inputManager;
   std::unique_ptr<LightManager> lightManager;

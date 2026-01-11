@@ -3,7 +3,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkanMeshHandler.h"
+#include "mesh.h"
 #include "vulkanUtils.h"
 
 class MeshDrawer {
