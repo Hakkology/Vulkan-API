@@ -26,13 +26,62 @@ void DefaultScene::init() {
   Mesh *plane = drawManager.drawPlane(glm::vec3(0.0f, -1.0f, 0.0f), 5.0f);
   drawManager.setMaterial(plane, groundMaterial);
 
-  // Create a cube with colored material
-  auto cubeMaterial = std::make_shared<Material>(MaterialType::COLORED);
-  cubeMaterial->setColor(glm::vec4(1.0f, 0.5f, 0.31f, 1.0f)); // Orange
+  // --- Human Figure ---
 
-  Mesh *cube =
-      drawManager.drawCube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f));
-  drawManager.setMaterial(cube, cubeMaterial);
+  // Materials
+  auto skinMaterial = std::make_shared<Material>(MaterialType::COLORED);
+  skinMaterial->setColor(glm::vec4(1.0f, 0.8f, 0.6f, 1.0f)); // Skin tone
+
+  auto shirtMaterial = std::make_shared<Material>(MaterialType::COLORED);
+  shirtMaterial->setColor(glm::vec4(0.2f, 0.2f, 0.8f, 1.0f)); // Blue shirt
+
+  auto pantsMaterial = std::make_shared<Material>(MaterialType::COLORED);
+  pantsMaterial->setColor(glm::vec4(0.1f, 0.1f, 0.4f, 1.0f)); // Dark blue pants
+
+  // 1. Torso (Rectangle)
+  // Scale of cube defaults to 1.0. We want 0.8 x 1.2 x 0.4
+  Mesh *torso = drawManager.drawCube(glm::vec3(0.0f, 1.0f, 0.0f),
+                                     glm::vec3(0.8f, 1.2f, 0.4f));
+  drawManager.setMaterial(torso, shirtMaterial);
+
+  // 2. Head (Sphere)
+  // Positioned above torso (Torso top = 1.6). Head center at 2.1
+  Mesh *head = drawManager.drawSphere(glm::vec3(0.0f, 2.1f, 0.0f), 0.4f);
+  drawManager.setMaterial(head, skinMaterial);
+
+  // 3. Legs (Capsules)
+  // Torso bottom is at 0.4.
+  // Legs should extend from 0.4 down to near -1.0.
+  // Length approx 1.2. Radius 0.15.
+  // Center y = 0.4 - (0.6 + 0.15) ? No, let's explicit place.
+  // Ground is -1.0. Hip is 0.4. Length needed: 1.4.
+  // Capsule total height = h + 2r. 1.4 = h + 0.3 -> h = 1.1.
+  // Center pos = -1.0 + 0.7 = -0.3.
+  float legRadius = 0.15f;
+  float legCylHeight = 1.1f;
+  float legY = -0.3f;
+
+  Mesh *leftLeg = drawManager.drawCapsule(glm::vec3(-0.25f, legY, 0.0f),
+                                          legRadius, legCylHeight);
+  drawManager.setMaterial(leftLeg, pantsMaterial);
+
+  Mesh *rightLeg = drawManager.drawCapsule(glm::vec3(0.25f, legY, 0.0f),
+                                           legRadius, legCylHeight);
+  drawManager.setMaterial(rightLeg, pantsMaterial);
+
+  // 4. Arms (Capsules)
+  // Shoulder at approx 1.5. Hand down.
+  float armRadius = 0.12f;
+  float armCylHeight = 0.9f;
+  float armY = 1.0f; // Beside torso
+
+  Mesh *leftArm = drawManager.drawCapsule(glm::vec3(-0.55f, armY, 0.0f),
+                                          armRadius, armCylHeight);
+  drawManager.setMaterial(leftArm, skinMaterial);
+
+  Mesh *rightArm = drawManager.drawCapsule(glm::vec3(0.55f, armY, 0.0f),
+                                           armRadius, armCylHeight);
+  drawManager.setMaterial(rightArm, skinMaterial);
 
   // Setup lights
   // Wrapped Diffuse (Half-Lambert) will handle visibility in shadows.

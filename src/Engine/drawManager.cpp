@@ -22,6 +22,21 @@ Mesh *DrawManager::drawTriangle(const glm::vec3 &position) {
   return mesh;
 }
 
+Mesh *DrawManager::drawSphere(const glm::vec3 &position, float radius,
+                              int sectors, int stacks) {
+  auto vertices = generateSphereVertices(position, radius, sectors, stacks);
+  Mesh *mesh = meshManager.createMesh(vertices);
+  return mesh;
+}
+
+Mesh *DrawManager::drawCapsule(const glm::vec3 &position, float radius,
+                               float height, int sectors, int stacks) {
+  auto vertices =
+      generateCapsuleVertices(position, radius, height, sectors, stacks);
+  Mesh *mesh = meshManager.createMesh(vertices);
+  return mesh;
+}
+
 void DrawManager::setMaterial(Mesh *mesh, std::shared_ptr<Material> material) {
   if (mesh) {
     mesh->setMaterial(material);
@@ -110,4 +125,168 @@ DrawManager::generateTriangleVertices(const glm::vec3 &position) {
   return {{{px + 0.0f, py - 0.5f, pz}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
           {{px + 0.5f, py + 0.5f, pz}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
           {{px - 0.5f, py + 0.5f, pz}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}}};
+}
+
+std::vector<Vertex>
+DrawManager::generateSphereVertices(const glm::vec3 &position, float radius,
+                                    int sectors, int stacks) {
+  std::vector<Vertex> vertices;
+  float x, y, z, xy;                           // vertex position
+  float nx, ny, nz, lengthInv = 1.0f / radius; // vertex normal
+  float s, t;                                  // vertex texCoord
+
+  float sectorStep = 2 * M_PI / sectors;
+  float stackStep = M_PI / stacks;
+  float sectorAngle, stackAngle;
+
+  // Vertices
+  for (int i = 0; i <= stacks; ++i) {
+    stackAngle = M_PI / 2 - i * stackStep; // starting from pi/2 to -pi/2
+    xy = radius * cosf(stackAngle);        // r * cos(u)
+    z = radius * sinf(stackAngle);         // r * sin(u)
+
+    // add (sectorCount+1) vertices per stack
+    // the first and last vertices have same position and normal, but different
+    // tex coords
+    for (int j = 0; j <= sectors; ++j) {
+      sectorAngle = j * sectorStep; // starting from 0 to 2pi
+
+      // vertex position (x, y, z)
+      x = xy * cosf(sectorAngle); // r * cos(u) * cos(v)
+      y = xy * sinf(sectorAngle); // r * cos(u) * sin(v)
+      // Note: This generates Z-up sphere (poles at Z). Our world is Y-up?
+      // Standard mathematical sphere: x = r cos(theta) sin(phi), y = r
+      // sin(theta) sin(phi), z = r cos(phi) Let's adjust to Y-up. x = xy *
+      // cos(sectorAngle) z = xy * sin(sectorAngle) y = z (from loop) -> but
+      // calculate actual Y Let's rewrite for Y-up: stackAngle from PI/2 (top)
+      // to -PI/2 (bottom) along Y axis. y = radius * sin(stackAngle) xz =
+      // radius * cos(stackAngle) x = xz * cos(sectorAngle) z = xz *
+      // sin(sectorAngle)
+
+      float py = radius * sinf(stackAngle);
+      float pxz = radius * cosf(stackAngle);
+      float px = pxz * cosf(sectorAngle);
+      float pz = pxz * sinf(sectorAngle);
+
+      glm::vec3 pos = glm::vec3(px, py, pz);
+      glm::vec3 normal = glm::normalize(pos);
+
+      // Tex coords
+      s = (float)j / sectors;
+      t = (float)i / stacks;
+
+      vertices.push_back({position + pos, normal, {s, t}});
+    }
+  }
+
+  // Indices (triangle strip logic -> triangles)
+  std::vector<uint32_t> indices;
+  // TODO: DrawManager returns vector<Vertex> but Mesh::createMesh takes
+  // vector<Vertex>. Mesh class handles non-indexed drawing or simple vertex
+  // array. Our generateCube generates triangles directly (36 verts). For
+  // sphere, we should generate separate triangles if we aren't using index
+  // buffer support in Mesh class yet? Checking Mesh::createMesh... it takes
+  // vector<Vertex>. Mesh::Mesh(..., vertices) -> creates vertex buffer.
+  // vkCmdDraw uses vertices.size().
+  // So we must duplicate vertices for rendering triangles.
+  // This is expensive but consistent with current DrawManager design.
+
+  std::vector<Vertex> triangleVertices;
+  int k1, k2;
+  for (int i = 0; i < stacks; ++i) {
+    k1 = i * (sectors + 1); // beginning of current stack
+    k2 = k1 + sectors + 1;  // beginning of next stack
+
+    for (int j = 0; j < sectors; ++j, ++k1, ++k2) {
+      // 2 triangles per sector excluding first and last stacks
+      // k1 => k2 => k1+1
+      if (i != 0) {
+        triangleVertices.push_back(vertices[k1]);
+        triangleVertices.push_back(vertices[k2]);
+        triangleVertices.push_back(vertices[k1 + 1]);
+      }
+
+      // k1+1 => k2 => k2+1
+      if (i != (stacks - 1)) {
+        triangleVertices.push_back(vertices[k1 + 1]);
+        triangleVertices.push_back(vertices[k2]);
+        triangleVertices.push_back(vertices[k2 + 1]);
+      }
+    }
+  }
+  return triangleVertices;
+}
+
+std::vector<Vertex>
+DrawManager::generateCapsuleVertices(const glm::vec3 &position, float radius,
+                                     float height, int sectors, int stacks) {
+  std::vector<Vertex> generatedVertices;
+  std::vector<Vertex> gridVertices;
+
+  // Total steps = stacks (top hemi) + 1 (cylinder) + stacks (bottom hemi).
+  // 0 to stacks: Top Hemisphere
+  // stacks to stacks+1: Cylinder
+  // stacks+1 to 2*stacks+1: Bottom Hemisphere
+
+  for (int i = 0; i <= (2 * stacks + 1); ++i) {
+    float y, xz;
+
+    if (i <= stacks) {
+      // Top Hemisphere
+      float ratio = (float)i / stacks;
+      float angle = M_PI / 2 * (1.0f - ratio);
+      y = radius * sinf(angle) + height * 0.5f;
+      xz = radius * cosf(angle);
+    } else if (i == stacks + 1) {
+      // Bottom of cylinder
+      y = -height * 0.5f;
+      xz = radius;
+    } else {
+      // Bottom Hemisphere
+      float ratio = (float)(i - (stacks + 1)) / stacks;
+      float angle = -M_PI / 2 * ratio;
+      y = radius * sinf(angle) - height * 0.5f;
+      xz = radius * cosf(angle);
+    }
+
+    for (int j = 0; j <= sectors; ++j) {
+      float theta = (float)j / sectors * 2 * M_PI;
+      float x = xz * cosf(theta);
+      float z = xz * sinf(theta);
+
+      // Normal calculation
+      glm::vec3 n;
+      if (y > height * 0.5f - 0.001f) {
+        n = glm::normalize(glm::vec3(x, y - height * 0.5f, z));
+      } else if (y < -height * 0.5f + 0.001f) {
+        n = glm::normalize(glm::vec3(x, y + height * 0.5f, z));
+      } else {
+        n = glm::normalize(glm::vec3(x, 0, z));
+      }
+
+      gridVertices.push_back(
+          {position + glm::vec3(x, y, z),
+           n,
+           {(float)j / sectors, (float)i / (2 * stacks + 1)}});
+    }
+  }
+
+  // Triangulate grid
+  int numRows = 2 * stacks + 1;
+  for (int i = 0; i < numRows; ++i) {
+    int k1 = i * (sectors + 1);
+    int k2 = k1 + sectors + 1;
+
+    for (int j = 0; j < sectors; ++j, ++k1, ++k2) {
+      generatedVertices.push_back(gridVertices[k1]);
+      generatedVertices.push_back(gridVertices[k2]);
+      generatedVertices.push_back(gridVertices[k1 + 1]);
+
+      generatedVertices.push_back(gridVertices[k1 + 1]);
+      generatedVertices.push_back(gridVertices[k2]);
+      generatedVertices.push_back(gridVertices[k2 + 1]);
+    }
+  }
+
+  return generatedVertices;
 }
