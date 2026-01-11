@@ -8,10 +8,10 @@ layout(location = 0) out vec4 outColour;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
-    vec4 lightDir; // Direction of the light
-    vec4 lightColor; // Color of the light
-    vec4 ambientLight; // Ambient light (rgb, intensity)
-    vec4 objectColor; // Object color (can act as tint)
+    vec4 lightDir;
+    vec4 lightColor;
+    vec4 ambientLight;
+    vec4 objectColor;
 } pushConsts;
 
 layout(binding = 1) uniform sampler2D texSampler;
@@ -30,7 +30,7 @@ void main(){
 
     // Combine
     vec4 texColor = texture(texSampler, fragTexCoord);
-    vec3 objectColor = texColor.rgb * pushConsts.objectColor.rgb; // Tint with objectColor
+    vec3 objectColor = texColor.rgb * pushConsts.objectColor.rgb;
 
     vec3 result = (ambient + diffuse) * objectColor;
 

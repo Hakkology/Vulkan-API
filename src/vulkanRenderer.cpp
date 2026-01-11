@@ -222,6 +222,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     // The textureManager has loaded the texture by now (in
     // Scene::addInitialMeshes).
 
+    // Allocate descriptor sets for textured meshes
     const auto &meshes = meshManager->getAllMeshes();
     for (const auto &[id, mesh] : meshes) {
       if (mesh && mesh->hasMaterial() && mesh->getMaterial()->hasTexture()) {

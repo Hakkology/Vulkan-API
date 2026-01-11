@@ -2,13 +2,11 @@
 
 GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass &renderPass,
                                    VkExtent2D &swapChainExtent,
-                                   const std::string &vertexShaderPath,
-                                   const std::string &fragmentShaderPath)
-    : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent) {
-  vertexShaderModule = std::make_unique<PipelineShaderModule>(
-      device, VK_SHADER_STAGE_VERTEX_BIT, vertexShaderPath);
-  fragmentShaderModule = std::make_unique<PipelineShaderModule>(
-      device, VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShaderPath);
+                                   const std::string &vertShaderPath,
+                                   const std::string &fragShaderPath)
+    : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent),
+      vertexShaderPath(vertShaderPath), fragmentShaderPath(fragShaderPath) {
+  // Store shader paths for later use in createGraphicsPipeline
 }
 
 GraphicsPipeline::~GraphicsPipeline() { cleanup(); }
@@ -16,14 +14,15 @@ GraphicsPipeline::~GraphicsPipeline() { cleanup(); }
 void GraphicsPipeline::createGraphicsPipeline(
     const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts) {
   resetPipelineUnits();
-  // Read in SPIR-V code of shaders.
-  // Build Shader Modules to link to graphics pipeline.
-  // Put shader stage creation info in to array.
-  // graphics pipeline creation info requires array of shader stage creates
+
+  // Use stored shader paths (passed to constructor)
+  std::cout << "Loading vertex shader: " << vertexShaderPath << std::endl;
+  std::cout << "Loading fragment shader: " << fragmentShaderPath << std::endl;
+
   vertexShaderModule = std::make_unique<PipelineShaderModule>(
-      device, VK_SHADER_STAGE_VERTEX_BIT, VERTEX_SHADER_PATH);
+      device, VK_SHADER_STAGE_VERTEX_BIT, vertexShaderPath);
   fragmentShaderModule = std::make_unique<PipelineShaderModule>(
-      device, VK_SHADER_STAGE_FRAGMENT_BIT, FRAGMENT_SHADER_PATH);
+      device, VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShaderPath);
 
   auto vertShaderStageInfo = vertexShaderModule->createShaderStageInfo();
   auto fragShaderStageInfo = fragmentShaderModule->createShaderStageInfo();
@@ -70,8 +69,9 @@ void GraphicsPipeline::createGraphicsPipeline(
       colorBlendState->getColorBlendStateInfo();
 
   std::cout << "Configuring pipeline layout..." << std::endl;
-  std::vector<VkDescriptorSetLayout> layouts; // Add layouts here if needed
-  pipelineLayoutState = std::make_unique<PipelineLayout>(device, layouts);
+  // Use the passed descriptor set layouts for texture binding
+  pipelineLayoutState =
+      std::make_unique<PipelineLayout>(device, descriptorSetLayouts);
   if (!pipelineLayoutState->createPipelineLayout()) {
     // Handle error, e.g., throw an exception or return false
     // For now, let's assume it's a void function and just return if it fails

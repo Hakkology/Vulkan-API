@@ -42,6 +42,9 @@ private:
   VkExtent2D swapChainExtent;
   VkRenderPass &renderPass;
 
+  std::string vertexShaderPath;
+  std::string fragmentShaderPath;
+
   std::unique_ptr<PipelineViewportState> viewportState;
   std::unique_ptr<PipelineVertexInputState> vertexInputState;
   std::unique_ptr<PipelineInputAssemblyState> inputAssemblyState;

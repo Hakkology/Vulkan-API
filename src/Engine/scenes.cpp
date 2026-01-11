@@ -12,7 +12,8 @@ void DefaultScene::init() {
 
   // Create ground plane with texture
   auto groundMaterial = std::make_shared<Material>(MaterialType::TEXTURED);
-  groundMaterial->setColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+  groundMaterial->setColor(
+      glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)); // White - no tint on texture
 
   try {
     textureManager.loadTexture("../src/Assets/Textures/groundTex.jpg");

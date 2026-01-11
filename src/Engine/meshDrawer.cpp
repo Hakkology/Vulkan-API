@@ -1,4 +1,7 @@
 #include "meshDrawer.h"
+#include <iostream>
+
+static int debugCount = 0;
 
 MeshDrawer::MeshDrawer(VkDevice device, VkRenderPass renderPass,
                        VkPipeline graphicsPipeline, VkPipeline texturedPipeline,
@@ -7,36 +10,47 @@ MeshDrawer::MeshDrawer(VkDevice device, VkRenderPass renderPass,
       graphicsPipeline(graphicsPipeline), texturedPipeline(texturedPipeline),
       pipelineLayout(pipelineLayout) {}
 
-MeshDrawer::~MeshDrawer() {
-  // Clean up operations can be done here, if necessary
-  // Note: Destruction of Vulkan objects like renderPass and graphicsPipeline
-  // should be managed outside of this class
-}
+MeshDrawer::~MeshDrawer() {}
 
 void MeshDrawer::drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
                           const PushConstants &pushConstants) {
   if (!mesh || !commandBuffer)
     return;
 
-  VkBuffer vertexBuffers[] = {
-      mesh->getVertexBuffer()}; // Array of vertex buffers
-  VkDeviceSize offsets[] = {0}; // Offsets for the vertex buffers
+  VkBuffer vertexBuffers[] = {mesh->getVertexBuffer()};
+  VkDeviceSize offsets[] = {0};
 
-  // std::cout << "Binding vertex buffers." << std::endl;
   vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-  // Command to bind vertex buffer before drawing with them.
 
-  // std::cout << "Binding the graphics pipeline." << std::endl;
-  // bind render pass to graphics pipeline.
+  // DEBUG: Print which pipeline is being used
+  if (debugCount < 20) {
+    bool hasMat = mesh->hasMaterial();
+    bool hasTex = mesh->hasTexture();
+    std::cout << "[MeshDrawer] hasMaterial=" << hasMat
+              << ", hasTexture=" << hasTex;
+    if (hasMat) {
+      auto mat = mesh->getMaterial();
+      std::cout << ", matType=" << (int)mat->getType()
+                << ", matHasTex=" << mat->hasTexture();
+    }
+    std::cout << std::endl;
+    debugCount++;
+  }
+
+  // Bind appropriate pipeline based on texture availability
   if (mesh->hasTexture()) {
+    if (debugCount < 25) {
+      std::cout << "[MeshDrawer] -> TEXTURED pipeline" << std::endl;
+    }
     vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                       texturedPipeline);
   } else {
+    if (debugCount < 25) {
+      std::cout << "[MeshDrawer] -> COLORED pipeline" << std::endl;
+    }
     vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                       graphicsPipeline);
   }
-  // we might have different bind pipelines bound to different set of functions
-  // here.
 
   // Push Constants
   vkCmdPushConstants(commandBuffer, pipelineLayout,
