@@ -1,7 +1,7 @@
 #include "vulkanGraphicsPipeline.h"
 
-GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass &renderPass,
-                                   VkExtent2D &swapChainExtent,
+GraphicsPipeline::GraphicsPipeline(VkDevice device, VkRenderPass renderPass,
+                                   VkExtent2D swapChainExtent,
                                    const std::string &vertShaderPath,
                                    const std::string &fragShaderPath)
     : device(device), renderPass(renderPass), swapChainExtent(swapChainExtent),

@@ -19,8 +19,8 @@
 
 class GraphicsPipeline {
 public:
-  GraphicsPipeline(VkDevice device, VkRenderPass &renderPass,
-                   VkExtent2D &swapChainExtent,
+  GraphicsPipeline(VkDevice device, VkRenderPass renderPass,
+                   VkExtent2D swapChainExtent,
                    const std::string &vertexShaderPath,
                    const std::string &fragmentShaderPath);
   ~GraphicsPipeline();
@@ -40,7 +40,7 @@ private:
   VkPipeline graphicsPipeline;
   VkDevice device;
   VkExtent2D swapChainExtent;
-  VkRenderPass &renderPass;
+  VkRenderPass renderPass;
 
   std::string vertexShaderPath;
   std::string fragmentShaderPath;

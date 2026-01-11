@@ -20,11 +20,19 @@ public:
   void allocateCommandBuffers(std::vector<VkFramebuffer> frameBuffers);
   void recordCommands(std::vector<VkFramebuffer> frameBuffers,
                       VkRenderPass &renderPass, VkExtent2D chosenExtent,
-                      MeshDrawer *meshDrawer, MeshManager *meshManager);
-  void recordCommand(uint32_t imageIndex, VkFramebuffer framebuffer,
-                     VkRenderPass &renderPass, VkExtent2D chosenExtent,
-                     MeshDrawer *meshDrawer, MeshManager *meshManager,
-                     const PushConstants &pushConstants);
+                      MeshDrawer *meshDrawer, MeshManager *meshManager,
+                      VkDescriptorSet globalDescriptorSet);
+  void recordMainPass(VkCommandBuffer commandBuffer, VkFramebuffer framebuffer,
+                      VkRenderPass &renderPass, VkExtent2D chosenExtent,
+                      MeshDrawer *meshDrawer, MeshManager *meshManager,
+                      const PushConstants &pushConstants,
+                      VkDescriptorSet globalDescriptorSet);
+  void recordShadowPass(VkCommandBuffer commandBuffer, MeshManager *meshManager,
+                        VkPipeline shadowPipeline,
+                        VkPipelineLayout pipelineLayout,
+                        VkExtent2D shadowExtent, VkRenderPass shadowRenderPass,
+                        VkFramebuffer shadowFramebuffer,
+                        const glm::mat4 &lightSpaceMatrix);
   void cleanup();
 
   // Getters

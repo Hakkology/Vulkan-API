@@ -4,6 +4,49 @@ VulkanRenderer::VulkanRenderer() {
   // Constructor implementation (if needed)
 }
 
+void createBuffer(VkDevice device, VkPhysicalDevice physicalDevice,
+                  VkDeviceSize size, VkBufferUsageFlags usage,
+                  VkMemoryPropertyFlags properties, VkBuffer &buffer,
+                  VkDeviceMemory &bufferMemory) {
+  VkBufferCreateInfo bufferInfo{};
+  bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+  bufferInfo.size = size;
+  bufferInfo.usage = usage;
+  bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+  if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
+    throw std::runtime_error("failed to create buffer!");
+  }
+
+  VkMemoryRequirements memRequirements;
+  vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
+
+  VkPhysicalDeviceMemoryProperties memProperties;
+  vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
+
+  uint32_t memoryTypeIndex = UINT32_MAX;
+  for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+    if ((memRequirements.memoryTypeBits & (1 << i)) &&
+        (memProperties.memoryTypes[i].propertyFlags & properties) ==
+            properties) {
+      memoryTypeIndex = i;
+      break;
+    }
+  }
+
+  VkMemoryAllocateInfo allocInfo{};
+  allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+  allocInfo.allocationSize = memRequirements.size;
+  allocInfo.memoryTypeIndex = memoryTypeIndex;
+
+  if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) !=
+      VK_SUCCESS) {
+    throw std::runtime_error("failed to allocate buffer memory!");
+  }
+
+  vkBindBufferMemory(device, buffer, bufferMemory, 0);
+}
+
 VulkanRenderer::~VulkanRenderer() { terminate(); }
 
 int VulkanRenderer::init(GLFWwindow *newWindow) {
@@ -84,10 +127,17 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     }
 
     std::cout << "Initializing Depth Stencil Manager..." << std::endl;
-    depthStencilManager = std::make_unique<DepthStencilManager>(
+    depthStencilManager = std::make_unique<VulkanDepthStencilManager>(
         deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice());
     depthStencilManager->createDepthResources(
         swapChainManager->getChosenExtent(), swapChainManager.get());
+
+    std::cout << "Initializing Shadow Map Manager..." << std::endl;
+    shadowMapManager = std::make_unique<VulkanShadowMapManager>(
+        deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice());
+    shadowMapManager->createResources(2048, 2048);
+    shadowMapManager->createRenderPass();
+    shadowMapManager->createFramebuffer();
 
     std::cout << "Creating render pass..." << std::endl;
     renderPass = std::make_unique<Renderpass>(
@@ -95,53 +145,97 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         depthStencilManager->getDepthFormat());
     renderPass->createRenderPass(); // Create the render pass
 
+    std::cout << "Creating global descriptor set layout..." << std::endl;
+    // Binding 0: Global UBO
+    VkDescriptorSetLayoutBinding uboLayoutBinding{};
+    uboLayoutBinding.binding = 0;
+    uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    uboLayoutBinding.descriptorCount = 1;
+    uboLayoutBinding.stageFlags =
+        VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+    uboLayoutBinding.pImmutableSamplers = nullptr;
+
+    // Binding 1: Shadow Map
+    VkDescriptorSetLayoutBinding shadowLayoutBinding{};
+    shadowLayoutBinding.binding = 1;
+    shadowLayoutBinding.descriptorType =
+        VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    shadowLayoutBinding.descriptorCount = 1;
+    shadowLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+    shadowLayoutBinding.pImmutableSamplers = nullptr;
+
+    std::array<VkDescriptorSetLayoutBinding, 2> globalBindings = {
+        uboLayoutBinding, shadowLayoutBinding};
+    VkDescriptorSetLayoutCreateInfo globalLayoutInfo{};
+    globalLayoutInfo.sType =
+        VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+    globalLayoutInfo.bindingCount =
+        static_cast<uint32_t>(globalBindings.size());
+    globalLayoutInfo.pBindings = globalBindings.data();
+
+    if (vkCreateDescriptorSetLayout(deviceManager.getLogicalDevice(),
+                                    &globalLayoutInfo, nullptr,
+                                    &globalDescriptorSetLayout) != VK_SUCCESS) {
+      throw std::runtime_error(
+          "Failed to create global descriptor set layout!");
+    }
+
     std::cout << "Creating descriptor set layout for texture..." << std::endl;
-    // Binding 1: Combined image sampler for texture
+    // Binding 0: Combined image sampler for texture (NOW IN SET 1)
     VkDescriptorSetLayoutBinding samplerLayoutBinding{};
-    samplerLayoutBinding.binding = 1; // Must match shader binding
+    samplerLayoutBinding.binding = 0;
     samplerLayoutBinding.descriptorCount = 1;
     samplerLayoutBinding.descriptorType =
         VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
     samplerLayoutBinding.pImmutableSamplers = nullptr;
     samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-    VkDescriptorSetLayoutCreateInfo layoutInfo{};
-    layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-    layoutInfo.bindingCount = 1;
-    layoutInfo.pBindings = &samplerLayoutBinding;
+    VkDescriptorSetLayoutCreateInfo textureLayoutInfo{};
+    textureLayoutInfo.sType =
+        VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+    textureLayoutInfo.bindingCount = 1;
+    textureLayoutInfo.pBindings = &samplerLayoutBinding;
 
     if (vkCreateDescriptorSetLayout(
-            deviceManager.getLogicalDevice(), &layoutInfo, nullptr,
+            deviceManager.getLogicalDevice(), &textureLayoutInfo, nullptr,
             &textureDescriptorSetLayout) != VK_SUCCESS) {
       throw std::runtime_error(
           "Failed to create texture descriptor set layout!");
     }
 
-    std::cout << "Creating graphics pipeline..."
-              << std::endl; // Create graphics pipeline
-    // Assuming colored_shader is the default for now
+    std::cout << "Creating shadow graphics pipeline..." << std::endl;
+    shadowPipeline = std::make_unique<GraphicsPipeline>(
+        deviceManager.getLogicalDevice(), shadowMapManager->getRenderPass(),
+        shadowMapManager->getExtent(), "../src/Shaders/spv/shadow.vert.spv",
+        "../src/Shaders/spv/shadow.frag.spv");
+    shadowPipeline->createGraphicsPipeline(
+        {}); // Empty layouts for shadow pass (only push constants)
+
+    std::cout << "Creating main graphics pipelines..." << std::endl;
     graphicsPipeline = std::make_unique<GraphicsPipeline>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         swapChainManager->getChosenExtent(),
         "../src/Shaders/spv/colored_shader.vert.spv",
         "../src/Shaders/spv/colored_shader.frag.spv");
+    graphicsPipeline->createGraphicsPipeline({globalDescriptorSetLayout});
 
-    // Add the descriptor set layout to the pipeline
-    std::vector<VkDescriptorSetLayout> descriptorSetLayouts;
-    descriptorSetLayouts.push_back(textureDescriptorSetLayout);
-
-    graphicsPipeline->createGraphicsPipeline(descriptorSetLayouts);
-
-    std::cout << "Creating textured graphics pipeline..." << std::endl;
-    // Create textured pipeline
     texturedGraphicsPipeline = std::make_unique<GraphicsPipeline>(
         deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
         swapChainManager->getChosenExtent(),
         "../src/Shaders/spv/textured_shader.vert.spv",
         "../src/Shaders/spv/textured_shader.frag.spv");
-    texturedGraphicsPipeline->createGraphicsPipeline(descriptorSetLayouts);
+    texturedGraphicsPipeline->createGraphicsPipeline(
+        {globalDescriptorSetLayout, textureDescriptorSetLayout});
 
-    // Initialize Command Manager early for Command Pool
+    // Global UBO Buffer
+    createBuffer(deviceManager.getLogicalDevice(),
+                 deviceManager.getPhysicalDevice(), sizeof(GlobalUBO),
+                 VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+                 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+                     VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+                 globalUboBuffer, globalUboMemory);
+
+    // Initialize Command Manager
     std::cout << "Creating command manager..." << std::endl;
     commandBuffer = std::make_unique<CommandManager>(
         deviceManager.getLogicalDevice(), deviceManager.getPhysicalDevice(),
@@ -199,28 +293,69 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     sceneManager->loadScene("default");
 
     // Initializing Descriptor Pool
-    VkDescriptorPoolSize poolSize{};
-    poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-    poolSize.descriptorCount = 10; // Allocate enough
+    std::array<VkDescriptorPoolSize, 2> poolSizes{};
+    poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    poolSizes[0].descriptorCount = 10;
+    poolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    poolSizes[1].descriptorCount = 20;
 
     VkDescriptorPoolCreateInfo poolInfo{};
     poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-    poolInfo.poolSizeCount = 1;
-    poolInfo.pPoolSizes = &poolSize;
-    poolInfo.maxSets = 10;
+    poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
+    poolInfo.pPoolSizes = poolSizes.data();
+    poolInfo.maxSets = 20;
 
     if (vkCreateDescriptorPool(deviceManager.getLogicalDevice(), &poolInfo,
                                nullptr, &textureDescriptorPool) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create descriptor pool!");
     }
 
-    // Allocate Descriptor Set for Plane (Mesh 0 in generic logic, but let's
-    // find it) Actually, Scene added it. We can iterate meshes. For now, let's
-    // assume we want to apply to ALL meshes that have texture.
+    // Allocate Global Descriptor Set
+    VkDescriptorSetAllocateInfo globalAllocInfo{};
+    globalAllocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+    globalAllocInfo.descriptorPool = textureDescriptorPool;
+    globalAllocInfo.descriptorSetCount = 1;
+    globalAllocInfo.pSetLayouts = &globalDescriptorSetLayout;
 
-    // We need to update the descriptor set for the texture.
-    // The textureManager has loaded the texture by now (in
-    // Scene::addInitialMeshes).
+    if (vkAllocateDescriptorSets(deviceManager.getLogicalDevice(),
+                                 &globalAllocInfo,
+                                 &globalDescriptorSet) != VK_SUCCESS) {
+      throw std::runtime_error("Failed to allocate global descriptor set!");
+    }
+
+    // Update Global Descriptor Set
+    VkDescriptorBufferInfo uboBufferInfo{};
+    uboBufferInfo.buffer = globalUboBuffer;
+    uboBufferInfo.offset = 0;
+    uboBufferInfo.range = sizeof(GlobalUBO);
+
+    VkDescriptorImageInfo shadowImageInfo{};
+    shadowImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+    shadowImageInfo.imageView = shadowMapManager->getShadowImageView();
+    shadowImageInfo.sampler = shadowMapManager->getShadowSampler();
+
+    std::array<VkWriteDescriptorSet, 2> descriptorWrites{};
+
+    descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+    descriptorWrites[0].dstSet = globalDescriptorSet;
+    descriptorWrites[0].dstBinding = 0;
+    descriptorWrites[0].dstArrayElement = 0;
+    descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    descriptorWrites[0].descriptorCount = 1;
+    descriptorWrites[0].pBufferInfo = &uboBufferInfo;
+
+    descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+    descriptorWrites[1].dstSet = globalDescriptorSet;
+    descriptorWrites[1].dstBinding = 1;
+    descriptorWrites[1].dstArrayElement = 0;
+    descriptorWrites[1].descriptorType =
+        VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    descriptorWrites[1].descriptorCount = 1;
+    descriptorWrites[1].pImageInfo = &shadowImageInfo;
+
+    vkUpdateDescriptorSets(deviceManager.getLogicalDevice(),
+                           static_cast<uint32_t>(descriptorWrites.size()),
+                           descriptorWrites.data(), 0, nullptr);
 
     // Allocate descriptor sets for textured meshes
     const auto &meshes = meshManager->getAllMeshes();
@@ -249,7 +384,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         VkWriteDescriptorSet descriptorWrite{};
         descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
         descriptorWrite.dstSet = descriptorSet;
-        descriptorWrite.dstBinding = 1; // Binding 1
+        descriptorWrite.dstBinding = 0; // Binding 0
         descriptorWrite.dstArrayElement = 0;
         descriptorWrite.descriptorType =
             VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -343,6 +478,11 @@ void VulkanRenderer::terminate() {
     frameBuffer.reset();
   }
 
+  if (shadowPipeline) {
+    shadowPipeline->cleanup();
+    shadowPipeline.reset();
+  }
+
   if (graphicsPipeline) {
     graphicsPipeline->cleanup();
     graphicsPipeline.reset();
@@ -351,6 +491,28 @@ void VulkanRenderer::terminate() {
   if (texturedGraphicsPipeline) {
     texturedGraphicsPipeline->cleanup();
     texturedGraphicsPipeline.reset();
+  }
+
+  if (globalUboBuffer != VK_NULL_HANDLE) {
+    vkDestroyBuffer(deviceManager.getLogicalDevice(), globalUboBuffer, nullptr);
+    vkFreeMemory(deviceManager.getLogicalDevice(), globalUboMemory, nullptr);
+  }
+
+  if (globalDescriptorSetLayout != VK_NULL_HANDLE) {
+    vkDestroyDescriptorSetLayout(deviceManager.getLogicalDevice(),
+                                 globalDescriptorSetLayout, nullptr);
+  }
+
+  if (globalUboBuffer != VK_NULL_HANDLE) {
+    vkDestroyBuffer(deviceManager.getLogicalDevice(), globalUboBuffer, nullptr);
+  }
+  if (globalUboMemory != VK_NULL_HANDLE) {
+    vkFreeMemory(deviceManager.getLogicalDevice(), globalUboMemory, nullptr);
+  }
+
+  if (shadowMapManager) {
+    shadowMapManager->cleanup();
+    shadowMapManager.reset();
   }
 
   if (renderPass) {
@@ -388,12 +550,8 @@ void VulkanRenderer::terminate() {
 }
 
 void VulkanRenderer::draw() {
-  // std::cout << "Draw frame start" << std::endl;
-  // Update Input
   inputManager->update(0.016f);
 
-  // Calculate MVP
-  // Calculate MVP
   cameraManager->updateAspectRatio((float)swapChainExtent.width /
                                    (float)swapChainExtent.height);
   glm::mat4 view = cameraManager->getViewMatrix();
@@ -401,42 +559,38 @@ void VulkanRenderer::draw() {
   glm::mat4 model = glm::mat4(1.0f); // Default model matrix
   glm::mat4 mvp = projection * view * model;
 
+  DirectionalLight dirLight = lightManager->getDirectionalLight();
+  glm::vec3 lightPos =
+      -glm::vec3(dirLight.direction) * 10.0f; // Position light far away
+  glm::mat4 lightProjection =
+      glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 100.0f);
+  glm::mat4 lightView =
+      glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+  glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+  // Update GlobalUBO
+  GlobalUBO ubo{};
+  ubo.lightSpaceMatrix = lightSpaceMatrix;
+  ubo.lightDir = dirLight.direction;
+  ubo.lightColor = dirLight.color;
+  ubo.ambientLight = lightManager->getAmbientLight();
+
+  void *uboData;
+  vkMapMemory(deviceManager.getLogicalDevice(), globalUboMemory, 0,
+              sizeof(GlobalUBO), 0, &uboData);
+  memcpy(uboData, &ubo, sizeof(GlobalUBO));
+  vkUnmapMemory(deviceManager.getLogicalDevice(), globalUboMemory);
+
   // Prepare PushConstants
   PushConstants pushConstants = {};
   pushConstants.mvp = mvp;
+  pushConstants.objectColor = glm::vec4(1.0f);
 
-  DirectionalLight dirLight = lightManager->getDirectionalLight();
-  pushConstants.lightDir = dirLight.direction;
-  pushConstants.lightColor = dirLight.color;
-  pushConstants.ambientLight = lightManager->getAmbientLight();
-  pushConstants.objectColor =
-      glm::vec4(1.0f); // Temporary default if not set elsewhere
-
-  static bool printed = false;
-  if (!printed) {
-    std::cout << "--- PushConstants Debug ---" << std::endl;
-    std::cout << "Light Dir: " << pushConstants.lightDir.x << ", "
-              << pushConstants.lightDir.y << ", " << pushConstants.lightDir.z
-              << std::endl;
-    std::cout << "Light Color (RGB+W): " << pushConstants.lightColor.r << ", "
-              << pushConstants.lightColor.g << ", "
-              << pushConstants.lightColor.b
-              << " | Intensity: " << pushConstants.lightColor.w << std::endl;
-    std::cout << "Ambient (RGB+W): " << pushConstants.ambientLight.r << ", "
-              << pushConstants.ambientLight.g << ", "
-              << pushConstants.ambientLight.b
-              << " | Intensity: " << pushConstants.ambientLight.w << std::endl;
-    std::cout << "---------------------------" << std::endl;
-    printed = true;
-  }
-
-  // std::cout << "Waiting for fences..." << std::endl;
   // 1. Get next available image
   vkWaitForFences(deviceManager.getLogicalDevice(), 1,
                   &syncHandler->inFlightFences[currentFrame], VK_TRUE,
                   UINT64_MAX);
 
-  // std::cout << "Acquiring next image..." << std::endl;
   uint32_t imageIndex;
   VkResult result = vkAcquireNextImageKHR(
       deviceManager.getLogicalDevice(), swapChainManager->getSwapchain(),
@@ -449,19 +603,40 @@ void VulkanRenderer::draw() {
     throw std::runtime_error("Failed to acquire next image from swap chain!");
   }
 
-  // std::cout << "Resetting fences..." << std::endl;
   // Reset fences only after we know we are submitting
   vkResetFences(deviceManager.getLogicalDevice(), 1,
                 &syncHandler->inFlightFences[currentFrame]);
 
-  // std::cout << "Recording command buffer..." << std::endl;
-  // 2. Record Command Buffer for this frame
-  commandBuffer->recordCommand(
-      imageIndex, frameBuffer->getSwapchainFramebuffers()[imageIndex],
-      renderPass->getRenderPass(), swapChainManager->getChosenExtent(),
-      meshDrawer.get(), meshManager.get(), pushConstants);
+  // 2. Record Command Buffer
 
-  // std::cout << "Submitting queue..." << std::endl;
+  // Use the command buffer associated with the swapchain image index
+  // This ensures we are recording to the buffer that will be submitted
+  VkCommandBuffer cb = commandBuffer->getCommandBuffer(imageIndex);
+
+  VkCommandBufferBeginInfo beginInfo{};
+  beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+
+  if (vkBeginCommandBuffer(cb, &beginInfo) != VK_SUCCESS) {
+    throw std::runtime_error("Failed to begin command buffer recording!");
+  }
+
+  // Shadow Pass
+  commandBuffer->recordShadowPass(
+      cb, meshManager.get(), shadowPipeline->getGraphicsPipeline(),
+      shadowPipeline->getPipelineLayout(), shadowMapManager->getExtent(),
+      shadowMapManager->getRenderPass(), shadowMapManager->getFramebuffer(),
+      lightSpaceMatrix);
+
+  // Main Pass
+  commandBuffer->recordMainPass(
+      cb, frameBuffer->getSwapchainFramebuffers()[imageIndex],
+      renderPass->getRenderPass(), swapChainManager->getChosenExtent(),
+      meshDrawer.get(), meshManager.get(), pushConstants, globalDescriptorSet);
+
+  if (vkEndCommandBuffer(cb) != VK_SUCCESS) {
+    throw std::runtime_error("Failed to end command buffer recording!");
+  }
+
   // 3. Submit
   VkCommandBuffer commandBuffers[] = {
       commandBuffer->getCommandBuffer(imageIndex)};

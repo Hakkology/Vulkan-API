@@ -1,4 +1,5 @@
 #!/bin/bash
+cd "$(dirname "$0")"
 
 # glslangValidator path
 GLSLANG_VALIDATOR_PATH="../../lib/include/ShaderCompiler"
@@ -15,8 +16,12 @@ fi
 
 # Check if glslangValidator exists
 if [ ! -f "$GLSLANG_VALIDATOR" ]; then
-    echo "glslangValidator not found in $GLSLANG_VALIDATOR"
-    exit 1
+    echo "glslangValidator not found in $GLSLANG_VALIDATOR. Trying system glslangValidator..."
+    GLSLANG_VALIDATOR=$(which glslangValidator)
+    if [ -z "$GLSLANG_VALIDATOR" ]; then
+        echo "glslangValidator not found in PATH either."
+        exit 1
+    fi
 fi
 
 # Directory for SPIR-V output

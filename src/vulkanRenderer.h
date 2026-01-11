@@ -15,7 +15,8 @@
 #include "Engine/meshManager.h"
 #include "Engine/scenes.h"
 #include "Engine/textureManager.h"
-#include "Pipeline/depthStencilManager.h"
+#include "Pipeline/vulkanDepthStencilManager.h"
+#include "Pipeline/vulkanShadowMapManager.h"
 #include "cameraManager.h"
 #include "deviceManager.h"
 #include "inputManager.h"
@@ -60,7 +61,15 @@ private:
   std::unique_ptr<FrameManager> frameBuffer;
   std::unique_ptr<CommandManager> commandBuffer;
   std::unique_ptr<SynchronizationHandler> syncHandler;
-  std::unique_ptr<DepthStencilManager> depthStencilManager;
+  std::unique_ptr<VulkanDepthStencilManager> depthStencilManager;
+  std::unique_ptr<VulkanShadowMapManager> shadowMapManager;
+
+  std::unique_ptr<GraphicsPipeline> shadowPipeline;
+
+  VkDescriptorSetLayout globalDescriptorSetLayout;
+  VkDescriptorSet globalDescriptorSet;
+  VkBuffer globalUboBuffer;
+  VkDeviceMemory globalUboMemory;
 
   std::unique_ptr<MeshManager> meshManager;
   std::unique_ptr<MeshDrawer> meshDrawer;

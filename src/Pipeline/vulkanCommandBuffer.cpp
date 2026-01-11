@@ -83,7 +83,8 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
                                     VkRenderPass &renderPass,
                                     VkExtent2D chosenExtent,
                                     MeshDrawer *meshDrawer,
-                                    MeshManager *meshManager) {
+                                    MeshManager *meshManager,
+                                    VkDescriptorSet globalDescriptorSet) {
   std::cout << "Command recording has begun." << std::endl;
   // Information about how to begin each command buffer.
   VkCommandBufferBeginInfo bufferBeginInfo = {};
@@ -130,7 +131,7 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
     for (auto &meshPair : meshManager->getAllMeshes()) {
       pushConstants.objectColor = meshPair.second->getColor();
       meshDrawer->drawMesh(commandBuffers[i], meshPair.second.get(),
-                           pushConstants);
+                           pushConstants, globalDescriptorSet);
     }
     vkCmdEndRenderPass(commandBuffers[i]); // end render pass
 
@@ -145,20 +146,11 @@ void CommandManager::recordCommands(std::vector<VkFramebuffer> frameBuffers,
   // vkBeginCommandBuffer()
 }
 
-void CommandManager::recordCommand(
-    uint32_t imageIndex, VkFramebuffer framebuffer, VkRenderPass &renderPass,
-    VkExtent2D chosenExtent, MeshDrawer *meshDrawer, MeshManager *meshManager,
-    const PushConstants &pushConstants) {
-  // Check index validity
-  if (imageIndex >= commandBuffers.size()) {
-    throw std::runtime_error("Image index out of range in recordCommand.");
-  }
-
-  VkCommandBuffer commandBuffer = commandBuffers[imageIndex];
-
-  // Begin Info
-  VkCommandBufferBeginInfo bufferBeginInfo = {};
-  bufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+void CommandManager::recordMainPass(
+    VkCommandBuffer commandBuffer, VkFramebuffer framebuffer,
+    VkRenderPass &renderPass, VkExtent2D chosenExtent, MeshDrawer *meshDrawer,
+    MeshManager *meshManager, const PushConstants &pushConstants,
+    VkDescriptorSet globalDescriptorSet) {
 
   // Render Pass Begin Info
   VkRenderPassBeginInfo renderPassBeginInfo = {};
@@ -176,13 +168,6 @@ void CommandManager::recordCommand(
 
   renderPassBeginInfo.framebuffer = framebuffer;
 
-  // Start recording
-  VkResult result = vkBeginCommandBuffer(commandBuffer, &bufferBeginInfo);
-  if (result != VK_SUCCESS) {
-    throw std::runtime_error(
-        "Failed to start recording a command buffer (recordCommand).");
-  }
-
   vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo,
                        VK_SUBPASS_CONTENTS_INLINE);
 
@@ -190,16 +175,61 @@ void CommandManager::recordCommand(
     PushConstants meshPushConstants = pushConstants;
     meshPushConstants.objectColor = meshPair.second->getColor();
     meshDrawer->drawMesh(commandBuffer, meshPair.second.get(),
-                         meshPushConstants);
+                         meshPushConstants, globalDescriptorSet);
   }
 
   vkCmdEndRenderPass(commandBuffer);
+}
 
-  result = vkEndCommandBuffer(commandBuffer);
-  if (result != VK_SUCCESS) {
-    throw std::runtime_error(
-        "Failed to stop recording a command buffer (recordCommand).");
+void CommandManager::recordShadowPass(
+    VkCommandBuffer commandBuffer, MeshManager *meshManager,
+    VkPipeline shadowPipeline, VkPipelineLayout pipelineLayout,
+    VkExtent2D shadowExtent, VkRenderPass shadowRenderPass,
+    VkFramebuffer shadowFramebuffer, const glm::mat4 &lightSpaceMatrix) {
+  VkRenderPassBeginInfo renderPassBeginInfo{};
+  renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+  renderPassBeginInfo.renderPass = shadowRenderPass;
+  renderPassBeginInfo.framebuffer = shadowFramebuffer;
+  renderPassBeginInfo.renderArea.offset = {0, 0};
+  renderPassBeginInfo.renderArea.extent = shadowExtent;
+
+  VkClearValue clearValue{};
+  clearValue.depthStencil = {1.0f, 0};
+  renderPassBeginInfo.pClearValues = &clearValue;
+  renderPassBeginInfo.clearValueCount = 1;
+
+  vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo,
+                       VK_SUBPASS_CONTENTS_INLINE);
+
+  vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    shadowPipeline);
+
+  for (auto const &[id, mesh] : meshManager->getAllMeshes()) {
+    VkBuffer vertexBuffers[] = {mesh->getVertexBuffer()};
+    VkDeviceSize offsets[] = {0};
+    vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+
+    PushConstants pushConstants{};
+    pushConstants.mvp =
+        lightSpaceMatrix; // In shadow pass, MVP is just lightSpaceMatrix
+                          // (assuming model is identity for simplicity in this
+                          // pass, or should be multiplied if model matrix
+                          // exists)
+    // Wait, if model exists:
+    // pushConstants.mvp = lightSpaceMatrix * mesh->getModelMatrix();
+    // Let's assume identity for now if meshes don't have separate model
+    // matrices yet.
+
+    vkCmdPushConstants(commandBuffer, pipelineLayout,
+                       VK_SHADER_STAGE_VERTEX_BIT |
+                           VK_SHADER_STAGE_FRAGMENT_BIT,
+                       0, sizeof(PushConstants), &pushConstants);
+
+    vkCmdDraw(commandBuffer, static_cast<uint32_t>(mesh->getVertexCount()), 1,
+              0, 0);
   }
+
+  vkCmdEndRenderPass(commandBuffer);
 }
 
 void CommandManager::cleanup() {

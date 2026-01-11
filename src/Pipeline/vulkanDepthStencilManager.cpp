@@ -1,13 +1,13 @@
-#include "depthStencilManager.h"
+#include "vulkanDepthStencilManager.h"
 #include <iostream>
 
-DepthStencilManager::DepthStencilManager(VkPhysicalDevice physicalDevice,
-                                         VkDevice logicalDevice)
+VulkanDepthStencilManager::VulkanDepthStencilManager(
+    VkPhysicalDevice physicalDevice, VkDevice logicalDevice)
     : physicalDevice(physicalDevice), logicalDevice(logicalDevice) {}
 
-DepthStencilManager::~DepthStencilManager() { cleanup(); }
+VulkanDepthStencilManager::~VulkanDepthStencilManager() { cleanup(); }
 
-void DepthStencilManager::cleanup() {
+void VulkanDepthStencilManager::cleanup() {
   for (auto imageView : depthImageViews) {
     vkDestroyImageView(logicalDevice, imageView, nullptr);
   }
@@ -24,7 +24,7 @@ void DepthStencilManager::cleanup() {
   depthImageMemorys.clear();
 }
 
-void DepthStencilManager::createDepthResources(
+void VulkanDepthStencilManager::createDepthResources(
     VkExtent2D swapChainExtent, SwapChainManager *swapChainManager) {
   depthFormat = findDepthFormat();
 
@@ -47,14 +47,14 @@ void DepthStencilManager::createDepthResources(
   std::cout << "Depth resources created (" << imageCount << ")." << std::endl;
 }
 
-VkFormat DepthStencilManager::findDepthFormat() {
+VkFormat VulkanDepthStencilManager::findDepthFormat() {
   return findSupportedFormat(
       {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT,
        VK_FORMAT_D24_UNORM_S8_UINT},
       VK_IMAGE_TILING_OPTIMAL, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 }
 
-VkFormat DepthStencilManager::findSupportedFormat(
+VkFormat VulkanDepthStencilManager::findSupportedFormat(
     const std::vector<VkFormat> &candidates, VkImageTiling tiling,
     VkFormatFeatureFlags features) {
   for (VkFormat format : candidates) {
@@ -73,12 +73,10 @@ VkFormat DepthStencilManager::findSupportedFormat(
   throw std::runtime_error("Failed to find supported format!");
 }
 
-void DepthStencilManager::createImage(uint32_t width, uint32_t height,
-                                      VkFormat format, VkImageTiling tiling,
-                                      VkImageUsageFlags usage,
-                                      VkMemoryPropertyFlags properties,
-                                      VkImage &image,
-                                      VkDeviceMemory &imageMemory) {
+void VulkanDepthStencilManager::createImage(
+    uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling,
+    VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage &image,
+    VkDeviceMemory &imageMemory) {
   VkImageCreateInfo imageInfo = {};
   imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
   imageInfo.imageType = VK_IMAGE_TYPE_2D;

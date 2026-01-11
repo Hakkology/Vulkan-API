@@ -37,11 +37,16 @@ struct Vertex {
 };
 
 struct PushConstants {
-  glm::mat4 mvp;
-  glm::vec4 lightDir;
-  glm::vec4 lightColor;
-  glm::vec4 ambientLight;
-  glm::vec4 objectColor;
+  glm::mat4 mvp;         // 64 bytes
+  glm::vec4 objectColor; // 16 bytes. Total = 80 bytes
+};
+
+// Global properties
+struct GlobalUBO {
+  glm::mat4 lightSpaceMatrix; // 64 bytes
+  glm::vec4 lightDir;         // 16 bytes
+  glm::vec4 lightColor;       // 16 bytes
+  glm::vec4 ambientLight;     // 16 bytes. Total = 112 bytes
 };
 
 namespace VulkanUtils {

@@ -10,11 +10,15 @@ layout (location = 2) out vec2 fragTexCoord;
 
 layout(push_constant) uniform PushConsts {
     mat4 mvp;
+    vec4 objectColor;
+} pushConsts;
+
+layout(set = 0, binding = 0) uniform GlobalUBO {
+    mat4 lightSpaceMatrix;
     vec4 lightDir;
     vec4 lightColor;
     vec4 ambientLight;
-    vec4 objectColor;
-} pushConsts;
+} ubo;
 
 void main(){
     gl_Position = pushConsts.mvp * vec4(pos, 1.0);

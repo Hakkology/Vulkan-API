@@ -41,7 +41,8 @@ add_executable(Vulkan-Renderer
     src/Pipeline/vulkanCommandBuffer.cpp
     src/Pipeline/vulkanGraphicsPipeline.cpp
     src/Pipeline/vulkanSyncHandler.cpp
-    src/Pipeline/depthStencilManager.cpp
+    src/Pipeline/vulkanDepthStencilManager.cpp
+    src/Pipeline/vulkanShadowMapManager.cpp
 
     src/Pipeline/PipelineUnits/pipelineShaderModule.cpp
     src/Pipeline/PipelineUnits/pipelineVertexInputState.cpp

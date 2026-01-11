@@ -14,7 +14,8 @@ public:
   ~MeshDrawer();
 
   void drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
-                const PushConstants &pushConstants);
+                const PushConstants &pushConstants,
+                VkDescriptorSet globalDescriptorSet);
 
 private:
   VkDevice device;
