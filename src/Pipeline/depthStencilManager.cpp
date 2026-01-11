@@ -1,13 +1,13 @@
-#include "vulkanDepthManager.h"
+#include "depthStencilManager.h"
 #include <iostream>
 
-DepthManager::DepthManager(VkPhysicalDevice physicalDevice,
-                           VkDevice logicalDevice)
+DepthStencilManager::DepthStencilManager(VkPhysicalDevice physicalDevice,
+                                         VkDevice logicalDevice)
     : physicalDevice(physicalDevice), logicalDevice(logicalDevice) {}
 
-DepthManager::~DepthManager() { cleanup(); }
+DepthStencilManager::~DepthStencilManager() { cleanup(); }
 
-void DepthManager::cleanup() {
+void DepthStencilManager::cleanup() {
   for (auto imageView : depthImageViews) {
     vkDestroyImageView(logicalDevice, imageView, nullptr);
   }
@@ -24,8 +24,8 @@ void DepthManager::cleanup() {
   depthImageMemorys.clear();
 }
 
-void DepthManager::createDepthResources(VkExtent2D swapChainExtent,
-                                        SwapChainManager *swapChainManager) {
+void DepthStencilManager::createDepthResources(
+    VkExtent2D swapChainExtent, SwapChainManager *swapChainManager) {
   depthFormat = findDepthFormat();
 
   size_t imageCount = swapChainManager->getSwapChainImages().size();
@@ -47,17 +47,16 @@ void DepthManager::createDepthResources(VkExtent2D swapChainExtent,
   std::cout << "Depth resources created (" << imageCount << ")." << std::endl;
 }
 
-VkFormat DepthManager::findDepthFormat() {
+VkFormat DepthStencilManager::findDepthFormat() {
   return findSupportedFormat(
       {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT,
        VK_FORMAT_D24_UNORM_S8_UINT},
       VK_IMAGE_TILING_OPTIMAL, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 }
 
-VkFormat
-DepthManager::findSupportedFormat(const std::vector<VkFormat> &candidates,
-                                  VkImageTiling tiling,
-                                  VkFormatFeatureFlags features) {
+VkFormat DepthStencilManager::findSupportedFormat(
+    const std::vector<VkFormat> &candidates, VkImageTiling tiling,
+    VkFormatFeatureFlags features) {
   for (VkFormat format : candidates) {
     VkFormatProperties props;
     vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &props);
@@ -74,10 +73,12 @@ DepthManager::findSupportedFormat(const std::vector<VkFormat> &candidates,
   throw std::runtime_error("Failed to find supported format!");
 }
 
-void DepthManager::createImage(uint32_t width, uint32_t height, VkFormat format,
-                               VkImageTiling tiling, VkImageUsageFlags usage,
-                               VkMemoryPropertyFlags properties, VkImage &image,
-                               VkDeviceMemory &imageMemory) {
+void DepthStencilManager::createImage(uint32_t width, uint32_t height,
+                                      VkFormat format, VkImageTiling tiling,
+                                      VkImageUsageFlags usage,
+                                      VkMemoryPropertyFlags properties,
+                                      VkImage &image,
+                                      VkDeviceMemory &imageMemory) {
   VkImageCreateInfo imageInfo = {};
   imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
   imageInfo.imageType = VK_IMAGE_TYPE_2D;
@@ -107,7 +108,7 @@ void DepthManager::createImage(uint32_t width, uint32_t height, VkFormat format,
   VkPhysicalDeviceMemoryProperties memProperties;
   vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
 
-  uint32_t memoryTypeIndex = -1;
+  uint32_t memoryTypeIndex = UINT32_MAX;
   for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
     if ((memRequirements.memoryTypeBits & (1 << i)) &&
         (memProperties.memoryTypes[i].propertyFlags & properties) ==
@@ -117,7 +118,7 @@ void DepthManager::createImage(uint32_t width, uint32_t height, VkFormat format,
     }
   }
 
-  if (memoryTypeIndex == -1) {
+  if (memoryTypeIndex == UINT32_MAX) {
     throw std::runtime_error("failed to find suitable memory type!");
   }
 

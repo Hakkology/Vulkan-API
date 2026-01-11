@@ -838,6 +838,30 @@ src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s
 .PHONY : src/Pipeline/PipelineUnits/pipelineViewportState.cpp.s
 
+src/Pipeline/depthStencilManager.o: src/Pipeline/depthStencilManager.cpp.o
+.PHONY : src/Pipeline/depthStencilManager.o
+
+# target to build an object file
+src/Pipeline/depthStencilManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/depthStencilManager.cpp.o
+.PHONY : src/Pipeline/depthStencilManager.cpp.o
+
+src/Pipeline/depthStencilManager.i: src/Pipeline/depthStencilManager.cpp.i
+.PHONY : src/Pipeline/depthStencilManager.i
+
+# target to preprocess a source file
+src/Pipeline/depthStencilManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/depthStencilManager.cpp.i
+.PHONY : src/Pipeline/depthStencilManager.cpp.i
+
+src/Pipeline/depthStencilManager.s: src/Pipeline/depthStencilManager.cpp.s
+.PHONY : src/Pipeline/depthStencilManager.s
+
+# target to generate assembly for a file
+src/Pipeline/depthStencilManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/depthStencilManager.cpp.s
+.PHONY : src/Pipeline/depthStencilManager.cpp.s
+
 src/Pipeline/vulkanCommandBuffer.o: src/Pipeline/vulkanCommandBuffer.cpp.o
 .PHONY : src/Pipeline/vulkanCommandBuffer.o
 
@@ -957,30 +981,6 @@ src/Pipeline/vulkanSyncHandler.s: src/Pipeline/vulkanSyncHandler.cpp.s
 src/Pipeline/vulkanSyncHandler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Pipeline/vulkanSyncHandler.cpp.s
 .PHONY : src/Pipeline/vulkanSyncHandler.cpp.s
-
-src/Renderer/vulkanDepthManager.o: src/Renderer/vulkanDepthManager.cpp.o
-.PHONY : src/Renderer/vulkanDepthManager.o
-
-# target to build an object file
-src/Renderer/vulkanDepthManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.o
-.PHONY : src/Renderer/vulkanDepthManager.cpp.o
-
-src/Renderer/vulkanDepthManager.i: src/Renderer/vulkanDepthManager.cpp.i
-.PHONY : src/Renderer/vulkanDepthManager.i
-
-# target to preprocess a source file
-src/Renderer/vulkanDepthManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.i
-.PHONY : src/Renderer/vulkanDepthManager.cpp.i
-
-src/Renderer/vulkanDepthManager.s: src/Renderer/vulkanDepthManager.cpp.s
-.PHONY : src/Renderer/vulkanDepthManager.s
-
-# target to generate assembly for a file
-src/Renderer/vulkanDepthManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vulkan-Renderer.dir/build.make CMakeFiles/Vulkan-Renderer.dir/src/Renderer/vulkanDepthManager.cpp.s
-.PHONY : src/Renderer/vulkanDepthManager.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -1127,6 +1127,9 @@ help:
 	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.o"
 	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.i"
 	@echo "... src/Pipeline/PipelineUnits/pipelineViewportState.s"
+	@echo "... src/Pipeline/depthStencilManager.o"
+	@echo "... src/Pipeline/depthStencilManager.i"
+	@echo "... src/Pipeline/depthStencilManager.s"
 	@echo "... src/Pipeline/vulkanCommandBuffer.o"
 	@echo "... src/Pipeline/vulkanCommandBuffer.i"
 	@echo "... src/Pipeline/vulkanCommandBuffer.s"
@@ -1142,9 +1145,6 @@ help:
 	@echo "... src/Pipeline/vulkanSyncHandler.o"
 	@echo "... src/Pipeline/vulkanSyncHandler.i"
 	@echo "... src/Pipeline/vulkanSyncHandler.s"
-	@echo "... src/Renderer/vulkanDepthManager.o"
-	@echo "... src/Renderer/vulkanDepthManager.i"
-	@echo "... src/Renderer/vulkanDepthManager.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

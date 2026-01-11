@@ -90,7 +90,7 @@ void GraphicsPipeline::createGraphicsPipeline(
       vertexInputStateInfo; // All the fixed function pipeline states
   pipelineCreateInfo.pInputAssemblyState = inputAssemblyStateInfo;
   pipelineCreateInfo.pViewportState = viewportStateInfo;
-  pipelineCreateInfo.pDynamicState = nullptr;
+  pipelineCreateInfo.pDynamicState = dynamicStateInfo;
   pipelineCreateInfo.pRasterizationState = rasterizationStateInfo;
   pipelineCreateInfo.pMultisampleState = multisampleStateInfo;
   pipelineCreateInfo.pColorBlendState = colorBlendStateInfo;

@@ -6,10 +6,10 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 
-class DepthManager {
+class DepthStencilManager {
 public:
-  DepthManager(VkPhysicalDevice physicalDevice, VkDevice logicalDevice);
-  ~DepthManager();
+  DepthStencilManager(VkPhysicalDevice physicalDevice, VkDevice logicalDevice);
+  ~DepthStencilManager();
 
   void createDepthResources(VkExtent2D swapChainExtent,
                             SwapChainManager *swapChainManager);

@@ -69,23 +69,33 @@ void Renderpass::createRenderPass() {
 
   // Conversion from VK_IMAGE_LAYOUT_UNDEFINED to
   // VK_IMAGE_LAYOUT_COLOUR_ATTACHMENT_OPTIMAL
+  // Dependency for transitioning from VK_IMAGE_LAYOUT_UNDEFINED to
+  // VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL and
+  // DEPTH_STENCIL_ATTACHMENT_OPTIMAL
   subpassDependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
   subpassDependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
   subpassDependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
   subpassDependencies[0].dstSubpass = 0;
   subpassDependencies[0].dstStageMask =
-      VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-  subpassDependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT |
-                                         VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+      VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT |
+      VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+  subpassDependencies[0].dstAccessMask =
+      VK_ACCESS_COLOR_ATTACHMENT_READ_BIT |
+      VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT |
+      VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
+      VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
   subpassDependencies[0].dependencyFlags = 0;
 
-  // Conversion from VK_IMAGE_LAYOUT_COLOUR_ATTACHMENT_OPTIMAL to
-  // VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+  // Dependency for transitioning out of subpass
   subpassDependencies[1].srcSubpass = 0;
   subpassDependencies[1].srcStageMask =
-      VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-  subpassDependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT |
-                                         VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+      VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT |
+      VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
+  subpassDependencies[1].srcAccessMask =
+      VK_ACCESS_COLOR_ATTACHMENT_READ_BIT |
+      VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT |
+      VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
+      VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
   subpassDependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
   subpassDependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
   subpassDependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;

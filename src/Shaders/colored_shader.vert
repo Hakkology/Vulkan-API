@@ -20,5 +20,5 @@ void main(){
     gl_Position = pushConsts.mvp * vec4(pos, 1.0);
     fragNormal = inNormal;
     fragPos = pos;
-    //fragColour = colours[gl_VertexIndex];
+    fragTexCoord = inTexCoord;
 }

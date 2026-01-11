@@ -35,9 +35,9 @@ void DefaultScene::init() {
   drawManager.setMaterial(cube, cubeMaterial);
 
   // Setup lights
-  lightManager.setDirectionalLight(glm::vec3(1.0f, 1.0f, 1.0f),
-                                   glm::vec3(-2.0f, -4.0f, -1.0f), 1.0f);
-  lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.4f);
+  lightManager.setDirectionalLight(glm::vec3(-2.0f, -4.0f, -1.0f),
+                                   glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
+  lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.2f);
 
   initialized = true;
   std::cout << "Default Scene initialized." << std::endl;
@@ -89,9 +89,9 @@ void DemoScene::init() {
   drawManager.setMaterial(cube3, yellowMaterial);
 
   // Setup lights - brighter for demo
-  lightManager.setDirectionalLight(glm::vec3(1.0f, 1.0f, 1.0f),
-                                   glm::vec3(-1.0f, -2.0f, -1.0f), 1.2f);
-  lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
+  lightManager.setDirectionalLight(glm::vec3(-1.0f, -2.0f, -1.0f),
+                                   glm::vec3(1.0f, 1.0f, 1.0f), 1.2f);
+  lightManager.setAmbientLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.3f);
 
   initialized = true;
   std::cout << "Demo Scene initialized." << std::endl;

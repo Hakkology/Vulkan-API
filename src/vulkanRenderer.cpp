@@ -83,16 +83,16 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
       return EXIT_FAILURE;
     }
 
-    std::cout << "Initializing Depth Manager..." << std::endl;
-    depthManager = std::make_unique<DepthManager>(
+    std::cout << "Initializing Depth Stencil Manager..." << std::endl;
+    depthStencilManager = std::make_unique<DepthStencilManager>(
         deviceManager.getPhysicalDevice(), deviceManager.getLogicalDevice());
-    depthManager->createDepthResources(swapChainManager->getChosenExtent(),
-                                       swapChainManager.get());
+    depthStencilManager->createDepthResources(
+        swapChainManager->getChosenExtent(), swapChainManager.get());
 
     std::cout << "Creating render pass..." << std::endl;
-    renderPass = std::make_unique<Renderpass>(deviceManager.getLogicalDevice(),
-                                              swapChainImageFormat,
-                                              depthManager->getDepthFormat());
+    renderPass = std::make_unique<Renderpass>(
+        deviceManager.getLogicalDevice(), swapChainImageFormat,
+        depthStencilManager->getDepthFormat());
     renderPass->createRenderPass(); // Create the render pass
 
     std::cout << "Creating descriptor set layout for texture..." << std::endl;
@@ -267,7 +267,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     frameBuffer = std::make_unique<FrameManager>(
         deviceManager.getLogicalDevice(), *swapChainManager,
         renderPass->getRenderPass());
-    frameBuffer->createFrameBuffers(depthManager->getDepthImageViews());
+    frameBuffer->createFrameBuffers(depthStencilManager->getDepthImageViews());
 
     std::cout << "Allocating command buffers..." << std::endl;
     // Pool already created
@@ -358,9 +358,9 @@ void VulkanRenderer::terminate() {
     renderPass.reset();
   }
 
-  if (depthManager) {
-    depthManager->cleanup();
-    depthManager.reset();
+  if (depthStencilManager) {
+    depthStencilManager->cleanup();
+    depthStencilManager.reset();
   }
 
   if (swapChainManager) {

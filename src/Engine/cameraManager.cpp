@@ -18,15 +18,8 @@ glm::mat4 CameraManager::getViewMatrix() const {
 }
 
 glm::mat4 CameraManager::getProjectionMatrix() const {
-  float viewHeight =
-      radius; // The height of the view volume scales with radius (zoom)
-  float viewWidth = viewHeight * aspectRatio;
-
-  float halfWidth = viewWidth / 2.0f;
-  float halfHeight = viewHeight / 2.0f;
-
-  glm::mat4 projection = glm::ortho(-halfWidth, halfWidth, -halfHeight,
-                                    halfHeight, nearPlane, farPlane);
+  glm::mat4 projection =
+      glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane);
   projection[1][1] *= -1; // Vulkan Y-flip
   return projection;
 }
