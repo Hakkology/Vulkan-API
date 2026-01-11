@@ -9,7 +9,7 @@
 
 #include "vulkanUtils.h"
 
-enum class AssetType { Texture, Blender };
+enum class AssetType { Texture, Model };
 
 class AssetImportManager {
 public:

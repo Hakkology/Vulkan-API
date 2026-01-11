@@ -25,7 +25,7 @@ void DefaultScene::init() {
     std::cerr << "Failed to load texture: " << e.what() << std::endl;
   }
 
-  Mesh *plane = drawManager.drawPlane(glm::vec3(0.0f, -1.0f, 0.0f), 5.0f);
+  Mesh *plane = drawManager.drawPlane(glm::vec3(0.0f, -1.0f, 0.0f), 10.0f);
   drawManager.setMaterial(plane, groundMaterial);
 
   // --- Human Figure ---
@@ -110,6 +110,19 @@ void DefaultScene::init() {
   // look from +Z (front), I see front of char. Cape is behind. If I rotate
   // camera to back (-Z), I see cape. So cape normal should point -Z (away from
   // character). Rotate -90 deg X? (0,1,0) -> (0,0,-1).
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
 
   capeModel = glm::translate(
       capeModel,
@@ -133,8 +146,7 @@ void DefaultScene::init() {
   // Import Blender model for the sword
   AssetImportManager assetImporter;
   void *loadedAsset = assetImporter.importAsset(
-      "../src/Assets/Models/sword/dwarvensword.blend.blend",
-      AssetType::Blender);
+      "../src/Assets/Models/sword/dwarvensword.blend.blend", AssetType::Model);
 
   if (loadedAsset) {
     std::vector<Vertex> *swordVertices =
@@ -167,7 +179,7 @@ void DefaultScene::init() {
       // Sword model might need scaling/rotation.
 
       glm::mat4 swordModel = glm::mat4(1.0f);
-      swordModel = glm::translate(swordModel, glm::vec3(0.55f, 0.45f, 0.65f));
+      swordModel = glm::translate(swordModel, glm::vec3(0.55f, 0.45f, 0.3f));
 
       // Transformations to align with hand
       swordModel = glm::rotate(swordModel, glm::radians(90.0f),
@@ -179,7 +191,10 @@ void DefaultScene::init() {
       swordModel = glm::rotate(swordModel, glm::radians(90.0f),
                                glm::vec3(0.0f, 1.0f, 0.0f));
 
-      swordModel = glm::scale(swordModel, glm::vec3(0.1f));
+      swordModel = glm::scale(
+          swordModel,
+          glm::vec3(
+              5.0f)); // User requested 10x (assuming 10x scaling or 5.0 size)
 
       swordMesh->setModelMatrix(swordModel);
       drawManager.setMaterial(swordMesh, swordMaterial);
@@ -189,6 +204,49 @@ void DefaultScene::init() {
     delete swordVertices;
   } else {
     std::cerr << "Failed to load sword model!" << std::endl;
+  }
+
+  // --- Tree Loading ---
+  void *treeAsset = assetImporter.importAsset(
+      "../src/Assets/Models/trees/oaktree.obj", AssetType::Model);
+  // Reusing Model type as it uses generic Assimp logic which works for OBJ too.
+
+  if (treeAsset) {
+    std::vector<Vertex> *treeVertices =
+        static_cast<std::vector<Vertex> *>(treeAsset);
+
+    if (!treeVertices->empty()) {
+      // Create texture for tree
+      auto treeMaterial = std::make_shared<Material>(MaterialType::TEXTURED);
+      treeMaterial->setColor(glm::vec4(1.0f));
+      try {
+        textureManager.loadTexture(
+            "../src/Assets/Models/trees/oaktree1_bark_BaseColor.jpg");
+        treeMaterial->setTexture(textureManager.getTextureImageView(),
+                                 textureManager.getTextureSampler());
+      } catch (const std::exception &e) {
+        std::cerr << "Failed to load tree texture: " << e.what() << std::endl;
+      }
+
+      // Positions for 4 corners (assuming ground is approx 10x10 area, corners
+      // at +/- 4)
+      glm::vec3 treePositions[] = {
+          glm::vec3(-9.0f, -1.0f, -9.0f), glm::vec3(9.0f, -1.0f, -9.0f),
+          glm::vec3(-9.0f, -1.0f, 9.0f), glm::vec3(9.0f, -1.0f, 9.0f)};
+
+      for (const auto &pos : treePositions) {
+        Mesh *treeMesh = meshManager.createMesh(*treeVertices);
+        glm::mat4 treeModel = glm::mat4(1.0f);
+        treeModel = glm::translate(treeModel, pos);
+        // Normalized to 1.0. Scale 12.0 -> 12 meters tall (4x previous 3.0).
+        treeModel = glm::scale(treeModel, glm::vec3(12.0f));
+        treeMesh->setModelMatrix(treeModel);
+        drawManager.setMaterial(treeMesh, treeMaterial);
+      }
+    }
+    delete treeVertices;
+  } else {
+    std::cerr << "Failed to load tree model!" << std::endl;
   }
 
   initialized = true;

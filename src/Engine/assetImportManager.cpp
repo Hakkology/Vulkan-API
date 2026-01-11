@@ -6,7 +6,7 @@ AssetImportManager::AssetImportManager() {}
 AssetImportManager::~AssetImportManager() {}
 
 void *AssetImportManager::importAsset(const std::string &path, AssetType type) {
-  if (type == AssetType::Blender) {
+  if (type == AssetType::Model) {
     std::vector<Vertex> *vertices = new std::vector<Vertex>();
     *vertices = importModel(path);
     if (vertices->empty()) {
@@ -43,6 +43,46 @@ std::vector<Vertex> AssetImportManager::importModel(const std::string &path) {
 
   std::vector<Vertex> vertices;
   processNode(scene->mRootNode, scene, vertices);
+
+  // --- Normalization Step ---
+  if (!vertices.empty()) {
+    glm::vec3 min(1e9f);
+    glm::vec3 max(-1e9f);
+
+    // Calculate AABB
+    for (const auto &v : vertices) {
+      min = glm::min(min, v.pos);
+      max = glm::max(max, v.pos);
+    }
+
+    glm::vec3 center = (min + max) * 0.5f;
+    glm::vec3 size = max - min;
+    float maxDim = std::max(std::max(size.x, size.y), size.z);
+
+    // Avoid division by zero
+    if (maxDim < 1e-6f)
+      maxDim = 1.0f;
+
+    float scaleFactor = 1.0f / maxDim;
+
+    // Center the model relative to its Bottom-Center
+    // X, Z are centered. Y is based on Bottom (min.y).
+    glm::vec3 offset;
+    offset.x = -center.x;
+    offset.y = -min.y; // Align bottom to 0
+    offset.z = -center.z;
+
+    for (auto &v : vertices) {
+      v.pos = (v.pos + offset) * scaleFactor;
+    }
+
+    std::cout << "Asset Normalized: " << path << "\n"
+              << "Original Bounds: Min(" << min.x << "," << min.y << ","
+              << min.z << ") "
+              << "Max(" << max.x << "," << max.y << "," << max.z << ")\n"
+              << "Scale Factor: " << scaleFactor << std::endl;
+  }
+
   return vertices;
 }
 
