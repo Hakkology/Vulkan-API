@@ -3,11 +3,12 @@
 MeshDrawer::MeshDrawer(VkDevice device, VkRenderPass renderPass,
                        VkPipeline graphicsPipeline, VkPipeline texturedPipeline,
                        VkPipeline coloredMovingPipeline,
+                       VkPipeline skyboxPipeline,
                        VkPipelineLayout pipelineLayout)
     : device(device), renderPass(renderPass),
       graphicsPipeline(graphicsPipeline), texturedPipeline(texturedPipeline),
       coloredMovingPipeline(coloredMovingPipeline),
-      pipelineLayout(pipelineLayout) {}
+      skyboxPipeline(skyboxPipeline), pipelineLayout(pipelineLayout) {}
 
 MeshDrawer::~MeshDrawer() {}
 
@@ -32,6 +33,8 @@ void MeshDrawer::drawMesh(VkCommandBuffer commandBuffer, Mesh *mesh,
       pipelineToBind = coloredMovingPipeline;
     } else if (type == MaterialType::TEXTURED) {
       pipelineToBind = texturedPipeline;
+    } else if (type == MaterialType::SKYBOX) {
+      pipelineToBind = skyboxPipeline;
     }
   }
 

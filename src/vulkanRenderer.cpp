@@ -232,6 +232,20 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
     texturedGraphicsPipeline->createGraphicsPipeline(
         {globalDescriptorSetLayout, textureDescriptorSetLayout});
 
+    std::cout << "Creating skybox graphics pipeline..." << std::endl;
+    skyboxGraphicsPipeline = std::make_unique<GraphicsPipeline>(
+        deviceManager.getLogicalDevice(), renderPass->getRenderPass(),
+        swapChainExtent, "../src/Shaders/spv/skybox.vert.spv",
+        "../src/Shaders/spv/skybox.frag.spv",
+        VK_CULL_MODE_NONE,      // Render all faces
+        VK_FRONT_FACE_CLOCKWISE // Standard winding
+    ); // Can add depth test disabling here if needed, but managing via render
+       // order/depth func is also possible.
+    // For now we assume standard depth test Less/Equal.
+
+    skyboxGraphicsPipeline->createGraphicsPipeline(
+        {globalDescriptorSetLayout, textureDescriptorSetLayout});
+
     // Global UBO Buffer
     createBuffer(deviceManager.getLogicalDevice(),
                  deviceManager.getPhysicalDevice(), sizeof(GlobalUBO),
@@ -290,6 +304,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
         graphicsPipeline->getGraphicsPipeline(),
         texturedGraphicsPipeline->getGraphicsPipeline(),
         coloredMovingGraphicsPipeline->getGraphicsPipeline(),
+        skyboxGraphicsPipeline->getGraphicsPipeline(),
         graphicsPipeline->getPipelineLayout());
 
     // Initialize SceneManager
@@ -445,6 +460,9 @@ int VulkanRenderer::init(GLFWwindow *newWindow) {
 }
 
 void VulkanRenderer::terminate() {
+  if (isTerminated)
+    return;
+  isTerminated = true;
 
   // wait until no actions being run on device.
   if (deviceManager.getLogicalDevice() != nullptr) {
@@ -509,9 +527,27 @@ void VulkanRenderer::terminate() {
     texturedGraphicsPipeline.reset();
   }
 
+  if (skyboxGraphicsPipeline) {
+    skyboxGraphicsPipeline->cleanup();
+    skyboxGraphicsPipeline.reset();
+  }
+
   if (globalDescriptorSetLayout != VK_NULL_HANDLE) {
     vkDestroyDescriptorSetLayout(deviceManager.getLogicalDevice(),
                                  globalDescriptorSetLayout, nullptr);
+    globalDescriptorSetLayout = VK_NULL_HANDLE;
+  }
+
+  if (textureDescriptorSetLayout != VK_NULL_HANDLE) {
+    vkDestroyDescriptorSetLayout(deviceManager.getLogicalDevice(),
+                                 textureDescriptorSetLayout, nullptr);
+    textureDescriptorSetLayout = VK_NULL_HANDLE;
+  }
+
+  if (textureDescriptorPool != VK_NULL_HANDLE) {
+    vkDestroyDescriptorPool(deviceManager.getLogicalDevice(),
+                            textureDescriptorPool, nullptr);
+    textureDescriptorPool = VK_NULL_HANDLE;
   }
 
   if (globalUboBuffer != VK_NULL_HANDLE) {

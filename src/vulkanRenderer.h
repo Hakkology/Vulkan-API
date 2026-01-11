@@ -58,6 +58,7 @@ private:
   std::unique_ptr<GraphicsPipeline> graphicsPipeline;
   std::unique_ptr<GraphicsPipeline> texturedGraphicsPipeline;
   std::unique_ptr<GraphicsPipeline> coloredMovingGraphicsPipeline;
+  std::unique_ptr<GraphicsPipeline> skyboxGraphicsPipeline;
   std::unique_ptr<Renderpass> renderPass;
   std::unique_ptr<FrameManager> frameBuffer;
   std::unique_ptr<CommandManager> commandBuffer;
@@ -90,6 +91,7 @@ private:
 
   int currentFrame = 0;
   const int maxFramesInFlight = 2;
+  bool isTerminated = false;
 
   // Create functions
   bool createInstance();

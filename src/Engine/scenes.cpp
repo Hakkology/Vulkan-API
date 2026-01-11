@@ -179,7 +179,7 @@ void DefaultScene::init() {
       // Sword model might need scaling/rotation.
 
       glm::mat4 swordModel = glm::mat4(1.0f);
-      swordModel = glm::translate(swordModel, glm::vec3(0.55f, 0.45f, 0.3f));
+      swordModel = glm::translate(swordModel, glm::vec3(0.55f, 0.45f, 0.0f));
 
       // Transformations to align with hand
       swordModel = glm::rotate(swordModel, glm::radians(90.0f),
@@ -247,6 +247,49 @@ void DefaultScene::init() {
     delete treeVertices;
   } else {
     std::cerr << "Failed to load tree model!" << std::endl;
+  }
+
+  // --- Skybox Loading ---
+  void *skyboxAsset = assetImporter.importAsset(
+      "../src/Assets/Textures/skybox/free-skybox-enchanted-forest/source/"
+      "magic_forest_skybox.fbx",
+      AssetType::Model);
+
+  if (skyboxAsset) {
+    std::vector<Vertex> *skyboxVertices =
+        static_cast<std::vector<Vertex> *>(skyboxAsset);
+
+    if (!skyboxVertices->empty()) {
+      Mesh *skyboxMesh = meshManager.createMesh(*skyboxVertices);
+
+      // Create a textured material for the skybox
+      auto skyboxMaterial = std::make_shared<Material>(MaterialType::SKYBOX);
+      skyboxMaterial->setColor(glm::vec4(1.0f));
+
+      try {
+        textureManager.loadTexture(
+            "../src/Assets/Textures/skybox/free-skybox-enchanted-forest/"
+            "textures/skybox_6k.jpg");
+        skyboxMaterial->setTexture(textureManager.getTextureImageView(),
+                                   textureManager.getTextureSampler());
+      } catch (const std::exception &e) {
+        std::cerr << "Failed to load skybox texture: " << e.what() << std::endl;
+      }
+
+      glm::mat4 skyboxModel = glm::mat4(1.0f);
+      // Move skybox down so the center is roughly at (0,0,0).
+      // Since AssetImporter normalizes to [0, 1] on Y and sets pivot to bottom,
+      // and we scale by 50, the height is 0 to 50. -25 centers it.
+      skyboxModel = glm::translate(skyboxModel, glm::vec3(0.0f, -25.0f, 0.0f));
+      // Scale large enough to be a skybox
+      skyboxModel = glm::scale(skyboxModel, glm::vec3(50.0f));
+
+      skyboxMesh->setModelMatrix(skyboxModel);
+      drawManager.setMaterial(skyboxMesh, skyboxMaterial);
+    }
+    delete skyboxVertices;
+  } else {
+    std::cerr << "Failed to load skybox model!" << std::endl;
   }
 
   initialized = true;
